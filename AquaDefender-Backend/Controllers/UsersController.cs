@@ -1,5 +1,6 @@
 using AquaDefender_Backend.Data;
 using AquaDefender_Backend.Domain;
+using AquaDefender_Backend.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,23 +14,34 @@ namespace AquaDefender_Backend.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly AquaDefenderDataContext _context;
+        private readonly IUserService _userService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public UsersController(AquaDefenderDataContext context)
+         public UsersController(IUserService userService, IWebHostEnvironment webHostEnvironment)
         {
-            _context = context;
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<AppUser>>> GetAllUsers()
         {
-            return await _context.Users.ToListAsync();
+            var users = await _userService.GetAllUsersAsync();
+
+            return Ok(users);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetUser(int id)
+        public async Task<ActionResult<AppUser>> GetUserById(int id)
         {
-            return await _context.Users.FindAsync(id);
+            var user = await _userService.GetUserByIdAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
         }
     }
 }
