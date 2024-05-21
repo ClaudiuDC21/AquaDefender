@@ -1,0 +1,17 @@
+<div class="content">
+  <div class="alert-container">
+    <div class="alert alert-info alert-white rounded">
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        (click)="onClose()"
+        aria-hidden="true"
+      >
+        <fa-icon [icon]="iconService.faClose"></fa-icon>
+      </button>
+      <div class="icon"><i class="fa fa-info-circle"><fa-icon [icon]="iconService.faInfo"></fa-icon></i></div>
+      <strong>Info!</strong>  {{ message }}
+    </div>
+  </div>
+</div>

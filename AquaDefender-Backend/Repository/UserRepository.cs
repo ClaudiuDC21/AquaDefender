@@ -29,5 +29,24 @@ namespace AquaDefender_Backend.Repository
             // Asynchronously retrieves all users from the database using EF Core's ToListAsync.
             return await _dbContext.Users.ToListAsync();
         }
+
+        public async Task UpdateUserAsync(AppUser user)
+        {
+            if (user == null)
+                throw new ArgumentNullException(nameof(user));
+
+            _dbContext.Users.Update(user);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteUserAsync(int userId)
+        {
+            var user = await _dbContext.Users.FindAsync(userId);
+            if (user != null)
+            {
+                _dbContext.Users.Remove(user);
+                await _dbContext.SaveChangesAsync();
+            }
+        }
     }
 }

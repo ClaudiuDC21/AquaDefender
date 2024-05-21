@@ -1,0 +1,181 @@
+.navbar {
+    background-color: rgba(255, 255, 255, 0);
+    color: #fff;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  
+    /* Schimbă fundalul la scroll */
+    &.scrolled {
+      background-color: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar-left {
+    display: flex;
+    align-items: center;
+  
+    .logo {
+      width: 150px;
+      height: 80px;
+      background: url("../images/AquaDefenderStema.png") no-repeat center center;
+      background-size: cover;
+    }
+  }
+  
+  .navbar-center {
+    display: flex;
+    justify-content: center;
+  
+    .nav-button {
+      margin: 0 15px;
+      padding: 12px 24px;
+      background-color: transparent;
+      border: none;
+      font-size: 2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: color 0.3s, background-color 0.3s;
+  
+      &:hover {
+        color: #3498db;
+        background-color: #f2f2f2;
+      }
+  
+      fa-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+  
+  .navbar-right {
+    .auth-button {
+      margin: 0 15px;
+      padding: 12px 24px;
+      background-color: #3498db;
+      border: none;
+      font-size: 2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: color 0.3s, background-color 0.3s;
+  
+      &:hover {
+        color: #3498db;
+        background-color: #f2f2f2;
+      }
+  
+      fa-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+  
+  .dropdown {
+    position: relative;
+  
+    .dropdown-menu-auth {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      min-width: 160px;
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+      z-index: 1;
+  
+      &.show {
+        display: block;
+      }
+  
+      .dropdown-content-auth {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        border: none;
+        font-size: 2rem;
+        background-color: transparent;
+        text-align: left;
+        cursor: pointer;
+  
+        &:hover {
+          color: #3498db;
+          background-color: #f2f2f2;
+        }
+  
+        fa-icon {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+  
+  .drop-icon{
+    display: none;
+  }
+
+  .menu-icon {
+    display: none; /* Ascuns inițial, va fi afișat pe ecrane mici */
+    cursor: pointer;
+    margin: 0 15px;
+    padding: 12px 24px;
+    background-color: #3498db;
+    border: none;
+    font-size: 2rem;
+    border-radius: 8px;
+    transition: color 0.3s, background-color 0.3s;
+  
+    &:hover {
+      color: #3498db;
+      background-color: #f2f2f2;
+    }
+  
+    fa-icon {
+      margin-right: 8px;
+    }
+  }
+  
+  @media (max-width: 999px) {
+    .navbar-center,
+    .navbar-right {
+      display: none; /* Ascunde butoanele când ecranul este sub 1000px */
+    }
+  
+    .menu-icon {
+      display: block; /* Afișează butonul de meniu */
+    }
+  }
+  
+  /* Stil pentru meniu dropdown */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .navbar.scrolled .navbar-center .nav-button {
+    color: #3498db !important; /* Schimbă culoarea butoanelor din centrul navbar-ului la scroll */
+  }

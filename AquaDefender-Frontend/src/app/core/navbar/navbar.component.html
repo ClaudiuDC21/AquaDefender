@@ -1,0 +1,182 @@
+<nav class="navbar" appScroll>
+  <div class="navbar-container">
+    <div class="navbar-left">
+      <div class="logo"></div>
+    </div>
+
+    <div class="dropdown">
+      <button
+        class="menu-icon"
+        type="button"
+        (click)="enableResposiveDropdown(); $event.stopPropagation()"
+      >
+        <i class="fas fa-cog"></i> Opțiuni
+      </button>
+      <div
+        class="dropdown-menu-auth"
+        [ngClass]="{ show: showResponsiveDropdown }"
+      >
+        <button
+          class="dropdown-content-auth drop-icon"
+          routerLinkActive="active"
+          routerLink="/home"
+        >
+          <fa-icon [icon]="iconService.faHome"></fa-icon> Acasă
+        </button>
+        <button
+          class="dropdown-content-auth drop-icon"
+          routerLinkActive="active"
+          [routerLink]="['/water-values', getCityId(), 'info']"
+        >
+          <fa-icon [icon]="iconService.faTint"></fa-icon> Valori apă potabilă
+        </button>
+        <button
+          class="dropdown-content-auth drop-icon"
+          routerLinkActive="active"
+          routerLink="/report-a-problem"
+        >
+          <fa-icon [icon]="iconService.faExclamationTriangle"></fa-icon>
+          Raportează o problemă
+        </button>
+        <button
+          class="dropdown-content-auth drop-icon"
+          routerLinkActive="active"
+          [routerLink]="['/report-management', getCityId(), 'details']"
+        >
+          <fa-icon [icon]="iconService.faTasks"></fa-icon> Probleme raportate
+        </button>
+        <button
+          *ngIf="!isAuthenticated()"
+          class="dropdown-content-auth"
+          routerLinkActive="active"
+          routerLink="/login"
+        >
+          <fa-icon [icon]="iconService.faSignInAlt"></fa-icon> Autentificare
+        </button>
+        <button
+          *ngIf="!isAuthenticated()"
+          class="dropdown-content-auth drop-icon"
+          routerLinkActive="active"
+          routerLink="/signup"
+        >
+          <fa-icon [icon]="iconService.faUserPlus"></fa-icon> Înregistrare
+        </button>
+        <button
+          *ngIf="isAuthenticated()"
+          class="dropdown-content-auth drop-icon"
+          routerLinkActive="active"
+          [routerLink]="['/personal-profile', getUserId(), 'info']"
+        >
+          <fa-icon [icon]="iconService.faUserCircle"></fa-icon> Profilul tău
+        </button>
+        <button
+          *ngIf="isAuthenticated()"
+          class="dropdown-content-auth drop-icon"
+          routerLinkActive="active"
+          [routerLink]="['/edit-profile', getUserId()]"
+        >
+          <fa-icon [icon]="iconService.faEdit"></fa-icon> Editare profil
+        </button>
+        <button
+          *ngIf="isAuthenticated()"
+          class="dropdown-content-auth drop-icon"
+          (click)="onLogout()"
+        >
+          <fa-icon [icon]="iconService.faTasks"></fa-icon> Ieși din cont
+        </button>
+      </div>
+    </div>
+    <div class="navbar-center">
+      <button
+        class="nav-button"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="active"
+        routerLink="/home"
+      >
+        <fa-icon [icon]="iconService.faHome"></fa-icon> 
+        Acasă
+      </button>
+      <button
+        class="nav-button"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="active"
+        [routerLink]="['/water-values', getUserId(), 'info']"
+      >
+        <fa-icon [icon]="iconService.faTint"></fa-icon> 
+        Valori apă potabilă</button
+      ><button
+        class="nav-button"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="active"
+        routerLink="/report-a-problem"
+      >
+        <fa-icon [icon]="iconService.faExclamationTriangle"></fa-icon>
+        Raportează o problemă
+      </button>
+      <button
+        class="nav-button"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="active"
+        [routerLink]="['/report-management', getCityId(), 'details']"
+      >
+        <fa-icon [icon]="iconService.faTasks"></fa-icon> 
+        Probleme raportate
+      </button>
+    </div>
+
+    <div class="navbar-right">
+      <button
+        *ngIf="!isAuthenticated()"
+        class="auth-button"
+        routerLinkActive="active"
+        routerLink="/login"
+      >
+        <fa-icon [icon]="iconService.faSignInAlt"></fa-icon> Autentificare
+      </button>
+      <button
+        *ngIf="!isAuthenticated()"
+        class="auth-button"
+        routerLinkActive="active"
+        routerLink="/signup"
+      >
+        <fa-icon [icon]="iconService.faUserPlus"></fa-icon> Înregistrare
+      </button>
+      <div *ngIf="isAuthenticated()" class="dropdown">
+        <button
+          class="auth-button"
+          type="button"
+          (click)="toggleDropdown(); $event.stopPropagation()"
+        >
+          <fa-icon [icon]="iconService.faCog"></fa-icon> 
+          Opțiuni
+        </button>
+        <div class="dropdown-menu-auth" [ngClass]="{ show: isDropdownOpen }">
+          <button
+            *ngIf="isAuthenticated()"
+            class="dropdown-content-auth"
+            routerLinkActive="active"
+            [routerLink]="['/personal-profile', getUserId(), 'info']"
+          >
+            <fa-icon [icon]="iconService.faUserCircle"></fa-icon> Profilul tău
+          </button>
+          <button
+            *ngIf="isAuthenticated()"
+            class="dropdown-content-auth"
+            routerLinkActive="active"
+            routerLink="/edit"
+            [routerLink]="['/edit-profile', getUserId()]"
+          >
+            <fa-icon [icon]="iconService.faEdit"></fa-icon> Editare profil
+          </button>
+          <button
+            *ngIf="isAuthenticated()"
+            class="dropdown-content-auth"
+            (click)="onLogout()"
+          >
+            <fa-icon [icon]="iconService.faTasks"></fa-icon> Ieși din cont
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

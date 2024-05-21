@@ -1,0 +1,108 @@
+<app-home
+  style="opacity: 0.2"
+  (click)="onOutsideClick()"
+  *ngIf="!isLoading"
+></app-home>
+
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div class="alert-container" *ngIf="!isLoading">
+  <div *ngFor="let errorMessage of alertErrorMessages; let i = index">
+    <app-alert-error
+      [message]="errorMessage"
+      (close)="removeAlert(i)"
+    ></app-alert-error>
+  </div>
+</div>
+
+<div class="alert-container" *ngIf="alertErrorMessages.length > 0 && !isLoading">
+  <div *ngFor="let errorMessage of alertErrorMessages; let i = index">
+    <app-alert-error
+      [message]="errorMessage"
+      (close)="removeAlert(i)"
+    ></app-alert-error>
+  </div>
+</div>
+
+<div class="header" *ngIf="!isLoading">
+  <div class="login-container" *ngIf="!isLoading">
+    <div class="login-box">
+      <button class="close-button" (click)="closeForm()">
+        <fa-icon [icon]="iconService.faClose"></fa-icon>
+      </button>
+      <h1>Autentificare</h1>
+      <form #loginForm="ngForm" (ngSubmit)="login()" autocomplete="off">
+        <div class="form-group">
+          <label for="username">Email:</label>
+          <input
+            type="email"
+            id="username"
+            name="username"
+            placeholder="ion.popescu@exemplu.com"
+            [(ngModel)]="email"
+            #emailField="ngModel"
+            required
+            email
+          />
+          <div
+            *ngIf="
+              emailField.errors && (emailField.dirty || emailField.touched)
+            "
+            class="error-message"
+          >
+            <span *ngIf="emailField.errors['required']"
+              >Emailul este obligatoriu</span
+            >
+            <span *ngIf="emailField.errors['email']">
+              Introduceți un email valid, de forma "exemplu&commat;exemplu.com"
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Parola:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Introdu parola"
+            [(ngModel)]="password"
+            #passwordField="ngModel"
+            required
+            minlength="8"
+          />
+          <div
+            *ngIf="
+              passwordField.errors &&
+              (passwordField.dirty || passwordField.touched)
+            "
+            class="error-message"
+          >
+            <span *ngIf="passwordField.errors['required']"
+              >Parola este obligatorie</span
+            >
+            <span *ngIf="passwordField.errors['minlength']"
+              >Parola trebuie să aibă cel puțin 8 caractere</span
+            >
+          </div>
+        </div>
+
+        <button
+          class="redirect-button"
+          *ngIf="!isLoading"
+          [disabled]="!loginForm.valid"
+        >
+          <span class="button-text">Autentificare</span>
+          <div class="fill-container"></div>
+        </button>
+      </form>
+
+      <p class="create-account-link">
+        Nu ai un cont?
+        <a routerLinkActive="active" routerLink="/signup"
+          >Creează unul chiar
+        </a>
+      </p>
+    </div>
+  </div>
+</div>

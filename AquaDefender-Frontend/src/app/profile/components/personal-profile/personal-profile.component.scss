@@ -1,0 +1,939 @@
+.header {
+  margin: 0;
+  padding-top: 100px;
+  box-sizing: border-box;
+  font-family: "Brush Script MT", sans-serif;
+  position: relative;
+  text-align: center;
+  background: linear-gradient(
+    60deg,
+    rgba(84, 58, 183, 1) 0%,
+    rgba(0, 172, 193, 1) 100%
+  );
+  color: white;
+
+  .inner-header {
+    min-height: 75vh;
+    margin: 0 auto;
+    padding: 0;
+
+    .flex {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .back-container {
+      width: 70%;
+      background-color: white;
+      margin: 0 auto;
+      margin-bottom: 100px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      min-height: 60vh; /* Înălțimea minimă pentru a asigura un anumit aspect inițial */
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+      top: 100px;
+
+      .top-section {
+        width: 100%;
+        display: flex;
+        justify-content: space-between; /* Distribuie pe orizontală imaginea și numele */
+        align-items: center;
+      }
+
+      .profile-picture {
+        width: 30%; /* Sau orice altă dimensiune preferi */
+        height: 200px; /* Se va ajusta în funcție de lățime */
+        background: url("../../images/AquaDefenderStema.png") no-repeat center
+          center;
+        background-size: contain;
+        margin-left: 10%;
+        display: flex;
+        justify-content: center; /* Centrează imaginea pe orizontală */
+        align-items: center; /* Centrează imaginea pe verticală */
+      }
+
+      .name-container {
+        height: 100%;
+        width: 40%;
+        font-size: 24px;
+        color: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 5%;
+      }
+
+      @media (max-width: 750px) {
+        .top-section {
+          flex-direction: column; /* Aranjează elementele pe verticală la ecrane mici */
+          align-items: center; /* Centrează elementele pe orizontală */
+        }
+
+        .profile-picture {
+          margin: 0; /* Elimină marginile */
+          margin-bottom: 10px; /* Adaugă spațiu sub imagine */
+          width: 70%; /* Ajustează lățimea imaginii la ecrane mici */
+        }
+
+        .name-container {
+          width: 100%; /* Ocupă întreaga lățime */
+          margin: 0; /* Elimină marginile */
+          text-align: center; /* Centrează textul */
+          display: flex; /* Asigură alinierea centrată */
+          justify-content: center; /* Centrează pe orizontală */
+          align-items: center; /* Centrează pe verticală */
+        }
+      }
+
+      @media (max-width: 500px) {
+        .profile-picture {
+          width: 90% !important; /* Ajustează lățimea imaginii pentru ecrane foarte mici */
+        }
+
+        .name-container {
+          width: 100%; /* Ocupă întreaga lățime */
+          text-align: center; /* Centrează textul */
+        }
+      }
+
+      @media (max-width: 1000px) {
+        .profile-picture {
+          width: 50%; /* Ajustează lățimea imaginii pentru ecrane foarte mici */
+        }
+      }
+
+      .bottom-section {
+        width: 100%;
+        display: flex;
+        justify-content: space-between; // pentru a distribui pe orizontală imaginea și numele
+        align-items: center;
+        flex-wrap: wrap;
+
+        .button-section {
+          width: 50%; /* Ajustează în funcție de nevoile tale */
+          display: flex;
+          flex-direction: column; /* Stivează elementele pe verticală */
+          align-items: center; /* Centrează butoanele orizontal */
+          justify-content: flex-start; /* Alinează butoanele la începutul container-ului pe verticală */
+          padding: 20px;
+        }
+
+        .redirect-button {
+          margin: 25px auto;
+          padding: 12px 24px;
+          color: #fff;
+          font-size: 2rem;
+          border-radius: 8px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          overflow: hidden; // This ensures that any child elements that overflow the button's boundaries are not rendered outside
+          position: relative;
+          border-radius: 100vw;
+          background-color: #3498db;
+          font-family: "Brush Script MT", sans-serif;
+          color: #fafafa;
+          border: solid 1px rgba($color: #2776aa, $alpha: 0.3);
+          overflow: hidden;
+          cursor: pointer;
+          transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); // easeOutQuart
+          mask-image: -webkit-radial-gradient(white, black); // force safari to respect border radius
+        
+          .button-text {
+            position: relative;
+            z-index: 2;
+          }
+        
+          .fill-container {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            padding-bottom: 100%;
+            transform: translateY(-50%) rotate(180deg);
+        
+            // collor filling
+            &::after {
+              content: "";
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              background-color: #2776aa;
+              border-radius: 50%;
+              transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); // easeOutQuart
+              transform: translateY(-100%);
+            }
+          }
+        
+          &:hover {
+            border-color: rgb(105, 138, 247);
+            transform: translateY(-4px);
+        
+            .fill-container {
+              transform: translateY(-50%) rotate(0);
+        
+              &::after {
+                transform: translateY(0);
+              }
+            }
+          }
+        
+          .button-icon {
+            margin-right: 10px; // Ajustează valoarea în funcție de nevoile tale
+            z-index: 2;
+          }
+        }
+
+        .popup-container {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 200; /* Asigură-te că popup-ul este deasupra altor elemente */
+        }
+        .popup {
+          background-color: white;
+          padding: 20px;
+          color: black;
+          border-radius: 5px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+          text-align: center;
+          width: 400px; /* Sau orice altă lățime preferi */
+          display: flex;
+          flex-direction: column;
+        }
+
+        .close-button {
+          align-self: flex-end;
+          margin-top: -15px;
+          margin-right: -20px;
+          padding: 0 10px;
+          font-size: 20px;
+          cursor: pointer;
+          background: none;
+          border: none;
+        }
+
+        .popup-actions {
+          display: flex;
+          justify-content: space-between; /* Așază butoanele la extremitățile containerului */
+          margin-top: 20px;
+          padding: 0 10px; /* Spațiu suplimentar la marginile containerului */
+        }
+
+        .popup-actions button {
+          flex-grow: 1; /* Butoanele să ocupe spațiul disponibil */
+          margin: 0 10px; /* Distanță între butoane și marginea containerului */
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 1em;
+          transition: background-color 0.3s;
+        }
+
+        .cancel-button {
+          background-color: #ccc;
+          color: #000;
+        }
+
+        .delete-button {
+          background-color: rgb(255, 58, 58);
+          color: white;
+          border: solid 1px rgba(255, 0, 0, 0.3);
+        
+          &:hover {
+            background-color: rgb(161, 60, 60); // Adjust the shade of red for the hover state
+            border-color: rgb(161, 60, 60); // Change the border color on hover
+            transform: translateY(-4px);
+        
+            .fill-container {
+              transform: translateY(-50%) rotate(0);
+        
+              &::after {
+                background-color: rgb(161, 60, 60); // Ensure the fill color also changes on hover
+                transform: translateY(0);
+              }
+            }
+          }
+        }
+
+        .cancel-button:hover,
+        .delete-button:hover {
+          filter: brightness(90%);
+        }
+
+        .details-container {
+          width: 50%;
+          margin-top: 15px;
+          display: flex;
+          flex-direction: column;
+          align-items: center; // centrează detaliile pe orizontală
+          color: black;
+
+          .detail {
+            font-size: 18px;
+            margin-bottom: 10px;
+          }
+        }
+
+        @media (max-width: 1000px) {
+          .bottom-section {
+            flex-direction: column; /* Aranjează elementele pe verticală la ecrane mici */
+          }
+
+          .details-container {
+            width: 100%; /* Ocupă întreaga lățime */
+            margin-bottom: 20px; /* Adaugă spațiu sub detalii */
+            order: -1; /* Mută detaliile deasupra butoanelor */
+          }
+
+          .button-section {
+            width: 100%; /* Ocupă întreaga lățime */
+          }
+        }
+      }
+
+      .statistics-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #000;
+        width: 100%;
+        margin-top: 50px;
+        padding: 0 20px;
+      }
+
+      .statistics-row {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        flex-wrap: wrap;
+      }
+
+      .statistic {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 2px solid black;
+        color: #000;
+        padding: 10px;
+        margin: 5px 1px;
+        flex: 1 1 19%; /* Adjusts flexibly on the line */
+        min-width: 150px; /* Prevents overly narrow boxes */ /* Prevents overly narrow boxes */
+        box-sizing: border-box;
+        word-wrap: break-word; /* Prevents text from spilling over the box width */
+      }
+
+      .statistic.full-width {
+        width: 100%; /* Uses the full width for headings and summaries */
+        justify-content: center;
+      }
+
+      .center-text {
+        width: 100%;
+        text-align: center;
+        margin: 10px 0;
+        font-size: 18px; /* Adjustable for different screen sizes */
+        word-wrap: break-word;
+        padding: 0 5px; /* Ensures a small space on the sides to prevent spilling over */
+      }
+
+      .number {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 5px;
+        word-wrap: break-word; /* Prevents text from exceeding width */
+      }
+
+      .label {
+        font-size: 16px;
+        color: #000;
+        text-align: center;
+        word-wrap: break-word; /* Prevents text from exceeding width */
+      }
+
+      /* Media query for screens smaller than or equal to 600px */
+      @media (max-width: 721px) {
+        .statistics-row .statistic {
+          order: 0; /* Reset any previously applied order */
+          flex-basis: 100%; /* Ensures that the width is set to 100% */
+          width: 100%; /* Explicitly set width to 100% to ensure it takes full row */
+        }
+      }
+
+      @media (max-width: 1550px) {
+        .statistic:not(:last-child) {
+          flex: 1 1 33.33%; /* Adjust to ensure the first three stats are equally spaced */
+        }
+
+        .statistic:last-child {
+          order: 4; /* Ensures it comes after the other items */
+          flex: 0 0 100%; /* Takes the full width to move it to a new row */
+        }
+      }
+
+      @media (max-width: 1200px) {
+        .statistics-row .statistic {
+          flex: 1 1 50%; /* Keep the default behavior for the first two statistics */
+        }
+
+        .statistics-row .statistic:nth-child(3),
+        .statistics-row .statistic:nth-child(4) {
+          order: 3; /* Logical order to maintain the flow, might not be needed if visual order is fine */
+          flex: 0 0 100%; /* Make each of these statistics take full width */
+        }
+      }
+
+      @media (max-width: 480px) {
+        .statistic {
+          flex-basis: 100%; /* O singură coloană pe rând pentru telefoane */
+        }
+
+        .center-text,
+        .number,
+        .label {
+          text-align: center;
+          font-size: 12px; /* Încă mai mic pentru vizibilitate pe ecrane foarte mici */
+        }
+      }
+
+      .filters-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        width: 100%;
+        margin-top: 20px;
+      }
+
+      .report-title h2 {
+        text-align: center;
+        color: #000;
+        margin-bottom: 20px;
+      }
+
+      .dropdowns-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center; /* Centrăm dropdown-urile */
+        flex-wrap: wrap; /* Permite dropdown-urilor să treacă pe linia următoare pe ecrane înguste */
+        width: 100%;
+      }
+
+      .filter-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 10px;
+        color: black;
+        flex: 1; /* Permitere fiecărui container să împartă egal spațiul */
+        min-width: 250px; /* Asigură o lățime minimă pentru fiecare dropdown */
+      }
+
+      .left-dropdown {
+        margin-right: 10px;
+        left: 0; /* Adaugă spațiu între dropdown-uri */
+      }
+
+      .right-dropdown {
+        margin-left: 10px; /* Adaugă spațiu între dropdown-uri */
+      }
+
+      .filter-container label {
+        margin-bottom: 5px;
+      }
+
+      .filter-container select {
+        width: 100%;
+        padding: 15px;
+        font-size: 1.2em;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      .redirect-button {
+        margin: 25px auto;
+        padding: 12px 24px;
+        color: #fff;
+        font-size: 2rem;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden; /* This ensures that any child elements that overflow the button's boundaries are not rendered outside */
+        position: relative;
+        border-radius: 100vw;
+        background-color: #3498db;
+        font-family: "Brush Script MT", sans-serif;
+        color: #fafafa;
+        border: solid 1px rgba($color: #2776aa, $alpha: 0.3);
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); // easeOutQuart
+        mask-image: -webkit-radial-gradient(
+          white,
+          black
+        ); // force safari to respect border radius
+
+        .button-text {
+          position: relative;
+          z-index: 2;
+        }
+
+        .fill-container {
+          position: absolute;
+          left: 0;
+          top: 50%;
+          width: 100%;
+          padding-bottom: 100%;
+          transform: translateY(-50%) rotate(180deg);
+
+          // collor filling
+          &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #2776aa;
+            border-radius: 50%;
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); // easeOutQuart
+            transform: translateY(-100%);
+          }
+        }
+
+        &:hover {
+          border-color: blue;
+          transform: translateY(-4px);
+
+          .fill-container {
+            transform: translateY(-50%) rotate(0);
+
+            &::after {
+              transform: translateY(0);
+            }
+          }
+        }
+        .button-icon {
+          margin-right: 10px; /* Ajustează valoarea în funcție de nevoile tale */
+        }
+      }
+
+      .no-reports-message {
+        text-align: center;
+        font-size: 1.5em;
+        color: #555;
+        margin-top: 20px;
+      }
+
+      .report-container {
+        background: #fff;
+        color: #000;
+        font-family: "Brush Script MT", sans-serif;
+        border: 1px solid #3498db;
+        border-radius: 4px;
+        width: 90%;
+        padding: 20px;
+        margin: 40px auto; // Centrarea pe orizontală a container-ului
+
+        .heading {
+          width: 100%;
+          display: flex;
+          justify-content: space-between; /* Așează conținutul la extremitățile containerului */
+          align-items: center; /* Alinează elementele pe centru vertical */
+
+          .name-title {
+            font-size: 1.5rem;
+            width: auto;
+            color: black;
+            margin: 0;
+            text-align: left; /* Adaugă o bordură dreaptă */
+          }
+
+          .date-reported {
+            width: auto;
+            font-size: 1.8rem;
+            display: flex;
+            padding-left: 10px;
+            border-left: 1px solid black;
+            justify-content: flex-end; /* Alinează data la dreapta */
+            align-items: center; /* Alinează elementele pe centru vertical */
+            margin: 0;
+            color: black;
+          }
+        }
+
+        .current-status {
+          display: flex;
+          align-items: center; /* Centrează iconița și textul pe verticală */
+          margin-top: 5px;
+          font-size: 10px;
+          text-align: left;
+        }
+
+        .current-status fa-icon {
+          margin-right: 5px;
+          display: flex; /* Asigură-te că iconița este un element flex */
+          align-items: center; /* Centrează iconița pe verticală */
+        }
+
+        .current-status p {
+          margin: 0; /* Elimină marginile implicite ale paragrafului */
+          display: flex; /* Asigură-te că textul este un element flex */
+          align-items: center; /* Centrează textul pe verticală */
+        }
+
+        .status-new {
+          color: #3498db;
+        }
+
+        .status-in-progress {
+          color: orange;
+        }
+
+        .status-resolved {
+          color: green;
+        }
+
+        .button-status button {
+          background-color: #2776aa;
+          padding: 10px;
+          margin-top: 10px;
+          font-size: 15px;
+        }
+
+        /* Stiluri pentru label */
+        label {
+          display: block; /* Afișează label pe toată lățimea container-ului său, sub forma unui bloc */
+          font-size: 16px; /* Dimensiunea fontului pentru etichetă */
+          margin: 8px; /* Spațiu dedesubt pentru a separa de elementul de formular */
+          color: #333; /* Culoare întunecată pentru o bună lizibilitate */
+          font-weight: 600; /* Font puțin mai bold pentru a evidenția eticheta */
+        }
+
+        /* Stiluri pentru select */
+        select {
+          width: 50%; /* Ocupă toată lățimea container-ului său */
+          padding: 8px 10px; /* Padding pentru a face selectul mai ușor de utilizat */
+          border: 1px solid #ccc; /* Bordură subtilă pentru a defini clar elementul */
+          border-radius: 4px; /* Borduri rotunjite pentru un aspect modern */
+          background-color: #fff; /* Fundal alb pentru claritate */
+          box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Umbra internă pentru a adăuga adâncime */
+          font-size: 14px; /* Dimensiunea fontului în select */
+          color: #333; /* Culoare text întunecată pentru a contrasta cu fundalul */
+          -webkit-appearance: none; /* Elimină stilul nativ în Chrome și Safari */
+          -moz-appearance: none; /* Elimină stilul nativ în Firefox */
+          appearance: none; /* Standard pentru a elimina stilul nativ */
+          cursor: pointer; /* Cursor de tip pointer pentru a indica faptul că elementul este interactiv */
+        }
+
+        /* Stilizare pentru focus pe select */
+        select:focus {
+          border-color: #0056b3; /* Schimbă culoarea bordurii când este focusat */
+          box-shadow: 0 0 5px rgba(0, 86, 179, 0.5); /* Umbra externă pentru a evidenția focusul */
+          outline: none; /* Elimină outline-ul implicit */
+        }
+
+        .report-title {
+          font-size: 1.5rem; /* Micsorează fontul */
+          width: 100%;
+          color: black; /* Ocupă doar 70% din lățimea containerului său */
+          margin: 0;
+          margin-top: 15px;
+        }
+
+        .description,
+        .location-description {
+          color: #0c0c0c;
+          margin-top: 10px;
+          text-align: left;
+        }
+
+        .image-container {
+          border: 1px solid #3498db;
+          margin-top: 20px;
+          margin-left: auto;
+          margin-right: auto;
+          position: relative; /* Așează butoanele de navigare în raport cu container-ul */
+          width: auto; /* Orice lățime dorești sau 'auto' dacă preferi */
+          height: 400px; /* Setează înălțimea la ce dorești */
+          overflow: hidden; /* Ascunde părțile imaginii care depășesc dimensiunea container-ului */
+        }
+
+        .slide {
+          display: flex;
+          transition: transform 0.5s ease;
+          width: 100%;
+          height: 100%;
+        }
+
+        .image {
+          min-width: 100%; /* Fiecare imagine va avea lățimea container-ului */
+          background-size: cover;
+          background-position: center;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        /* Stiluri pentru butoane */
+        button.prev,
+        button.next {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          background-color: #fff;
+          color: #3498db;
+          border: none;
+          cursor: pointer;
+          z-index: 20;
+        }
+
+        button.prev {
+          left: 10px; /* Așează butonul prev la 10px de marginea stângă */
+        }
+
+        button.next {
+          right: 10px; /* Așează butonul next la 10px de marginea dreaptă */
+        }
+
+        button {
+          font-size: 1.8em;
+          background: none;
+          border-radius: 50px;
+          border: 0px #ccc;
+          opacity: 0.7;
+          padding: 3px 7px;
+          cursor: pointer;
+          z-index: 11;
+        }
+      }
+    }
+  }
+
+  .waves {
+    position: relative;
+    width: 100%;
+    height: 20vh;
+    margin-bottom: -7px;
+    min-height: 150px;
+    max-height: 250px;
+
+    .content {
+      position: relative;
+      height: 20vh;
+      text-align: center;
+      background-color: white;
+    }
+
+    .parallax > use {
+      animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+    }
+    .parallax > use:nth-child(1) {
+      animation-delay: -2s;
+      animation-duration: 7s;
+    }
+    .parallax > use:nth-child(2) {
+      animation-delay: -3s;
+      animation-duration: 10s;
+    }
+    .parallax > use:nth-child(3) {
+      animation-delay: -4s;
+      animation-duration: 13s;
+    }
+    .parallax > use:nth-child(4) {
+      animation-delay: -5s;
+      animation-duration: 20s;
+    }
+
+    @keyframes move-forever {
+      0% {
+        transform: translate3d(-90px, 0, 0);
+      }
+      100% {
+        transform: translate3d(85px, 0, 0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .waves {
+        height: 50px;
+        min-height: 50px;
+      }
+      .content {
+        height: 30vh;
+      }
+      h1 {
+        font-size: 24px;
+      }
+    }
+  }
+}
+
+@media (max-width: 599px) {
+  .report-container {
+    width: 99%; /* Lățime mai mare pentru ecrane mici */
+    padding: 10px;
+    font-size: 0.8rem; /* Font mai mic pentru ecrane mici */
+  }
+
+  .heading .name-title {
+    font-size: 0.9rem; /* Font mai mic pentru ecrane mici */
+    width: 50%;
+  }
+
+  .report-title,
+  .description,
+  .location-description {
+    font-size: 0.9rem; /* Font mai mic pentru ecrane mici */
+  }
+
+  .heading .date-reported {
+    font-size: 0.4rem;
+    width: auto;
+  }
+
+  .image-container {
+    height: 150px !important; /* Înălțime mai mică pentru imagini pe ecrane mici */
+  }
+
+  .date-reported {
+    font-size: 0.8rem !important;
+    padding-left: 1px !important;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 899px) {
+  .report-container {
+    width: 95%; /* Lățime mai mare pentru tablete */
+    padding: 15px;
+    font-size: 1rem; /* Font mai mare decât pe telefoane */
+  }
+
+  .heading .name-title,
+  .heading .date-reported {
+    font-size: 1.1rem; /* Font ajustat pentru tablete */
+  }
+
+  .report-title,
+  .description,
+  .location-description {
+    font-size: 1rem; /* Font ajustat pentru tablete */
+  }
+
+  .image-container {
+    height: 250px !important; /* Înălțime ajustată pentru imagini pe tablete */
+  }
+
+  .date-reported {
+    font-size: 1rem !important;
+    padding-left: 3px !important;
+  } 
+}
+
+@media (min-width: 900px) and (max-width: 1199px) {
+  .report-container {
+    width: 90%; /* Lățime mai mare pentru laptopuri mici */
+    padding: 20px;
+  }
+
+  .heading .name-title,
+  .heading .date-reported {
+    font-size: 1.3rem; /* Font mai mare pentru laptopuri mici */
+  }
+
+  .report-title,
+  .description,
+  .location-description {
+    font-size: 1.2rem; /* Font ajustat pentru laptopuri mici */
+  }
+
+  .image-container {
+    height: 400px !important; /* Înălțime ajustată pentru imagini pe laptopuri mici */
+  }
+  .date-reported {
+    font-size: 1.2rem !important;
+    padding-left: 5px !important;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1599px) {
+  .report-container {
+    width: 85%; /* Lățime stabilă pentru ecrane mari */
+    padding: 20px;
+  }
+
+  .heading .name-title,
+  .heading .date-reported {
+    font-size: 1.5rem; /* Font mai mare pentru ecrane mari */
+  }
+
+  .report-title,
+  .description,
+  .location-description {
+    font-size: 1.5rem; /* Font mai mare pentru ecrane mari */
+  }
+
+  .image-container {
+    height: 500px ; /* Înălțime standard pentru imagini pe ecrane mari */
+  }
+
+  .date-reported {
+    font-size: 1.3rem !important;
+    padding-left: 7px !important;
+  }
+}
+
+@media (min-width: 1600px) {
+  .report-container {
+    width: 80%; /* Menținem lățimea la 50% pentru a evita un aspect întins */
+    padding: 30px; /* Padding mai generos pentru un aspect mai aerisit */
+    font-size: 1.6rem; /* Font mărit pentru o citire ușoară pe ecrane mari */
+  }
+
+  .heading .name-title,
+  .heading .date-reported {
+    font-size: 1.8rem; /* Font mărit pentru titluri pe ecrane mari */
+  }
+
+  .report-title,
+  .description,
+  .location-description {
+    font-size: 1.6rem; /* Font ajustat pentru detalii și descrieri pe ecrane mari */
+  }
+
+  .image-container {
+    height: 600px; /* Înălțime mai mare pentru imagini, pentru a profita de spațiul disponibil */
+  }
+
+  .image {
+    width: 100%; /* Lățime completă pentru o vizualizare optimă a imaginilor */
+  }
+
+  button {
+    font-size: 2em; /* Mărire butoane pentru accesibilitate îmbunătățită */
+    padding: 15px 30px; /* Padding mai generos pentru un aspect proporțional */
+  }
+  .date-reported {
+    font-size: 1.5rem !important;
+    padding-left: 8px !important;
+  }
+}

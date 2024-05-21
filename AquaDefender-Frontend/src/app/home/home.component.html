@@ -1,0 +1,359 @@
+<app-loading *ngIf="isLoading"></app-loading>
+
+<app-navbar *ngIf="!isLoading"></app-navbar>
+
+<div class="alert-container">
+  <div *ngFor="let successMessage of alertSuccessMessages; let j = index">
+    <app-alert-success
+      [message]="successMessage"
+      (close)="removeSuccessAlert(j)"
+    ></app-alert-success>
+  </div>
+
+  <div *ngFor="let infoMessage of alertInfoMessages; let k = index">
+    <app-alert-info
+      [message]="infoMessage"
+      (close)="removeInfoAlert(k)"
+    ></app-alert-info>
+  </div>
+
+  <div *ngFor="let warningMessage of alertWarningMessages; let l = index">
+    <app-alert-warning
+      [message]="warningMessage"
+      (close)="removeWarningAlert(l)"
+    ></app-alert-warning>
+  </div>
+
+  <div *ngFor="let errorMessage of alertErrorMessages; let i = index">
+    <app-alert-error
+      [message]="errorMessage"
+      (close)="removeAlert(i)"
+    ></app-alert-error>
+  </div>
+</div>
+
+<div class="landscape" *ngIf="!isLoading">
+  <div class="mountain"></div>
+  <div class="mountain mountain-2"></div>
+  <div class="mountain mountain-3"></div>
+  <div class="sun-container sun-container-1"></div>
+  <div class="sun-container">
+    <div class="sun"></div>
+  </div>
+  <div class="cloud"></div>
+  <div class="cloud cloud-1"></div>
+  <div class="sun-container sun-container-reflection">
+    <div class="sun"></div>
+  </div>
+  <div class="light"></div>
+  <div class="light light-1"></div>
+  <div class="light light-2"></div>
+  <div class="light light-3"></div>
+  <div class="light light-4"></div>
+  <div class="light light-5"></div>
+  <div class="light light-6"></div>
+  <div class="light light-7"></div>
+  <div class="water"></div>
+  <div class="site-title" *ngIf="!isLoading">
+    Misiunea noastră de aparare a ecosistemelor acvatice și garantarea apei pure
+    pentru viitoarele generații
+  </div>
+  <div class="splash"></div>
+  <div class="splash delay-1"></div>
+  <div class="splash delay-2"></div>
+  <div class="splash splash-4 delay-2"></div>
+  <div class="splash splash-4 delay-3"></div>
+  <div class="splash splash-4 delay-4"></div>
+  <div class="splash splash-stone delay-3"></div>
+  <div class="splash splash-stone splash-4"></div>
+  <div class="splash splash-stone splash-5"></div>
+  <div class="lotus lotus-1"></div>
+  <div class="lotus lotus-2"></div>
+  <div class="lotus lotus-3"></div>
+  <div class="front">
+    <div class="stone"></div>
+    <div class="grass"></div>
+    <div class="grass grass-1"></div>
+    <div class="grass grass-2"></div>
+    <div class="reed"></div>
+    <div class="reed reed-1"></div>
+  </div>
+</div>
+
+<div class="header" *ngIf="!isLoading">
+  <div class="paragraph-left-photo" *ngIf="!isLoading">
+    <div class="spread">
+      <div class="spread__left first"></div>
+      <div class="spread__right">
+        <div class="title">Ce reprezintă Aqua Defender?</div>
+        <div class="content">
+          <div class="ro" lang="ro">
+            <h2>
+              Protejează și monitorizează resursele de apă din comunitatea ta
+            </h2>
+            <p>
+              Într-o lume în care problemele legate de calitatea apei devin tot
+              mai frecvente, Aqua Defender oferă o soluție tehnologică avansată
+              care permite cetățenilor să participe activ la protejarea
+              resurselor de apă. Aplicația este un instrument esențial care
+              facilitează raportarea rapidă a oricărui incident legat de apă, de
+              la poluare până la defecțiuni ale infrastructurii hidrologice.
+              Aceste rapoarte sunt trimise direct instituțiilor competente, cum
+              ar fi primăriile sau departamentele pentru apă și salubritate,
+              garantând o intervenție promptă și eficientă în rezolvarea
+              problemelor. Pe lângă funcția de raportare, Aqua Defender le oferă
+              utilizatorilor posibilitatea de a consulta în timp real date
+              despre calitatea apei potabile din localitatea lor. Informațiile
+              sunt actualizate periodic și acoperă o varietate de indicatori
+              esențiali pentru sănătate, cum ar fi nivelurile de pH, prezența
+              clorului și a altor substanțe periculoase. Astfel, fiecare
+              cetățean poate fi sigur că familia sa are acces la apă sigură și
+              de calitate superioară.
+            </p>
+          </div>
+
+          <div class="ro" lang="ro">
+            <h2>
+              Transformă fiecare cetățean într-un agent activ pentru protecția
+              apei
+            </h2>
+            <p>
+              Aqua Defender este mai mult decât o aplicație - este o mișcare
+              comunitară dedicată protejării resurselor de apă. Prin facilități
+              intuitive, aplicația încurajează implicarea directă a
+              utilizatorilor în detectarea și raportarea oricăror probleme
+              legate de apă, fie că este vorba de contaminare accidentală sau de
+              deteriorarea infrastructurii. Această implicare civică directă
+              ajută autoritățile să răspundă în mod eficient și rapid,
+              minimizând impactul negativ asupra mediului și sănătății publice.
+              Utilizatorii Aqua Defender au la dispoziție un dashboard
+              interactiv unde pot vizualiza rapoarte detaliate despre starea
+              apei în comunitatea lor, inclusiv analize actualizate despre
+              calitatea apei potabile. Informațiile sunt prezentate într-un
+              format ușor de înțeles, ceea ce permite fiecărui utilizator să
+              înțeleagă riscurile și să ia măsuri preventive acolo unde este
+              necesar. Aceste funcționalități transformă Aqua Defender într-un
+              instrument esențial pentru oricine dorește să contribuie la un
+              mediu mai curat și mai sigur pentru toți.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="paragraph-right-photo" *ngIf="!isLoading">
+    <div class="spread">
+      <div class="spread__left">
+        <div class="title">Cum pot vedea valorile apei potabile?</div>
+        <div class="content">
+          <div class="ro" lang="ro">
+            <h2>
+              Accesează datele despre calitatea apei din confortul casei tale
+            </h2>
+            <p>
+              Este vital să avem cunoștințe despre calitatea apei pe care o
+              consumăm zilnic. Aqua Defender îți pune la dispoziție o metodă
+              accesibilă și eficientă de a verifica compoziția apei potabile
+              direct din aplicație. Află valorile parametrilor esențiali cum ar
+              fi pH-ul, duritatea, sau conținutul de minerale și asigură-te că
+              apa ta respectă standardele de siguranță. Fie că locuiești la oraș
+              sau la țară, informațiile despre apă sunt actualizate constant,
+              astfel încât să ai mereu date fiabile la îndemână.
+            </p>
+          </div>
+          <div class="ro" lang="ro">
+            <h2>Menține-te informat și protejează sănătatea celor dragi</h2>
+            <p>
+              Prin Aqua Defender, ești doar la un pas de a deveni un membru
+              activ în supravegherea calității resursei vitale care este apa.
+              Aplicația te ajută să monitorizezi nu doar prezența substanțelor
+              periculoase, dar și eficiența tratamentelor de purificare aplicate
+              în zona ta. Utilizând Aqua Defender, contribui la un efort comun
+              pentru o viață sănătoasă și un mediu nepoluat, sporind calitatea
+              vieții în comunitatea ta și peste tot în lume.
+            </p>
+          </div>
+        </div>
+        <button
+          class="redirect-button"
+          *ngIf="!isLoading"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLinkActive="active"
+          [routerLink]="['/water-values', getUserId(), 'info']"
+        >
+          <span class="button-text"
+            >Vezi valorile apei potabile din localitatea ta</span
+          >
+          <div class="fill-container"></div>
+        </button>
+      </div>
+      <div class="spread__right"></div>
+    </div>
+  </div>
+
+  <div class="paragraph-left-photo" *ngIf="!isLoading">
+    <div class="spread">
+      <div class="spread__left second"></div>
+      <div class="spread__right">
+        <div class="title">Cum și de ce să realizezi un raport eficient?</div>
+        <div class="content">
+          <div class="ro" lang="ro">
+            <h2>Implicarea ta - Un val de schimbare pentru apele curate</h2>
+            <p>
+              O apă curată este coloana vertebrală a unui ecosistem sănătos și a
+              unei comunități prospere. Prin inițierea unui raport în Aqua
+              Defender, contribui la păstrarea echilibrului natural și la
+              sănătatea concetățenilor tăi. Fiecare sesizare pe care ne-o
+              transmiți ne permite să reacționăm prompt la contaminări sau alte
+              incidente hidrologice, împiedicând potențialele repercusiuni
+              negative asupra mediului și asigurând că măsurile de curățare sunt
+              aplicate eficient și responsabil. Un gest mic pentru tine, un
+              impact imens pentru toți. Mai jos sunt căteva exemple de rapoarte
+              cu statusul: nou, in progres și finalizat.
+            </p>
+          </div>
+          <div class="ro" lang="ro">
+            <h2>
+              Raportarea inteligentă - Navigând împreună spre ape mai sigure
+            </h2>
+            <p>
+              A utiliza Aqua Defender pentru a raporta un incident este un
+              proces gândit să fie cât mai accesibil și de ajutor. Interfața
+              noastră prietenoasă cu utilizatorul te ghidează pas cu pas în
+              marcare precisă a locației incidentului direct pe hartă, cu
+              coordonatele geografice preluându-se automat. Câmpurile de titlu
+              și descriere te îndeamnă să oferi detalii clare și concise, iar
+              opțiunea de a încărca fotografii sprijină un răspuns informat și
+              adecvat din partea autorităților. Prin selectarea județului,
+              localității și adăugarea detaliilor locației, ne ajuți să
+              localizăm rapid și să evaluăm severitatea situației. Ești, astfel,
+              un element crucial în lanțul de răspuns rapid și eficient la
+              situațiile de urgență ecologică.
+            </p>
+          </div>
+        </div>
+
+        <button
+          class="redirect-button"
+          *ngIf="!isLoading"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLinkActive="active"
+          routerLink="/report-a-problem"
+        >
+          <span class="button-text">Raportează o problemă chiar acum</span>
+          <div class="fill-container"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- report-list.component.html -->
+  <div *ngIf="!isLoading">
+    <div *ngFor="let report of reports" class="report-container">
+      <div class="heading">
+        <p class="name-title">
+          {{ report.isAnonymous ? "Un utilizator anonim" : report.username }} a
+          adăugat un nou raport
+        </p>
+        <!-- Adăugat clasa report-title la p -->
+        <p class="date-reported">
+          {{ report.reportDate | date : "dd.MM.yyyy" }}
+        </p>
+      </div>
+
+      <div class="current-status" [ngClass]="getStatusClass(report.statusText)">
+        <ng-container [ngSwitch]="report.statusText">
+          <fa-icon
+            *ngSwitchCase="'Nou'"
+            [icon]="iconService.faHourglassStart"
+          ></fa-icon>
+          <fa-icon
+            *ngSwitchCase="'În Progres'"
+            [icon]="iconService.faHourglassHalf"
+          ></fa-icon>
+          <fa-icon
+            *ngSwitchCase="'Rezolvat'"
+            [icon]="iconService.faCheckCircle"
+          ></fa-icon>
+          <fa-icon *ngSwitchDefault [icon]="iconService.faInfo"></fa-icon>
+        </ng-container>
+        <p>{{ report.statusText }}</p>
+      </div>
+      <p class="report-title">{{ report.title }}</p>
+      <p class="description">{{ report.description }}</p>
+      <p class="location-description">
+        Problema a fost raportată în județul {{ report.county }}, comuna
+        {{ report.city }}, la coordonatele:
+        {{ report.latitude | customNumberCoordonate }} latitudine si
+        {{ report.longitude | customNumberCoordonate }} longitudine.
+      </p>
+      <p class="location-description">
+        Detaliile locatiei: {{ report.locationDetails }}
+      </p>
+      <div class="location-description">
+        Acest raport are un grad de severitate {{ report.severityText }}.
+      </div>
+      <div class="image-container" *ngIf="report.imageUrls.length > 0">
+        <!-- Container pentru slide-uri -->
+        <div
+          class="slide"
+          [ngStyle]="{
+            transform: 'translateX(-' + report.currentIndex * 100 + '%)'
+          }"
+        >
+          <!-- Slide-uri -->
+          <div
+            class="image"
+            *ngFor="let image of report.imageUrls; let i = index"
+            [style.background-image]="'url(' + image + ')'"
+            [attr.data-index]="i"
+          ></div>
+        </div>
+        <!-- Butoanele pentru navigarea între imagini -->
+        <button class="prev" (click)="prevImage(report)">&#8249;</button>
+        <button class="next" (click)="nextImage(report)">&#8250;</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <svg
+      class="waves"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 24 150 28"
+      preserveAspectRatio="none"
+      shape-rendering="auto"
+    >
+      <defs>
+        <path
+          id="gentle-wave"
+          d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+        />
+      </defs>
+      <g class="parallax">
+        <use
+          xlink:href="#gentle-wave"
+          x="48"
+          y="0"
+          fill="rgba(255,255,255,0.7)"
+        />
+        <use
+          xlink:href="#gentle-wave"
+          x="48"
+          y="3"
+          fill="rgba(255,255,255,0.5)"
+        />
+        <use
+          xlink:href="#gentle-wave"
+          x="48"
+          y="5"
+          fill="rgba(255,255,255,0.3)"
+        />
+        <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+      </g>
+    </svg>
+  </div>
+  <app-footer *ngIf="!isLoading"></app-footer>
+</div>

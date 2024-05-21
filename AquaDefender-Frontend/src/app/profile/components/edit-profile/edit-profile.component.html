@@ -1,0 +1,152 @@
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div class="header" *ngIf="!isLoading">
+  <app-navbar *ngIf="!isLoading"></app-navbar>
+
+  <div class="inner-header flex" *ngIf="!isLoading">
+    <div class="back-container">
+      <h1 class="form-title">Editare Profil</h1>
+      <p class="form-instructions">
+        Puteți actualiza oricare dintre câmpurile de mai jos. Nu este necesar să completați toate câmpurile pentru a salva modificările. Alegeți doar informațiile pe care doriți să le schimbați.
+      </p>
+      <form id="profileForm" (ngSubmit)="updateProfile()" #profileForm="ngForm">
+        <div class="form-group">
+          <label for="profileImage">Imaginea de profil:</label>
+          <input
+            type="file"
+            id="profileImage"
+            name="profileImage"
+            accept="image/*"
+            (change)="handleProfileImageUpload($event)"
+          />
+          <div *ngIf="profileImagePreview" class="profile-image-preview">
+            <img [src]="profileImagePreview" alt="Profile Image Preview" />
+            <button
+              type="button"
+              class="remove-profile-image-btn"
+              (click)="removeProfileImage()"
+            >
+              Elimina imaginea de profil
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="name">Nume:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            [(ngModel)]="user.userName"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="birthdate">Data nașterii:</label>
+          <input
+            type="date"
+            id="birthdate"
+            name="birthdate"
+            [(ngModel)]="user.birthDate"
+            [min]="minDate"
+            [max]="maxDate"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Număr de telefon:</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            [(ngModel)]="user.phoneNumber"
+            pattern="[0-9]{10}"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="county">Judet:</label>
+          <select
+            id="county"
+            name="county"
+            [(ngModel)]="countyName"
+            (change)="onCountyChange()"
+            required
+          >
+            <option value="" disabled selected>Selecteaza un judet</option>
+            <option *ngFor="let county of counties" [value]="county.id">
+              {{ county.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="city">Localitate:</label>
+          <select
+            id="city"
+            name="city"
+            [(ngModel)]="cityName"
+            required
+            [disabled]="cities.length === 0"
+          >
+            <option value="" disabled selected>Selecteaza o localitate</option>
+            <option *ngFor="let city of cities" [value]="city.id">
+              {{ city.name }}
+            </option>
+          </select>
+        </div>
+        <button class="button" type="submit">
+          <fa-icon
+            [icon]="iconService.faUserEdit"
+            class="button-icon"
+          ></fa-icon>
+          <span class="button-text">Actualizează Profilul</span>
+          <div class="fill-container"></div>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <svg
+      class="waves"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 24 150 28"
+      preserveAspectRatio="none"
+      shape-rendering="auto"
+    >
+      <defs>
+        <path
+          id="gentle-wave"
+          d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+        />
+      </defs>
+      <g class="parallax">
+        <use
+          xlink:href="#gentle-wave"
+          x="48"
+          y="0"
+          fill="rgba(255,255,255,0.7)"
+        />
+        <use
+          xlink:href="#gentle-wave"
+          x="48"
+          y="3"
+          fill="rgba(255,255,255,0.5)"
+        />
+        <use
+          xlink:href="#gentle-wave"
+          x="48"
+          y="5"
+          fill="rgba(255,255,255,0.3)"
+        />
+        <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+      </g>
+    </svg>
+  </div>
+  <app-footer *ngIf="!isLoading"></app-footer>
+</div>

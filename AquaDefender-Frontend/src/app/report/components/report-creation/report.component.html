@@ -1,0 +1,431 @@
+<head>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+</head>
+
+<div class="header">
+  <app-navbar *ngIf="!isLoading"></app-navbar>
+
+  <div class="alert-container">
+    <div *ngFor="let errorMessage of alertErrorMessages; let i = index">
+      <app-alert-error
+        [message]="errorMessage"
+        (close)="removeAlert(i)"
+      ></app-alert-error>
+    </div>
+
+    <div *ngFor="let successMessage of alertSuccessMessages; let j = index">
+      <app-alert-success
+        [message]="successMessage"
+        (close)="removeSuccessAlert(j)"
+      ></app-alert-success>
+    </div>
+
+    <div *ngFor="let infoMessage of alertInfoMessages; let k = index">
+      <app-alert-info
+        [message]="infoMessage"
+        (close)="removeInfoAlert(k)"
+      ></app-alert-info>
+    </div>
+
+    <div *ngFor="let warningMessage of alertWarningMessages; let l = index">
+      <app-alert-warning
+        [message]="warningMessage"
+        (close)="removeWarningAlert(l)"
+      ></app-alert-warning>
+    </div>
+  </div>
+
+  <div class="inner-header flex" *ngIf="!isLoading">
+    <div class="header-wrapper" *ngIf="!isLoading">
+      <div class="header-content">
+        <h1 class="title">Sesizează o problema apărută</h1>
+        <h2 class="subtitle">
+          Aceasta este pagina prin care utilizatorii pot raporta probleme legate
+          de apă.
+          <br />Ajută comunitatea adăugând un raport și contribuind la
+          monitorizarea calității apei.
+        </h2>
+      </div>
+    </div>
+
+    <div class="help-button-container" *ngIf="!isLoading && isNotUser()">
+      <button class="help-button" type="button" (click)="toggleInstructions()">
+        <i class="fa fa-question-circle" aria-hidden="true"
+          ><fa-icon [icon]="iconService.faHelp"></fa-icon
+        ></i>
+        Ajutor
+      </button>
+    </div>
+    <div *ngIf="showInstructions && !isLoading && isNotUser()" class="instructions">
+      <h3>Instrucțiuni pentru folosirea paginii</h3>
+      <p>
+        Pentru a adăuga un nou raport:
+        <br />
+        1. Titlu: Introduceți un titlu descriptiv al raportului. Titlul este obligatoriu și nu poate depăși 120 de caractere.
+        <br />
+        2. Descriere: Detaliați incidentul și specificați problema întâmpinată. Descrierea este obligatorie și nu poate depăși 400 de caractere.
+        <br />
+        3. Latitudine și Longitudine: Apăsați pe hartă în locul în care ați întâmpinat problema pentru a adăuga coordonatele exacte (latitudinea și longitudinea). Aceste câmpuri se vor completa automat.
+        <br />
+        4. Județ și Localitate: Selectați județul și localitatea în care ați întâmpinat problema.
+        <br />
+        5. Detalii locație: Descrieți locația cât mai detaliat pentru a ajuta autoritățile să găsească problema. Detalierea locației este obligatorie și nu poate depăși 400 de caractere.
+        <br />
+        6. Gradul de severitate: Alegeți gradul de severitate în funcție de cât de gravă este problema:
+        <br />
+        - Minor
+        <br />
+        - Moderat
+        <br />
+        - Serios
+        <br />
+        - Sever
+        <br />
+        - Critic
+        <br />
+        7. Adăugați poze: Adăugați poze relevante pentru a ajuta autoritățile să gestioneze problema mai eficient.
+        <br />
+        8. Postare anonimă: Bifați opțiunea "Doresc ca postarea să rămână anonimă" dacă nu doriți ca numele dumneavoastră să apară public.
+        <br />
+        Te rugăm să tratezi cu seriozitate acest raport și să încarci doar probleme legate de apa potabilă.
+        <br />
+        După ce ai completat toate câmpurile necesare, apasă butonul "Trimite raportul" pentru a trimite raportul.
+        <br />
+        Mulțumim pentru contribuția ta la îmbunătățirea calității apei potabile în comunitatea ta!
+      </p>
+    </div>
+    
+
+    <div id="map"></div>
+
+    <div class="report-form" *ngIf="!isAuthenticated()">
+      <p class="title">
+        Fiecare raport contează! Contribuind cu informații precise și
+        actualizate, ajutați comunitatea să identifice și să răspundă prompt la
+        problemele de mediu. <br />
+        Autentificați-vă acum pentru a împărtăși observațiile dumneavoastră și a
+        face o diferență semnificativă!
+      </p>
+      <div class="button">
+        <button type="button" routerLinkActive="active" routerLink="/login">
+          <span class="button-text">Autentificare</span>
+          <div class="fill-container"></div>
+        </button>
+      </div>
+    </div>
+    <form
+      *ngIf="!isLoading && isAuthenticated()"
+      class="reportForm"
+      #reportForm="ngForm"
+      (ngSubmit)="createReport(reportForm)"
+      autocomplete="off"
+      novalidate
+    >
+      <div class="form-group">
+        <label for="title"
+          >Titlu
+          <span class="input-count"
+            >{{ report.title.length || 0 }}/120</span
+          ></label
+        >
+        <input
+          type="text"
+          id="title"
+          class="title"
+          name="title"
+          [(ngModel)]="report.title"
+          #titleField="ngModel"
+          placeholder="Introduceți titlul raportului"
+          required
+          maxlength="120"
+        />
+        <div
+          *ngIf="titleField.errors && (titleField.dirty || titleField.touched)"
+          class="error-message"
+        >
+          <span *ngIf="titleField.errors['required']"
+            >Titlul este obligatoriu.</span
+          >
+          <span *ngIf="titleField.errors['maxlength']"
+            >Titlul nu poate depăși 120 de caractere.</span
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description"
+          >Descriere<span class="input-count"
+            >{{ report.description.length || 0 }}/400</span
+          ></label
+        >
+        <textarea
+          id="description"
+          name="description"
+          [(ngModel)]="report.description"
+          #descriptionField="ngModel"
+          rows="4"
+          placeholder="Detaliați incidentul"
+          required
+          maxlength="400"
+        ></textarea>
+        <div
+          *ngIf="
+            descriptionField.errors &&
+            (descriptionField.dirty || descriptionField.touched)
+          "
+          class="error-message"
+        >
+          <span *ngIf="descriptionField.errors['required']"
+            >Descrierea este obligatorie.</span
+          >
+          <span *ngIf="descriptionField.errors['maxlength']"
+            >Descrierea nu poate depăși 400 de caractere.</span
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="latitude">Latitudine</label>
+        <input
+          type="text"
+          id="latitude"
+          class="form-control"
+          name="latitude"
+          [(ngModel)]="report.latitude"
+          #latitudeField="ngModel"
+          readonly
+        />
+        <!-- Error message for latitude, shown only if the model is empty -->
+        <div *ngIf="!report.latitude" class="instruction-message">
+          <span
+            >Va rugam sa apasati pe harta in locul in care ati intampinat
+            problema pentru a adauga latitudinea</span
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="longitude">Longitudine</label>
+        <input
+          type="text"
+          id="longitude"
+          class="form-control"
+          name="longitude"
+          [(ngModel)]="report.longitude"
+          #longitudeField="ngModel"
+          readonly
+        />
+        <!-- Error message for longitude, shown only if the model is empty -->
+        <div *ngIf="!report.longitude" class="instruction-message">
+          <span
+            >Va rugam sa apasati pe harta in locul in care ati intampinat
+            problema pentru a adauga longitudinea</span
+          >
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="county">Județ</label>
+        <select
+          id="county"
+          name="county"
+          [(ngModel)]="report.county"
+          #countyField="ngModel"
+          (change)="onCountyChange()"
+          required
+        >
+          <option value="" disabled selected>Selectează un județ</option>
+          <option *ngFor="let county of counties" [value]="county.id">
+            {{ county.name }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            countyField.errors && (countyField.dirty || countyField.touched)
+          "
+          class="error-message"
+        >
+          <span *ngIf="countyField.errors['required']"
+            >Selectarea unui județ este obligatorie.</span
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="county">Localitate</label>
+        <select
+          id="city"
+          name="city"
+          [(ngModel)]="report.city"
+          #cityField="ngModel"
+          required
+        >
+          <option value="" disabled selected>Selectează o localitate</option>
+          <option *ngFor="let city of cities" [value]="city.id">
+            {{ city.name }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            countyField.errors && (countyField.dirty || countyField.touched)
+          "
+          class="error-message"
+        >
+          <span *ngIf="countyField.errors['required']"
+            >Selectarea unui județ este obligatorie.</span
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="locationDetails">
+          Detalii locație<span class="input-count"
+            >{{ report.locationDetails.length || 0 }}/400</span
+          >
+        </label>
+        <textarea
+          id="locationDetails"
+          name="locationDetails"
+          [(ngModel)]="report.locationDetails"
+          #locationDetailsField="ngModel"
+          rows="4"
+          placeholder="Descrieți locația detaliat"
+          maxlength="400"
+          required
+        ></textarea>
+        <div
+          *ngIf="
+            locationDetailsField.errors &&
+            (locationDetailsField.dirty || locationDetailsField.touched)
+          "
+          class="error-message"
+        >
+          <span *ngIf="locationDetailsField.errors['required']"
+            >Detalierea locației este obligatorie.</span
+          >
+          <span *ngIf="locationDetailsField.errors['maxlength']"
+            >Detalierea nu poate depăși 400 de caractere.</span
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="severity">Gradul de severitate</label>
+        <select
+          id="severity"
+          name="severity"
+          [(ngModel)]="report.severity"
+          #severityField="ngModel"
+          required
+        >
+          <option value="-1" disabled selected>
+            Selectează un grad de severitate:
+          </option>
+          <option value="0">Minor</option>
+          <option value="1">Moderat</option>
+          <option value="2">Serios</option>
+          <option value="3">Sever</option>
+          <option value="4">Critic</option>
+        </select>
+        <div
+          *ngIf="
+            severityField.errors &&
+            (severityField.dirty || severityField.touched)
+          "
+          class="error-message"
+        >
+          <span *ngIf="severityField.errors['required']">
+            Selectarea gradului de severitate este obligatorie.
+          </span>
+        </div>
+      </div>
+
+      <label for="poze">Adaugă poze</label>
+      <div class="file-input-container">
+        <input
+          type="file"
+          id="poze"
+          name="poze[]"
+          accept="image/*"
+          (change)="handleImageUpload($event)"
+          multiple
+        />
+        <div
+          *ngFor="let preview of imagePreviews; let i = index"
+          class="image-preview"
+        >
+          <img [src]="preview" alt="Image Preview" />
+          <button
+            type="button"
+            class="remove-image-btn"
+            (click)="removeImage(i)"
+          >
+            Elimina imaginea
+          </button>
+        </div>
+      </div>
+
+      <label class="label-checkbox">
+        <input
+          type="checkbox"
+          id="anonymous"
+          name="anonymous"
+          [(ngModel)]="report.isAnonymous"
+        />
+        <span class="checkmark"></span>
+        Doresc ca postarea să rămână anonimă
+      </label>
+
+      <div class="button">
+        <button type="submit" [disabled]="!reportForm.form.valid">
+          <span class="button-text">Trimite raportul</span>
+          <div class="fill-container"></div>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <svg
+      class="waves"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 24 150 28"
+      preserveAspectRatio="none"
+      shape-rendering="auto"
+    >
+      <defs>
+        <path
+          id="gentle-wave"
+          d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+        />
+      </defs>
+      <g class="parallax">
+        <use
+          xlink:href="#gentle-wave"
+          x="48"
+          y="0"
+          fill="rgba(255,255,255,0.7)"
+        />
+        <use
+          xlink:href="#gentle-wave"
+          x="48"
+          y="3"
+          fill="rgba(255,255,255,0.5)"
+        />
+        <use
+          xlink:href="#gentle-wave"
+          x="48"
+          y="5"
+          fill="rgba(255,255,255,0.3)"
+        />
+        <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+      </g>
+    </svg>
+  </div>
+  <app-footer *ngIf="!isLoading"></app-footer>
+</div>

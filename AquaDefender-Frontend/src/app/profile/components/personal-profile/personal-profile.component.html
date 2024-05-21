@@ -1,0 +1,244 @@
+<app-loading *ngIf="isLoading"></app-loading>
+<div class="header" *ngIf="!isLoading">
+  <app-navbar *ngIf="!isLoading"></app-navbar>
+
+  <div class="inner-header flex" *ngIf="!isLoading">
+    <div class="back-container">
+      <div class="top-section">
+        <div class="profile-picture"></div>
+        <div class="name-container">{{ user.userName }}</div>
+      </div>
+
+      <div class="bottom-section">
+        <div class="button-section">
+          <button
+            class="redirect-button"
+            [routerLinkActiveOptions]="{ exact: true }"
+            routerLinkActive="active"
+            [routerLink]="['/edit-profile', getUserId()]"
+          >
+            <fa-icon [icon]="iconService.faEdit" class="button-icon"></fa-icon>
+            <span class="button-text"> Modificare Profil</span>
+            <div class="fill-container"></div>
+          </button>
+          <button
+            class="redirect-button"
+            [routerLinkActiveOptions]="{ exact: true }"
+            routerLinkActive="active"
+            [routerLink]="['/change-password', getUserId()]"
+          >
+            <fa-icon [icon]="iconService.faKey" class="button-icon"></fa-icon>
+            <span class="button-text">Modificare Parolă</span>
+            <div class="fill-container"></div>
+          </button>
+          <button class="redirect-button delete-button" (click)="openDeleteConfirmation()">
+            <fa-icon [icon]="iconService.faTrash" class="button-icon"></fa-icon>
+            <span class="button-text">Ștergere Profil</span>
+            <div class="fill-container"></div>
+          </button>
+        </div>
+        
+
+        <div class="popup-container" *ngIf="showDeleteConfirmation">
+          <div class="popup">
+            <button class="close-button" (click)="closePopup()">X</button>
+            <p>Ești sigur că vrei să ștergi profilul?</p>
+            <div class="popup-actions">
+              <button class="cancel-button" (click)="closePopup()">
+                Anulează
+              </button>
+              <button class="delete-button" (click)="confirmDelete()">
+                Șterge
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="details-container">
+          <div class="detail">Email: {{ user.email }}</div>
+          <div class="detail">
+            Vârstă:
+            {{
+              calculateAge(user.birthDate) >= 120 || calculateAge(user.birthDate) < 5
+                ? "nespecificat"
+                : calculateAge(user.birthDate)
+            }}
+          </div>
+
+          <div class="detail">Nr. Telefon: {{ user.phoneNumber }}</div>
+          <div class="detail">Județ: {{ countyName }}</div>
+          <div class="detail">Localitate: {{ cityName }}</div>
+          <div class="detail">
+            Data Înregistrare: {{ user.registrationDate | date : "dd-MM-yyyy" }}
+          </div>
+        </div>
+      </div>
+      <!-- ... alte elemente ale template-ului tău ... -->
+
+      <div class="statistics-container" *ngIf="!isLoading">
+        <div class="statistics-row" *ngIf="!isLoading">
+          <div class="statistic full-width">
+            <div class="number">{{ stats.totalReports }}</div>
+            <div class="label">Numărul rapoartelor mele</div>
+          </div>
+          <div class="statistic full-width">
+            <div class="number">{{ stats.newReports }}</div>
+            <div class="label">Numărul rapoartelor noi</div>
+          </div>
+          <div class="statistic full-width">
+            <div class="number">{{ stats.casesInProgress }}</div>
+            <div class="label">Numărul cazurilor în rezolvare</div>
+          </div>
+          <div class="statistic full-width">
+            <div class="number">{{ stats.resolvedReports }}</div>
+            <div class="label">Numărul rapoartelor rezolvate</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dropdown pentru statusul raportului -->
+      <div class="filters-section" *ngIf="!isLoading">
+        <div class="report-title">
+          <h2>RAPOARTELE MELE</h2>
+        </div>
+        <div class="dropdowns-container">
+          <div class="filter-container left-dropdown">
+            <label for="severity">Selectează gradul de severitate:</label>
+            <select [(ngModel)]="selectedSeverity">
+              <option
+                *ngFor="let option of severityOptionsUI"
+                [value]="option.value"
+              >
+                {{ option.display }}
+              </option>
+            </select>
+          </div>
+          <div class="filter-container">
+            <label for="status">Selectează statusul raportului:</label>
+            <select [(ngModel)]="selectedStatus">
+              <option
+                *ngFor="let option of statusOptionsUI"
+                [value]="option.value"
+              >
+                {{ option.display }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <button class="redirect-button" (click)="applyFilters()">
+          <span class="button-text">Aplică Filtrele</span>
+          <div class="fill-container"></div>
+        </button>
+      </div>
+
+      <div *ngIf="!isLoading">
+        <div *ngFor="let report of reports" class="report-container">
+          <div class="heading">
+            <p class="name-title">
+              {{ report.username }} a adăugat un nou raport
+            </p>
+            <!-- Adăugat clasa report-title la p -->
+            <p class="date-reported">
+              {{ report.reportDate | date : "dd.MM.yyyy" }}
+            </p>
+          </div>
+
+          <div
+            class="current-status"
+            [ngClass]="getStatusClass(report.statusText)"
+          >
+            <ng-container [ngSwitch]="report.statusText">
+              <fa-icon
+                *ngSwitchCase="'Nou'"
+                [icon]="iconService.faHourglassStart"
+              ></fa-icon>
+              <fa-icon
+                *ngSwitchCase="'În Progres'"
+                [icon]="iconService.faHourglassHalf"
+              ></fa-icon>
+              <fa-icon
+                *ngSwitchCase="'Rezolvat'"
+                [icon]="iconService.faCheckCircle"
+              ></fa-icon>
+              <fa-icon *ngSwitchDefault [icon]="iconService.faInfo"></fa-icon>
+            </ng-container>
+            <p>{{ report.statusText }}</p>
+          </div>
+          <p class="report-title">{{ report.title }}</p>
+          <p class="description">{{ report.description }}</p>
+          <p class="location-description">
+            Problema a fost raportată în județul {{ report.county }}, comuna
+            {{ report.city }}, la coordonatele:
+            {{ report.latitude | customNumberCoordonate }} latitudine si
+            {{ report.longitude | customNumberCoordonate }} longitudine.
+          </p>
+          <p class="location-description">
+            Detaliile locatiei: {{ report.locationDetails }}
+          </p>
+          <div class="location-description">
+            Acest raport are un grad de severitate {{ report.severityText }}.
+          </div>
+          <div class="image-container" *ngIf="report.imageUrls.length > 0">
+            <!-- Container pentru slide-uri -->
+            <div
+              class="slide"
+              [ngStyle]="{
+                transform: 'translateX(-' + report.currentIndex * 100 + '%)'
+              }"
+            >
+              <!-- Slide-uri -->
+              <div
+                class="image"
+                *ngFor="let image of report.imageUrls; let i = index"
+                [style.background-image]="'url(' + image + ')'"
+                [attr.data-index]="i"
+              ></div>
+            </div>
+            <!-- Butoanele pentru navigarea între imagini -->
+            <button class="prev" (click)="prevImage(report)">&#8249;</button>
+            <button class="next" (click)="nextImage(report)">&#8250;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <svg
+      class="waves"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 24 150 28"
+      preserveAspectRatio="none"
+      shape-rendering="auto"
+    >
+      <defs>
+        <path
+          id="gentle-wave"
+          d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+        />
+      </defs>
+      <g class="parallax">
+        <use
+          xlink:href="#gentle-wave"
+          x="48"
+          y="0"
+          fill="rgba(255,255,255,0.7)"
+        />
+        <use
+          xlink:href="#gentle-wave"
+          x="48"
+          y="3"
+          fill="rgba(255,255,255,0.5)"
+        />
+        <use
+          xlink:href="#gentle-wave"
+          x="48"
+          y="5"
+          fill="rgba(255,255,255,0.3)"
+        />
+        <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+      </g>
+    </svg>
+  </div>
+  <app-footer *ngIf="!isLoading"></app-footer>
+</div>

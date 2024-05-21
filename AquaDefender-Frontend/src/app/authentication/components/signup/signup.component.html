@@ -1,0 +1,169 @@
+<app-home style="opacity: 0.2" (click)="onOutsideClick()"></app-home>
+
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div class="alert-container">
+  <div *ngFor="let errorMessage of alertErrorMessages; let i = index">
+    <app-alert-error
+      [message]="errorMessage"
+      (close)="removeAlert(i)"
+    ></app-alert-error>
+  </div>
+
+  <div *ngFor="let successMessage of alertSuccessMessages; let j = index">
+    <app-alert-success
+      [message]="successMessage"
+      (close)="removeSuccessAlert(j)"
+    ></app-alert-success>
+  </div>
+
+  <div *ngFor="let warningMessage of alertWarningMessages; let l = index">
+    <app-alert-warning
+      [message]="warningMessage"
+      (close)="removeWarningAlert(l)"
+    ></app-alert-warning>
+  </div>
+</div>
+
+<div class="signup-container" *ngIf="!isLoading">
+  <div class="signup-box">
+    <button class="close-button" (click)="closeForm()">
+    <fa-icon [icon]="iconService.faClose"></fa-icon>
+    </button>
+    <h1>Înregistrare</h1>
+    <form #signupForm="ngForm" (ngSubmit)="signup()" autocomplete="off">
+      <div class="form-group">
+        <label for="fullname">Numele complet:</label>
+        <input
+          type="text"
+          id="fullname"
+          name="fullname"
+          [(ngModel)]="username"
+          #usernameField="ngModel"
+          placeholder="Ion Popescu"
+          required>
+        <div *ngIf="usernameField.errors && (usernameField.dirty || usernameField.touched)" class="error-message">
+          <span *ngIf="usernameField.errors['required']">Numele complet este obligatoriu.</span>
+        </div>
+      </div>
+    
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="email"
+          #emailField="ngModel"
+          placeholder="ion.popescu@exemplu.com"
+          required
+          email>
+        <div *ngIf="emailField.errors && (emailField.dirty || emailField.touched)" class="error-message">
+          <span *ngIf="emailField.errors['required']">Emailul este obligatoriu.</span>
+          <span *ngIf="emailField.errors['email']"> Introduceți un email valid, de forma "exemplu&commat;exemplu.com"</span>
+        </div>
+      </div>
+    
+      <div class="form-group">
+        <label for="phone">Număr de telefon:</label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          [(ngModel)]="phone"
+          #phoneField="ngModel"
+          placeholder="0712345678"
+          pattern="^07[0-9]{8}$"
+          required>
+        <div *ngIf="phoneField.errors && (phoneField.dirty || phoneField.touched)" class="error-message">
+          <span *ngIf="phoneField.errors['required']">Numărul de telefon este obligatoriu.</span>
+          <span *ngIf="phoneField.errors['pattern']">Numărul de telefon trebuie să înceapă cu 07 și să aibă în total 10 cifre, conform formatului României.</span>
+        </div>
+    </div>
+    
+    
+      <div class="form-group">
+        <label for="county">Județ:</label>
+        <select
+          id="county"
+          name="county"
+          [(ngModel)]="county"
+          #countyField="ngModel"
+          (change)="onCountyChange()"
+          required>
+          <option value="" disabled selected>Selecteaza un județ</option>
+          <option *ngFor="let county of counties" [value]="county.id">
+            {{ county.name }}
+          </option>
+        </select>
+        <div *ngIf="countyField.errors && (countyField.touched || countyField.dirty)" class="error-message">
+          <span *ngIf="countyField.errors['required']">Selectarea unui județ este obligatorie.</span>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="city">Localitate:</label>
+        <select
+          id="city"
+          name="city"
+          [(ngModel)]="city"
+          #cityField="ngModel"
+          required
+          [disabled]="cities.length === 0">
+          <option value="" disabled selected>Selecteaza o localitate</option>
+          <option *ngFor="let city of cities" [value]="city.id">
+            {{ city.name }}
+          </option>
+        </select>
+        <div *ngIf="cityField.errors && (cityField.touched || cityField.dirty)" class="error-message">
+          <span *ngIf="cityField.errors['required']">Selectarea unei localități este obligatorie.</span>
+        </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="password">Parola:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        [(ngModel)]="password"
+        #passwordField="ngModel"
+        placeholder="Creeaza o parola sigura"
+        required
+        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,}"
+        >
+      <div *ngIf="passwordField.errors && (passwordField.dirty || passwordField.touched)" class="error-message">
+        <span *ngIf="passwordField.errors['required']">Parola este obligatorie.</span>
+        <span *ngIf="passwordField.errors['pattern']">Parola trebuie să conțină minim 8 caractere, inclusiv o literă mare, o literă mică, un număr și un simbol.</span>
+      </div>
+  </div>
+  
+  <div class="form-group">
+      <label for="confirm-password">Confirmă Parola:</label>
+      <input
+        type="password"
+        id="confirm-password"
+        name="confirm-password"
+        [(ngModel)]="confirmPassword"
+        #confirmPasswordField="ngModel"
+        placeholder="Reintrodu parola"
+        required
+        [class.is-invalid]="confirmPasswordField.touched || !passwordsMatch()">
+      <div *ngIf="confirmPasswordField.errors && (confirmPasswordField.dirty || confirmPasswordField.touched)" class="error-message">
+        <span *ngIf="confirmPasswordField.errors['required']">Confirmarea parolei este obligatorie.</span>
+        <span *ngIf="!passwordsMatch()">Parolele nu se potrivesc.</span>
+      </div>
+      <div *ngIf="confirmPasswordField.dirty || confirmPasswordField.touched" class="error-message">
+        <span *ngIf="!passwordsMatch()">Parolele nu se potrivesc.</span>
+      </div>
+  </div>
+  
+      <button type="submit" class="redirect-button" [disabled]="!signupForm.valid">Înregistrare</button>
+    </form>
+    
+    <p class="login-link">
+      Ai deja un cont?
+      <a routerLinkActive="active" routerLink="/login">Autentificare </a>
+    </p>
+  </div>
+</div>

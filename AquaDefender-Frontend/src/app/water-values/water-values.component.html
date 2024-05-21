@@ -1,0 +1,355 @@
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div class="header" *ngIf="!isLoading">
+  <app-navbar *ngIf="!isLoading"></app-navbar>
+
+  <div class="alert-container" *ngIf="!isLoading">
+    <div *ngFor="let errorMessage of alertErrorMessages; let i = index">
+      <app-alert-error
+        [message]="errorMessage"
+        (close)="removeAlert(i)"
+      ></app-alert-error>
+    </div>
+
+    <div *ngFor="let successMessage of alertSuccessMessages; let j = index">
+      <app-alert-success
+        [message]="successMessage"
+        (close)="removeSuccessAlert(j)"
+      ></app-alert-success>
+    </div>
+
+    <div *ngFor="let infoMessage of alertInfoMessages; let k = index">
+      <app-alert-info
+        [message]="infoMessage"
+        (close)="removeInfoAlert(k)"
+      ></app-alert-info>
+    </div>
+
+    <div *ngFor="let warningMessage of alertWarningMessages; let l = index">
+      <app-alert-warning
+        [message]="warningMessage"
+        (close)="removeWarningAlert(l)"
+      ></app-alert-warning>
+    </div>
+  </div>
+  <div class="header-wrapper" *ngIf="!isLoading">
+    <div class="header-content">
+      <h1 class="title">Pagina de Valori ale Apei Potabile din Comuna Ta</h1>
+      <h2 class="subtitle">
+        Aici poți verifica valorile apei potabile raportate în comuna ta.
+        <br />În partea stângă, găsești tabelul cu valorile normale recomandate
+        ale apei potabile, iar în partea dreaptă sunt afișate valorile curente
+        din localitatea dorită, raportate la data selectată.
+      </h2>
+    </div>
+  </div>
+
+  <div class="help-button-container" *ngIf="!isLoading && isNotUser()">
+    <button class="help-button" type="button" (click)="toggleInstructions()">
+      <i class="fa fa-question-circle" aria-hidden="true"
+        ><fa-icon [icon]="iconService.faHelp"></fa-icon
+      ></i>
+      Ajutor
+    </button>
+  </div>
+  <div
+    *ngIf="showInstructions && !isLoading && isNotUser()"
+    class="instructions"
+  >
+    <h3>Instrucțiuni pentru folosirea paginii</h3>
+    <p>
+      Pentru a selecta un raport de apă potabilă, alege județul, localitatea și
+      data dorită. Dacă dorești să adaugi un nou raport, apasă butonul "Adaugă
+      un nou raport de apă potabilă".
+      <br />
+      Va apărea un formular în care trebuie să introduci valorile pentru fiecare
+      parametru. La sfârșitul paginii, vei găsi o secțiune pentru alte mențiuni,
+      unde poți adăuga note suplimentare.
+      <br />
+      Dacă vrei să activezi o dată specifică, apasă butonul "Activează Data".
+      Atenție: acest lucru va opri procesul de adăugare și toate progresele vor
+      fi șterse.
+      <br />
+      De asemenea, reține că se poate adăuga un singur raport pe zi.
+      <br />
+      În partea stângă a paginii, găsești tabelul cu valorile normale
+      recomandate ale apei potabile. În partea dreaptă, sunt afișate valorile
+      curente din localitatea selectată, raportate la data aleasă.
+      <br />
+      Dacă dorești să modifici un raport existent, selectează raportul din lista
+      de rapoarte disponibile. După ce ai făcut modificările necesare, nu uita
+      să salvezi datele apăsând butonul "Salvează Datele".
+      <br />
+      Dacă vrei să ștergi un raport, apasă butonul "Șterge Raportul" și confirmă
+      ștergerea în fereastra popup care apare.
+    </p>
+  </div>
+
+  <div class="inner-header flex" *ngIf="!isLoading">
+    <div
+      class="buttons-container"
+      *ngIf="!isLoading && isAuthenticated() && isNotUser()"
+    >
+      <button type="button" *ngIf="isAdding" (click)="activateDate()">
+        <fa-icon [icon]="iconService.calendarCheck"></fa-icon>
+        <span class="button-text">Activeaza Data</span>
+        <div class="fill-container"></div>
+      </button>
+      <button type="button" (click)="addReport()">
+        <fa-icon [icon]="iconService.fileMedical"></fa-icon>
+        <span class="button-text">Adaugă un nou raport de apă potabilă</span>
+        <div class="fill-container"></div>
+      </button>
+      <button type="button" *ngIf="isReportFetched" (click)="modifyReport()">
+        <fa-icon [icon]="iconService.faEdit"></fa-icon>
+        <span class="button-text">Modifică acest raport</span>
+        <div class="fill-container"></div>
+      </button>
+      <button
+        type="button"
+        *ngIf="isReportFetched"
+        (click)="deleteWaterInfoAndValues()"
+      >
+        <fa-icon [icon]="iconService.faTrash"></fa-icon>
+        <span class="button-text">Șterge acest raport</span>
+        <div class="fill-container"></div>
+      </button>
+    </div>
+
+    <div class="left-table" [class.adding-margin]="isAdding" *ngIf="!isLoading">
+      <p class="left-title">Parametrii normali ale apei potabile</p>
+      <div class="table-wrapper">
+        <table class="fl-table">
+          <thead>
+            <tr>
+              <th>Parametru</th>
+              <th>Valoare maximă admisă</th>
+              <th>Unitate de măsură</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of tableData">
+              <td>{{ row.param }}</td>
+              <td>{{ row.value }}</td>
+              <td>{{ row.unit }}</td>
+            </tr>
+          </tbody>
+
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="right-table" *ngIf="!isAuthenticated()">
+      <p class="left-title">
+        Află chiar acum valorile apei potabile din comuna ta
+      </p>
+      <div class="redirectToLogin">
+        <button type="button" routerLinkActive="active" routerLink="/login">
+          <span class="button-text">Autentificare</span>
+          <div class="fill-container"></div>
+        </button>
+      </div>
+    </div>
+
+    <div class="right-table" *ngIf="!isLoading && isAuthenticated()">
+      <p class="right-title">
+        Parametrii apei potabile în județul
+        <select
+          id="county"
+          name="county"
+          [(ngModel)]="waterInfo.county"
+          (change)="onCountyChange()"
+          required
+        >
+          <option value="" disabled selected>Selectează un județ</option>
+          <option *ngFor="let county of counties" [value]="county.id">
+            {{ county.name }}
+          </option>
+        </select>
+        localitatea
+        <select
+          id="city"
+          name="city"
+          [(ngModel)]="waterInfo.city"
+          required
+          (change)="onCityChange()"
+          [disabled]="cities.length === 0"
+        >
+          <option value="" disabled selected>Selectează o localitate</option>
+          <option *ngFor="let city of cities" [value]="city.id">
+            {{ city.name }}
+          </option></select
+        ><br />
+        <span *ngIf="!isAdding">din data de: </span>
+        <select
+          *ngIf="!isAdding"
+          id="reportDate"
+          name="reportDate"
+          [(ngModel)]="waterInfo.dateReported"
+          required
+          (change)="onDateChange()"
+          [disabled]="reportDates.length === 0"
+        >
+          <option value="" disabled selected>Selectează un raport</option>
+          <option *ngFor="let date of reportDates" [value]="date">
+            {{ formatDate(date) }}
+          </option>
+        </select>
+      </p>
+
+      <div class="table-wrapper">
+        <table class="fl-table">
+          <thead>
+            <tr>
+              <th>Parametru</th>
+              <th>Valoare maximă admisă</th>
+              <th>Unitate de măsură</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of tableData">
+              <td>{{ row.param }}</td>
+              <td>
+                <div *ngIf="editMode; else showUserProvidedValue">
+                  <input
+                    type="text"
+                    [(ngModel)]="row.userProvidedValue"
+                    placeholder="Adăugați o valoare pentru {{ row.param }}"
+                  />
+                </div>
+                <ng-template #showUserProvidedValue>
+                  {{ row.userProvidedValue || "N/A" }}
+                </ng-template>
+              </td>
+              <td>{{ row.unit }}</td>
+            </tr>
+          </tbody>
+
+          <tbody></tbody>
+        </table>
+        <div *ngIf="editMode; else showNotes">
+          <div class="textarea-container">
+            <textarea
+              id="additionalNotes"
+              [(ngModel)]="waterInfo.additionalNotes"
+              placeholder="Introduceți note suplimentare aici..."
+              rows="4"
+            ></textarea>
+          </div>
+        </div>
+        <!-- Afișarea notelor doar dacă există -->
+        <ng-template #showNotes>
+          <div *ngIf="waterInfo.additionalNotes" class="notes-container">
+            <p>{{ waterInfo.additionalNotes }}</p>
+          </div>
+        </ng-template>
+      </div>
+      <div
+        class="buttons-container"
+        *ngIf="!isLoading && isAuthenticated() && isNotUser()"
+      >
+        <button
+          type="button"
+          *ngIf="isNotUser() && isAdding"
+          (click)="saveWaterInfoAndValues()"
+        >
+          <fa-icon [icon]="iconService.faSave"></fa-icon>
+          <span class="button-text">Salvează acest raport</span>
+          <div class="fill-container"></div>
+        </button>
+        <button
+          type="button"
+          *ngIf="isNotUser() && isUpdating"
+          (click)="modifyWaterValues()"
+        >
+          <fa-icon [icon]="iconService.faEdit"></fa-icon>
+          <span class="button-text">Modifică acest raport</span>
+          <div class="fill-container"></div>
+        </button>
+      </div>
+      <div class="popup-container" *ngIf="showDeleteConfirmation">
+        <div class="popup">
+          <button class="close-button" (click)="closePopup()">
+            <fa-icon [icon]="iconService.faClose"></fa-icon>
+          </button>
+          <p>
+            Ești sigur că vrei să ștergi raportul din data de
+            {{ formatDate(waterInfo.dateReported) }}?
+          </p>
+          <div class="popup-actions">
+            <button class="cancel-button" (click)="closePopup()">
+              <fa-icon [icon]="iconService.faTimes"></fa-icon> Anulează
+            </button>
+            <button
+              class="delete-button"
+              routerLink="/water-values"
+              (click)="confirmDelete()"
+            >
+              <fa-icon [icon]="iconService.faTrash"></fa-icon> Șterge
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="popup-container" *ngIf="showDate">
+        <div class="popup">
+          <button class="close-button" (click)="closePopup()">
+            <fa-icon [icon]="iconService.faClose"></fa-icon>
+          </button>
+          <p>
+            Ești sigur că vrei să activezi apariția datei? Acest lucru va șterge
+            progresele făcute până acum.
+          </p>
+          <div class="popup-actions">
+            <button class="cancel-button" (click)="closePopup()">
+              <fa-icon [icon]="iconService.faTimes"></fa-icon> Anulează
+            </button>
+            <button class="confirm-button" (click)="confirmShowDate()">
+              <fa-icon [icon]="iconService.faSuccess"></fa-icon> Activează Data
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <svg
+      class="waves"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 24 150 28"
+      preserveAspectRatio="none"
+      shape-rendering="auto"
+    >
+      <defs>
+        <path
+          id="gentle-wave"
+          d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+        />
+      </defs>
+      <g class="parallax">
+        <use
+          xlink:href="#gentle-wave"
+          x="48"
+          y="0"
+          fill="rgba(255,255,255,0.7)"
+        />
+        <use
+          xlink:href="#gentle-wave"
+          x="48"
+          y="3"
+          fill="rgba(255,255,255,0.5)"
+        />
+        <use
+          xlink:href="#gentle-wave"
+          x="48"
+          y="5"
+          fill="rgba(255,255,255,0.3)"
+        />
+        <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+      </g>
+    </svg>
+  </div>
+  <app-footer *ngIf="!isLoading"></app-footer>
+</div>

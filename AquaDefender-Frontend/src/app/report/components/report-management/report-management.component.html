@@ -1,0 +1,282 @@
+<app-loading *ngIf="isLoading"></app-loading>
+
+<app-navbar *ngIf="!isLoading"></app-navbar>
+
+<div class="header">
+
+
+  <div class="inner-header flex" *ngIf="!isLoading">
+    <div class="back-container">
+      <div class="report-management-header">
+        <h1>
+          Centralizarea și Managementul Rapoartelor Locale din {{ cityName }}
+        </h1>
+      </div>
+
+      <div class="statistics-container" *ngIf="!isLoading">
+        <!-- Rândul 1 -->
+        <div class="statistics-row">
+          <div class="statistic full-width">
+            <div class="number">{{ stats.totalReports }}</div>
+            <div class="label">Numărul total de rapoarte</div>
+          </div>
+        </div>
+
+        <!-- Titlu pentru Rândul 2 -->
+        <p class="center-text">Statusul Rapoartelor</p>
+        <!-- Rândul 2 -->
+        <div class="statistics-row">
+          <div class="statistic full-width">
+            <div class="number">{{ stats.newReports }}</div>
+            <div class="label">Numărul rapoartelor noi</div>
+          </div>
+          <div class="statistic full-width">
+            <div class="number">{{ stats.casesInProgress }}</div>
+            <div class="label">Numărul cazurilor în rezolvare</div>
+          </div>
+          <div class="statistic full-width">
+            <div class="number">{{ stats.resolvedReports }}</div>
+            <div class="label">Numărul rapoartelor rezolvate</div>
+          </div>
+        </div>
+
+        <!-- Titlu pentru Rândul 3 -->
+        <p class="center-text">Severitatea Rapoartelor</p>
+        <!-- Rândul 3 -->
+        <div class="statistics-row">
+          <div class="statistic full-width">
+            <div class="number">{{ stats.veryLowSeverity }}</div>
+            <div class="label">Minor</div>
+          </div>
+          <div class="statistic full-width">
+            <div class="number">{{ stats.lowSeverity }}</div>
+            <div class="label">Mediu</div>
+          </div>
+          <div class="statistic full-width">
+            <div class="number">{{ stats.mediumSeverity }}</div>
+            <div class="label">Serios</div>
+          </div>
+          <div class="statistic full-width">
+            <div class="number">{{ stats.highSeverity }}</div>
+            <div class="label">Sever</div>
+          </div>
+          <div class="statistic full-width">
+            <div class="number">{{ stats.veryHighSeverity }}</div>
+            <div class="label">Critic</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="filters-section" *ngIf="!isAuthenticated()">
+        <p class="title">
+          Apa este vitală pentru comunitatea noastră. Autentificați-vă acum
+          pentru a accesa rapoartele despre calitatea apei în localitatea
+          dumneavoastră. Prin observațiile și contribuțiile dumneavoastră,
+          puteți ajuta la rezolvarea problemelor de mediu. Împreună, putem
+          asigura un viitor mai curat și sănătos. Autentificați-vă și faceți
+          diferența!
+        </p>
+
+        <div class="button">
+          <button type="button" routerLinkActive="active" routerLink="/login">
+            <span class="button-text">Autentificare</span>
+            <div class="fill-container"></div>
+          </button>
+        </div>
+      </div>
+
+      <div class="filters-section" *ngIf="!isLoading && isAuthenticated()">
+        <div class="report-title">
+          <h2>RAPOARTE</h2>
+        </div>
+        <div class="dropdowns-container">
+          <div class="filter-container">
+            <label for="status">Selectează statusul raportului:</label>
+            <select [(ngModel)]="selectedStatus">
+              <option
+                *ngFor="let option of statusOptionsUI"
+                [value]="option.value"
+              >
+                {{ option.display }}
+              </option>
+            </select>
+          </div>
+          <div class="filter-container">
+            <label for="severity">Selectează gradul de severitate:</label>
+            <select [(ngModel)]="selectedSeverity">
+              <option
+                *ngFor="let option of severityOptionsUI"
+                [value]="option.value"
+              >
+                {{ option.display }}
+              </option>
+            </select>
+          </div>
+          <div class="filter-container">
+            <label for="startDate">Data început:</label>
+            <input
+              type="date"
+              [(ngModel)]="selectedStartDate"
+              max="{{ today | date : 'yyyy-MM-dd' }}"
+            />
+          </div>
+          <div class="filter-container">
+            <label for="endDate">Data sfârșit:</label>
+            <input
+              type="date"
+              [(ngModel)]="selectedEndDate"
+              max="{{ today | date : 'yyyy-MM-dd' }}"
+            />
+          </div>
+          <div class="filter-container">
+            <label for="userNameSearch">Nume utilizator:</label>
+            <input
+              type="text"
+              [(ngModel)]="userNameSearch"
+              placeholder="Introduceți numele"
+            />
+          </div>
+        </div>
+        <div class="button button-status">
+          <button type="button" (click)="applyFilters()">
+            <span class="button-text">Aplica filtrele</span>
+            <div class="fill-container"></div>
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading">
+        <div
+          *ngIf="filtersApplied && reports.length === 0"
+          class="no-reports-message"
+        >
+          Nu au fost găsite rapoarte.
+        </div>
+
+        <div *ngIf="!isLoading">
+          <div *ngFor="let report of reports" class="report-container">
+            <div class="heading">
+              <p class="name-title">
+                {{ report.username }} a adăugat un nou raport
+              </p>
+              <!-- Adăugat clasa report-title la p -->
+              <p class="date-reported">
+                {{ report.reportDate | date : "dd.MM.yyyy" }}
+              </p>
+            </div>
+
+            <div
+              class="current-status"
+              [ngClass]="getStatusClass(report.statusText)"
+            >
+              <ng-container [ngSwitch]="report.statusText">
+                <fa-icon
+                  *ngSwitchCase="'Nou'"
+                  [icon]="iconService.faHourglassStart"
+                ></fa-icon>
+                <fa-icon
+                  *ngSwitchCase="'În Progres'"
+                  [icon]="iconService.faHourglassHalf"
+                ></fa-icon>
+                <fa-icon
+                  *ngSwitchCase="'Rezolvat'"
+                  [icon]="iconService.faCheckCircle"
+                ></fa-icon>
+                <fa-icon *ngSwitchDefault [icon]="iconService.faInfo"></fa-icon>
+              </ng-container>
+              <p>{{ report.statusText }}</p>
+            </div>
+            <p class="report-title">{{ report.title }}</p>
+            <p class="description">{{ report.description }}</p>
+            <p class="location-description">
+              Problema a fost raportată în județul {{ report.county }}, comuna
+              {{ report.city }}, la coordonatele:
+              {{ report.latitude | customNumberCoordonate }} latitudine si
+              {{ report.longitude | customNumberCoordonate }} longitudine.
+            </p>
+            <p class="location-description">
+              Detaliile locatiei: {{ report.locationDetails }}
+            </p>
+            <div class="image-container" *ngIf="report.imageUrls.length > 0">
+              <!-- Container pentru slide-uri -->
+              <div
+                class="slide"
+                [ngStyle]="{
+                  transform: 'translateX(-' + report.currentIndex * 100 + '%)'
+                }"
+              >
+                <!-- Slide-uri -->
+                <div
+                  class="image"
+                  *ngFor="let image of report.imageUrls; let i = index"
+                  [style.background-image]="'url(' + image + ')'"
+                  [attr.data-index]="i"
+                ></div>
+              </div>
+              <!-- Butoanele pentru navigarea între imagini -->
+              <button class="prev" (click)="prevImage(report)">&#8249;</button>
+              <button class="next" (click)="nextImage(report)">&#8250;</button>
+            </div>
+            <div *ngIf="report && isNotUser()">
+              <label for="status"
+                >Selectează statusul raportului, daca a fost facut vreun
+                progres:</label
+              >
+              <select id="status" [(ngModel)]="report.status">
+                <option [ngValue]="0">Nou</option>
+                <option [ngValue]="1">În Progres</option>
+                <option [ngValue]="2">Rezolvat</option>
+              </select>
+            </div>
+            <div class="button-status" *ngIf="report.status !== null && isNotUser()">
+              <button type="button" (click)="updateStatus(report)">
+                <span class="button-text">Modifică statusul</span>
+                <div class="fill-container"></div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <svg
+        class="waves"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 24 150 28"
+        preserveAspectRatio="none"
+        shape-rendering="auto"
+      >
+        <defs>
+          <path
+            id="gentle-wave"
+            d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+          />
+        </defs>
+        <g class="parallax">
+          <use
+            xlink:href="#gentle-wave"
+            x="48"
+            y="0"
+            fill="rgba(255,255,255,0.7)"
+          />
+          <use
+            xlink:href="#gentle-wave"
+            x="48"
+            y="3"
+            fill="rgba(255,255,255,0.5)"
+          />
+          <use
+            xlink:href="#gentle-wave"
+            x="48"
+            y="5"
+            fill="rgba(255,255,255,0.3)"
+          />
+          <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+        </g>
+      </svg>
+    </div>
+    <app-footer *ngIf="!isLoading"></app-footer>
+  </div>
+</div>

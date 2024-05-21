@@ -1,0 +1,472 @@
+.header {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Brush Script MT", sans-serif;
+  position: relative;
+  text-align: center;
+  background: linear-gradient(
+    60deg,
+    rgba(84, 58, 183, 1) 0%,
+    rgba(0, 172, 193, 1) 100%
+  );
+  color: white;
+
+  .alert-container {
+    position: fixed; /* Sau 'absolute' dacă nu vrei să fie poziționat relativ la viewport */
+    top: 120px; /* Ajustează conform nevoilor */
+    right: 20px; /* Împinge containerul mai spre dreapta */
+    z-index: 1050; /* Asigură-te că alerta apare deasupra altor elemente */
+    max-width: 60%; /* Ajustează lățimea maximă după preferințe */
+    width: 500px; /* Ajustează lățimea conform conținutului */ /* Centrarea alertei spre dreapta */
+  }
+
+  .inner-header {
+    min-height: 75vh;
+    width: 100%;
+    margin: 0;
+    padding-top: 150px;
+  }
+
+  .flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .header-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 20vh; // Ajustează înălțimea după preferințe
+    width: 100%;
+
+    .header-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      max-width: 60%; // Asigură o lățime maximă pentru conținut
+
+      .title {
+        font-size: 2.5em;
+        margin: 0;
+        padding: 0;
+        color: #ffffff;
+      }
+
+      .subtitle {
+        font-size: 1.8em;
+        color: #c7c7c7;
+        margin: 0;
+        padding: 0;
+        margin-top: 20px;
+      }
+    }
+  }
+
+  .help-button-container {
+    display: flex;
+    justify-content: flex-end; // Poziționează butonul în partea dreaptă
+    width: 100%; // Ocupă întreaga lățime a containerului părinte
+    padding-right: 20px; // Adaugă un padding de 20px la dreapta pentru spațiere
+
+    .help-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 20px;
+      background-color: transparent;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.2em;
+      cursor: pointer;
+      text-decoration: none;
+
+      i {
+        margin-right: 8px; // Spațiu între iconiță și text
+      }
+
+      &:hover {
+        color: rgb(194, 193, 193);
+      }
+    }
+  }
+
+  .instructions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto; // Centrează div-ul pe orizontală
+    padding: 20px;
+    color: #fff;
+    background-color: rgb(52, 152, 219, 0.2); // Fundal semi-transparent
+    border: 1px solid rgba(0, 0, 0, 0.1); // Bordură subtilă
+    border-radius: 10px; // Borduri rotunjite pentru un aspect plăcut
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Umbre pentru un efect de adâncime
+    width: 75%;
+
+    h3 {
+      font-size: 2.0em;
+      margin-top: 0;
+      color: #ffffff; // Culoare alb mai închis pentru text
+    }
+
+    p {
+      font-size: 1.2em;
+      color: #dbdbdb; // Culoare alb mai închis pentru paragrafe
+      text-align: left; // Aliniază textul la stânga
+      width: 90%; // Asigură că paragrafele ocupă întreaga lățime disponibilă
+    }
+  }
+
+  #map {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 70vh;
+    width: 70%;
+    display: block;
+    z-index: 2;
+    font-size: 17px;
+  }
+
+  .title {
+    margin-top: 35px;
+    font-size: 1.8em;
+  }
+
+  .button button{
+    margin-left: 10px; /* Adjust spacing between buttons */
+    margin-top: 55px;
+    width: auto;
+    padding: 12px 24px;
+    color: #fff;
+    font-size: 2em;
+    border-radius: 8px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* This ensures that any child elements that overflow the button's boundaries are not rendered outside */
+    position: relative;
+    border-radius: 100vw;
+    background-color: #3498db;
+    font-family: "Brush Script MT", sans-serif;
+    color: #fafafa;
+    border: solid 1px rgba($color: #2776aa, $alpha: 0.3);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); // easeOutQuart
+    mask-image: -webkit-radial-gradient(
+      white,
+      black
+    ); // force safari to respect border radius
+
+    .button-text {
+      position: relative;
+      z-index: 2;
+    }
+
+    .fill-container {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      padding-bottom: 100%;
+      transform: translateY(-50%) rotate(180deg);
+
+      // collor filling
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #2776aa;
+        border-radius: 50%;
+        transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); // easeOutQuart
+        transform: translateY(-100%);
+      }
+    }
+
+    &:hover {
+      border-color: rgb(46, 93, 131);
+      transform: translateY(-4px);
+
+      .fill-container {
+        transform: translateY(-50%) rotate(0);
+
+        &::after {
+          transform: translateY(0);
+        }
+      }
+    }
+  }
+
+  .reportForm {
+    width: 50%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    clear: both;
+    z-index: 2;
+    color: #000;
+    border-radius: 10px;
+
+    .form-group { /* Keeping form width consistent */
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Centers labels and inputs */
+      width: 100%;
+    }
+
+    label,
+    select {
+      margin-top: 15px;
+      font-size: 1.5em;
+    }
+
+    label {
+      color: #d0e3fc;
+      width: 100%;
+    }
+
+    input,
+    select {
+      color: #000;
+    }
+
+    input,
+    textarea,
+    select {
+      margin-top: 5px;
+      padding: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 1em;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    input.ng-invalid.ng-touched, select.ng-invalid.ng-touched,
+    textarea.ng-invalid.ng-touched  {
+      border-color: #ff5252; /* Red border on input if it's invalid and touched */
+    }
+
+    .error-message, .instruction-message {
+      font-size: 15px;
+      margin-left: 0;
+      margin-right: 4%;
+      align-self: flex-start; /* Align error message to the start of the flex container */
+      margin-top: 0; /* Pull error message closer to input */
+      margin-bottom: 0px;
+    }
+
+    .error-message{
+      color: #ff5252;
+    }
+    .instruction-message{
+      color: #d0e3fc;
+    }
+    
+    .input-count {
+      font-size: 0.7em;
+      color: #a5a5a5;
+      float: right;
+      margin-top: 15px;
+    }
+
+    .label-checkbox {
+      position: relative;
+      width: auto;
+      padding-left: 35px; /* Space for the custom checkbox */
+      cursor: pointer;
+      display: inline-block;
+      color:  #d0e3fc; /* Color of the text */
+      font-size: 1.5em;
+      line-height: 24px; /* Adjust line-height to vertically center the text with the box */
+      user-select: none; /* Prevent text selection */
+    }
+
+    .label-checkbox input[type="checkbox"] {
+      position: absolute;
+      opacity: 0; /* Hide the checkbox */
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    /* Create a custom box */
+    .label-checkbox .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 24px;
+      width: 24px;
+      background-color: #eee;
+      border-radius: 4px;
+      border: 2px solid #3498db; /* Border color */
+    }
+
+    /* When the checkbox is checked */
+    .label-checkbox input[type="checkbox"]:checked ~ .checkmark {
+      background-color: #3498db; /* Background color when checked */
+    }
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .label-checkbox .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+
+    /* Show the checkmark when checked */
+    .label-checkbox input[type="checkbox"]:checked ~ .checkmark:after {
+      display: block;
+    }
+
+    /* Style the checkmark/indicator */
+    .label-checkbox .checkmark:after {
+      left: 8px;
+      top: 4px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      transform: rotate(45deg);
+    }
+
+    .file-input-container {
+      input[type="file"] {
+        width: 100%; // Setează lățimea la 100% pentru a se întinde pe tot containerul
+        padding: 10px;
+        margin-top: 15px;
+        font-size: 1.2em;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #fff;
+        box-sizing: border-box;
+        margin-bottom: 15px;
+
+        &:hover,
+        &:focus {
+          border-color: #3498db;
+        }
+
+        &::-webkit-file-upload-button {
+          padding: 10px;
+          cursor: pointer;
+          background-color: #3498db;
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          font-size: 1em;
+          transition: background-color 0.3s;
+
+          &:hover {
+            background-color: #2980b9;
+          }
+        }
+      }
+      .image-preview {
+        text-align: center; // Centrează conținutul textului pentru elementele inline sau inline-block
+        position: relative; // Setează poziția relativă pentru a putea poziționa butonul
+        display: inline-block; // Permite alinierea la centru și aplică margini
+        margin-bottom: 15px; // Spațiu sub fiecare previzualizare a imaginii
+
+        img {
+          max-width: 100%; // Poza nu va fi mai lată decât containerul său
+          height: auto; // Înălțimea se va ajusta pentru a păstra proporția imaginii
+          border-radius: 5px; // Opțional: rotunjirea colțurilor imaginii
+          margin-bottom: 10px; // Spațiu între imagine și buton
+          border: 1px solid #fff;
+        }
+
+        .remove-image-btn {
+          padding: 0.5em;
+          border: none;
+          border-radius: 4px;
+          background-color: #dc3545; // culoare de fundal pentru butonul de remove
+          color: white;
+          cursor: pointer;
+          transition: background-color 0.3s;
+          display: inline-block; // Asigură că butonul nu ia lățimea completă
+          margin: 0 auto;
+          margin-bottom: 20px; // Acesta va funcționa pentru un element inline-block
+
+          &:hover {
+            background-color: #c82333; // schimbă culoarea de fundal la hover
+          }
+        }
+      }
+    }
+  }
+
+  .waves {
+    position: relative;
+    width: 100%;
+    height: 20vh;
+    margin-bottom: -7px;
+    min-height: 150px;
+    max-height: 250px;
+
+    .content {
+      position: relative;
+      height: 20vh;
+      text-align: center;
+      background-color: white;
+    }
+
+    .parallax > use {
+      animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+    }
+    .parallax > use:nth-child(1) {
+      animation-delay: -2s;
+      animation-duration: 7s;
+    }
+    .parallax > use:nth-child(2) {
+      animation-delay: -3s;
+      animation-duration: 10s;
+    }
+    .parallax > use:nth-child(3) {
+      animation-delay: -4s;
+      animation-duration: 13s;
+    }
+    .parallax > use:nth-child(4) {
+      animation-delay: -5s;
+      animation-duration: 20s;
+    }
+
+    @keyframes move-forever {
+      0% {
+        transform: translate3d(-90px, 0, 0);
+      }
+      100% {
+        transform: translate3d(85px, 0, 0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .waves {
+        height: 50px;
+        min-height: 50px;
+      }
+      .content {
+        height: 30vh;
+      }
+      h1 {
+        font-size: 24px;
+      }
+    }
+  }
+}
+

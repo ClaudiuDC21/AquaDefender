@@ -19,18 +19,56 @@ namespace AquaDefender_Backend.Service
 
         public async Task<AppUser> GetUserByIdAsync(int userId)
         {
-            // Validation for a positive UserId
             if (userId <= 0)
             {
-                throw new ArgumentException("UserId should be a positive integer.");
+                throw new ArgumentException("Id-ul utilizatorului trebuie să fie un număr întreg pozitiv.");
             }
 
-            return await _userRepository.GetUserByIdAsync(userId);
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                throw new ArgumentException($"Utilizatorul cu id-ul {userId} nu există.");
+            }
+
+            return user;
         }
 
         public async Task<List<AppUser>> GetAllUsersAsync()
         {
             return await _userRepository.GetAllUsersAsync();
         }
+
+        public async Task UpdateUserAsync(AppUser user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), "Utilizatorul nu poate fi nul.");
+            }
+
+            var existingUser = await _userRepository.GetUserByIdAsync(user.Id);
+            if (existingUser == null)
+            {
+                throw new ArgumentException($"Utilizatorul cu id-ul {user.Id} nu există.");
+            }
+
+            await _userRepository.UpdateUserAsync(user);
+        }
+
+        public async Task DeleteUserAsync(int userId)
+        {
+            if (userId <= 0)
+            {
+                throw new ArgumentException("Id-ul utilizatorului trebuie să fie un număr întreg pozitiv.", nameof(userId));
+            }
+
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                throw new ArgumentException($"Utilizatorul cu id-ul {userId} nu există.");
+            }
+
+            await _userRepository.DeleteUserAsync(userId);
+        }
+
     }
 }
