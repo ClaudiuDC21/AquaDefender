@@ -136,3 +136,6 @@ C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\bin\Debug\net8.0\
 C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\obj\Debug\net8.0\AquaDefe.F4264A9E.Up2Date
+C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\bin\Debug\net8.0\MailKit.dll
+C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\bin\Debug\net8.0\MimeKit.dll
