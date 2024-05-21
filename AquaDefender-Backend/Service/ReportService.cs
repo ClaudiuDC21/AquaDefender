@@ -180,7 +180,7 @@ namespace AquaDefender_Backend.Service
             return await _reportRepository.UpdateReportStatusAsync(reportId, newStatus);
         }
 
-        public async Task CreateReportAsync(Report report, List<string>? images)
+        public async Task CreateReportAsync(Report report, List<string> images)
         {
             if (report == null)
             {

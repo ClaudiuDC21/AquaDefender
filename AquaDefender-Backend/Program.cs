@@ -4,8 +4,19 @@ using AquaDefender_Backend.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+// Adăugați Serilog pentru logging
+builder.Host.UseSerilog();
 
 builder.Services.AddControllers();
 
@@ -24,13 +35,6 @@ builder.Services.AddSwaggerGen(c =>
         },
     });
 
-});
-builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
-builder.Services.AddHttpClient("MailTrapApiClient", (services, client) =>
-{
-    var mailSettings = services.GetRequiredService<IOptions<MailSettings>>().Value;
-    client.BaseAddress = new Uri(mailSettings.ApiBaseUrl);
-    client.DefaultRequestHeaders.Add("Api-Token", mailSettings.ApiToken);
 });
 
 builder.Services.AddCors();

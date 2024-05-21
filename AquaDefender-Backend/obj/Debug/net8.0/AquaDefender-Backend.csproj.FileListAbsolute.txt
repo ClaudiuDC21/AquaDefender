@@ -139,3 +139,12 @@ C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\obj\Debug\net8.0\
 C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
 C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\bin\Debug\net8.0\MailKit.dll
 C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\bin\Debug\net8.0\MimeKit.dll
+C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\bin\Debug\net8.0\Serilog.dll
+C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\bin\Debug\net8.0\Serilog.AspNetCore.dll
+C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\bin\Debug\net8.0\Serilog.Extensions.Hosting.dll
+C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\bin\Debug\net8.0\Serilog.Extensions.Logging.dll
+C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\bin\Debug\net8.0\Serilog.Formatting.Compact.dll
+C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\bin\Debug\net8.0\Serilog.Settings.Configuration.dll
+C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\bin\Debug\net8.0\Serilog.Sinks.Console.dll
+C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\bin\Debug\net8.0\Serilog.Sinks.Debug.dll
+C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\bin\Debug\net8.0\Serilog.Sinks.File.dll
