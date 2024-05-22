@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../../authentication/services/authentication.service';
-import { LocationService } from '../../../other-services/location.service';
+import { LocationService } from '../../../utils/location.service';
 import { Report } from '../../models/report.model';
 import { ReportService } from '../../services/report.service';
 import { SeverityLevel } from '../../enums/severity';
@@ -12,7 +12,7 @@ import { Observable, catchError, filter, forkJoin, map, switchMap } from 'rxjs';
 import { ReportStatistics } from '../../models/report-statistics.model';
 import { ViewportScroller } from '@angular/common';
 import JSZip from 'jszip';
-import { IconService } from '../../../other-services/icon.service';
+import { IconService } from '../../../utils/icon.service';
 
 @Component({
   selector: 'app-report-management',

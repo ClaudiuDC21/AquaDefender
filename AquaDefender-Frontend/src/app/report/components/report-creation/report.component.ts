@@ -2,14 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../../authentication/services/authentication.service';
 import * as L from 'leaflet';
-import { LocationService } from '../../../other-services/location.service';
+import { LocationService } from '../../../utils/location.service';
 import { Report } from '../../models/report.model';
 import { ReportService } from '../../services/report.service';
 import { ViewportScroller } from '@angular/common';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { AbstractControl, FormArray, FormGroup, NgForm } from '@angular/forms';
-import { IconService } from '../../../other-services/icon.service';
+import { IconService } from '../../../utils/icon.service';
 
 @Component({
   selector: 'app-report',

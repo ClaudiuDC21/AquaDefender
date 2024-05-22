@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
-import { IconService } from '../../../other-services/icon.service';
+import { IconService } from '../../../utils/icon.service';
 import { ReportService } from '../../../report/services/report.service';
 
 @Component({

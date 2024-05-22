@@ -9,6 +9,7 @@ using AquaDefender_Backend.DTOs;
 using AquaDefender_Backend.Services.Interfaces;
 using AquaDefender_Backend.Service.Interfaces;
 using System.IO.Compression;
+using Microsoft.Extensions.Logging;
 
 namespace AquaDefender_Backend.Controllers
 {
@@ -18,13 +19,14 @@ namespace AquaDefender_Backend.Controllers
     {
         private readonly IReportService _reportService;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly ILogger<ReportController> _logger;
 
-        public ReportController(IReportService reportService, IWebHostEnvironment webHostEnvironment)
+        public ReportController(IReportService reportService, IWebHostEnvironment webHostEnvironment, ILogger<ReportController> logger)
         {
             _reportService = reportService ?? throw new ArgumentNullException(nameof(reportService));
-            _webHostEnvironment = webHostEnvironment;
+            _webHostEnvironment = webHostEnvironment ?? throw new ArgumentNullException(nameof(webHostEnvironment));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-
         [HttpGet("{reportId}")]
         public async Task<IActionResult> GetReportById(int reportId)
         {
@@ -38,13 +40,22 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest("Id-ul raportului trebuie să fie un număr întreg pozitiv.");
             }
 
-            var report = await _reportService.GetReportByIdAsync(reportId);
-            if (report == null)
+            try
             {
-                return NotFound("Raportul nu a fost găsit.");
-            }
+                var report = await _reportService.GetReportByIdAsync(reportId);
+                if (report == null)
+                {
+                    return NotFound("Raportul nu a fost găsit.");
+                }
 
-            return Ok(report);
+                return Ok(report);
+            }
+            catch (Exception ex)
+            {
+                // Log the error
+                _logger.LogError(ex, $"An error occurred while getting the report with ID {reportId}.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         [HttpGet("all")]
@@ -55,8 +66,17 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            var reports = await _reportService.GetAllReportsAsync();
-            return Ok(reports);
+            try
+            {
+                var reports = await _reportService.GetAllReportsAsync();
+                return Ok(reports);
+            }
+            catch (Exception ex)
+            {
+                // Log the error
+                _logger.LogError(ex, "An error occurred while getting all reports.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         [HttpGet("images")]
@@ -67,12 +87,21 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            var images = await _reportService.GetAllImagesAsync();
-            return Ok(images);
+            try
+            {
+                var images = await _reportService.GetAllImagesAsync();
+                return Ok(images);
+            }
+            catch (Exception ex)
+            {
+                // Log the error
+                _logger.LogError(ex, "An error occurred while getting all images.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         [HttpGet("{reportId}/images")]
-        public async Task<ActionResult<List<ReportImage>>> GetImagesByReportIdAsync(int reportId)
+        public async Task<ActionResult> GetImagesByReportIdAsync(int reportId)
         {
             if (!ModelState.IsValid)
             {
@@ -84,48 +113,56 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest("Id-ul raportului trebuie să fie un număr întreg pozitiv.");
             }
 
-            var images = await _reportService.GetImagesByReportIdAsync(reportId);
-
-            if (images == null || images.Count == 0)
+            try
             {
-                return NotFound("Imaginile nu au fost găsite.");
-            }
+                var images = await _reportService.GetImagesByReportIdAsync(reportId);
 
-            var imageStreams = new List<MemoryStream>();
-
-            foreach (var image in images)
-            {
-                var imagePath = Path.Combine(image.ImageUrl);
-
-                if (System.IO.File.Exists(imagePath))
+                if (images == null || images.Count == 0)
                 {
-                    var imageBytes = await System.IO.File.ReadAllBytesAsync(imagePath);
-                    var imageStream = new MemoryStream(imageBytes);
-                    imageStreams.Add(imageStream);
+                    return NotFound("Imaginile nu au fost găsite.");
                 }
-            }
 
-            if (imageStreams.Count == 0)
-            {
-                return NotFound("Imaginile nu au fost găsite.");
-            }
+                var imageStreams = new List<MemoryStream>();
 
-            var archiveStream = new MemoryStream();
-            using (var zipArchive = new ZipArchive(archiveStream, ZipArchiveMode.Create, true))
-            {
-                for (int i = 0; i < imageStreams.Count; i++)
+                foreach (var image in images)
                 {
-                    var entry = zipArchive.CreateEntry($"image_{i + 1}.jpg");
-                    using (var entryStream = entry.Open())
+                    var imagePath = Path.Combine(image.ImageUrl);
+
+                    if (System.IO.File.Exists(imagePath))
                     {
-                        imageStreams[i].CopyTo(entryStream);
+                        var imageBytes = await System.IO.File.ReadAllBytesAsync(imagePath);
+                        var imageStream = new MemoryStream(imageBytes);
+                        imageStreams.Add(imageStream);
                     }
                 }
+
+                if (imageStreams.Count == 0)
+                {
+                    return NotFound("Imaginile nu au fost găsite.");
+                }
+
+                var archiveStream = new MemoryStream();
+                using (var zipArchive = new ZipArchive(archiveStream, ZipArchiveMode.Create, true))
+                {
+                    for (int i = 0; i < imageStreams.Count; i++)
+                    {
+                        var entry = zipArchive.CreateEntry($"image_{i + 1}.jpg");
+                        using (var entryStream = entry.Open())
+                        {
+                            imageStreams[i].CopyTo(entryStream);
+                        }
+                    }
+                }
+
+                archiveStream.Position = 0;
+
+                return File(archiveStream, "application/zip", $"images_{reportId}.zip");
             }
-
-            archiveStream.Position = 0;
-
-            return File(archiveStream, "application/zip", $"images_{reportId}.zip");
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting images for report ID {reportId}.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         [HttpGet("{reportId}/hasimages")]
@@ -141,8 +178,16 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest("Id-ul raportului trebuie să fie un număr întreg pozitiv.");
             }
 
-            var hasImages = await _reportService.ReportHasImagesAsync(reportId);
-            return Ok(hasImages);
+            try
+            {
+                var hasImages = await _reportService.ReportHasImagesAsync(reportId);
+                return Ok(hasImages);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while checking if the report with ID {reportId} has images.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         [HttpGet("User/{userId}/Total")]
@@ -158,8 +203,16 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest("Id-ul utilizatorului trebuie să fie un număr întreg pozitiv.");
             }
 
-            var totalReports = await _reportService.GetReportCountByUserIdAsync(userId);
-            return Ok(totalReports);
+            try
+            {
+                var totalReports = await _reportService.GetReportCountByUserIdAsync(userId);
+                return Ok(totalReports);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting the total report count for user with ID {userId}.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         [HttpGet("User/{userId}/New")]
@@ -175,8 +228,16 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest("Id-ul utilizatorului trebuie să fie un număr întreg pozitiv.");
             }
 
-            var newReportsCount = await _reportService.GetNewReportCountByUserIdAsync(userId);
-            return Ok(newReportsCount);
+            try
+            {
+                var newReportsCount = await _reportService.GetNewReportCountByUserIdAsync(userId);
+                return Ok(newReportsCount);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting the new report count for user with ID {userId}.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         [HttpGet("User/{userId}/InProgress")]
@@ -192,8 +253,16 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest("Id-ul utilizatorului trebuie să fie un număr întreg pozitiv.");
             }
 
-            var inProgressReportsCount = await _reportService.GetInProgressReportCountByUserIdAsync(userId);
-            return Ok(inProgressReportsCount);
+            try
+            {
+                var inProgressReportsCount = await _reportService.GetInProgressReportCountByUserIdAsync(userId);
+                return Ok(inProgressReportsCount);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting the in-progress report count for user with ID {userId}.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         [HttpGet("User/{userId}/Resolved")]
@@ -209,8 +278,16 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest("Id-ul utilizatorului trebuie să fie un număr întreg pozitiv.");
             }
 
-            var resolvedReportsCount = await _reportService.GetResolvedReportCountByUserIdAsync(userId);
-            return Ok(resolvedReportsCount);
+            try
+            {
+                var resolvedReportsCount = await _reportService.GetResolvedReportCountByUserIdAsync(userId);
+                return Ok(resolvedReportsCount);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting the resolved report count for user with ID {userId}.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         [HttpGet("City/{cityId}/New")]
@@ -226,10 +303,17 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest("Id-ul orașului trebuie să fie un număr întreg pozitiv.");
             }
 
-            int count = await _reportService.GetNewReportCountByCityIdAsync(cityId);
-            return Ok(count);
+            try
+            {
+                int count = await _reportService.GetNewReportCountByCityIdAsync(cityId);
+                return Ok(count);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting the new report count for city with ID {cityId}.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
-
 
         [HttpGet("stats/{cityId}")]
         public async Task<IActionResult> GetReportStats(int cityId)
@@ -244,8 +328,16 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest("Id-ul orașului trebuie să fie un număr întreg pozitiv.");
             }
 
-            var stats = await _reportService.GetReportStatisticsByCityIdAsync(cityId);
-            return Ok(stats);
+            try
+            {
+                var stats = await _reportService.GetReportStatisticsByCityIdAsync(cityId);
+                return Ok(stats);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting report statistics for city with ID {cityId}.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         [HttpGet("user/status/severity")]
@@ -261,8 +353,16 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest("Id-ul utilizatorului trebuie să fie un număr întreg pozitiv.");
             }
 
-            var reports = await _reportService.GetFilteredReportsByUserId(userId, status, severity);
-            return Ok(reports);
+            try
+            {
+                var reports = await _reportService.GetFilteredReportsByUserId(userId, status, severity);
+                return Ok(reports);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting filtered reports for user with ID {userId}.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         [HttpGet("random-new")]
@@ -273,11 +373,18 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            var reports = await _reportService.GetRandomNewReports();
-            return Ok(reports);
+            try
+            {
+                var reports = await _reportService.GetRandomNewReports();
+                return Ok(reports);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while getting random new reports.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
-        // Get randomly selected in-progress reports
         [HttpGet("random-in-progress")]
         public async Task<IActionResult> GetRandomInProgressReports()
         {
@@ -286,11 +393,18 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            var reports = await _reportService.GetRandomInProgressReports();
-            return Ok(reports);
+            try
+            {
+                var reports = await _reportService.GetRandomInProgressReports();
+                return Ok(reports);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while getting random in-progress reports.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
-        // Get randomly selected completed reports
         [HttpGet("random-completed")]
         public async Task<IActionResult> GetRandomCompletedReports()
         {
@@ -299,8 +413,16 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            var reports = await _reportService.GetRandomCompletedReports();
-            return Ok(reports);
+            try
+            {
+                var reports = await _reportService.GetRandomCompletedReports();
+                return Ok(reports);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while getting random completed reports.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         [HttpGet("filteredReportsByCityId")]
@@ -316,8 +438,16 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest("Id-ul orașului trebuie să fie un număr întreg pozitiv.");
             }
 
-            var reports = await _reportService.GetFilteredReportsByCityId(cityId, status, severity, startDate, endDate, userName);
-            return Ok(reports);
+            try
+            {
+                var reports = await _reportService.GetFilteredReportsByCityId(cityId, status, severity, startDate, endDate, userName);
+                return Ok(reports);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting filtered reports for city with ID {cityId}.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         [HttpPut("{reportId}/status")]
@@ -338,15 +468,22 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest("Statusul nu poate fi gol.");
             }
 
-            var updatedReport = await _reportService.UpdateReportStatusAsync(reportId, updateStatusDto.Status);
-            if (updatedReport == null)
+            try
             {
-                return NotFound($"Raportul cu ID-ul {reportId} nu a fost găsit sau nu a putut fi actualizat.");
+                var updatedReport = await _reportService.UpdateReportStatusAsync(reportId, updateStatusDto.Status);
+                if (updatedReport == null)
+                {
+                    return NotFound($"Raportul cu ID-ul {reportId} nu a fost găsit sau nu a putut fi actualizat.");
+                }
+
+                return Ok(updatedReport);
             }
-
-            return Ok(updatedReport);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while updating the status of the report with ID {reportId}.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
-
         [HttpPost]
         public async Task<IActionResult> CreateReportWithImages([FromForm] ReportDto reportDto)
         {
@@ -361,7 +498,7 @@ namespace AquaDefender_Backend.Controllers
                 {
                     Title = reportDto.Title,
                     Description = reportDto.Description,
-                    ReportDate = DateTime.Now, // Setez ora curentă indiferent de inputul DTO
+                    ReportDate = DateTime.Now, // Set current time regardless of DTO input
                     UserId = reportDto.UserId,
                     CountyId = reportDto.CountyId,
                     CityId = reportDto.CityId,
@@ -373,7 +510,7 @@ namespace AquaDefender_Backend.Controllers
                     Severity = reportDto.Severity
                 };
 
-                // Verificați dacă există imagini pentru încărcare
+                // Check if there are images to upload
                 List<string> savedImagePaths = null;
                 if (reportDto.Images != null && reportDto.Images.Count > 0)
                 {
@@ -381,13 +518,13 @@ namespace AquaDefender_Backend.Controllers
                 }
 
                 await _reportService.CreateReportAsync(report, savedImagePaths);
+                return Ok(reportDto);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, "An error occurred while creating the report with images.");
+                return StatusCode(500, "An error occurred while processing your request.");
             }
-
-            return Ok(reportDto);
         }
 
         [HttpPut("{reportId}")]
@@ -429,14 +566,15 @@ namespace AquaDefender_Backend.Controllers
                 {
                     savedImagePaths = await SaveImages(reportDto.Images, _webHostEnvironment.WebRootPath);
                 }
+
                 await _reportService.UpdateReportAsync(existingReport, savedImagePaths);
+                return Ok(reportDto);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, $"An error occurred while updating the report with ID {reportId}.");
+                return StatusCode(500, "An error occurred while processing your request.");
             }
-
-            return Ok(reportDto);
         }
 
         [HttpDelete("{reportId}")]
@@ -458,8 +596,16 @@ namespace AquaDefender_Backend.Controllers
                 return NotFound($"Raportul cu ID-ul {reportId} nu a fost găsit.");
             }
 
-            await _reportService.DeleteReportAsync(reportId);
-            return NoContent();
+            try
+            {
+                await _reportService.DeleteReportAsync(reportId);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while deleting the report with ID {reportId}.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         private async Task<List<string>> SaveImages(List<IFormFile> images, string webRootPath)
@@ -470,15 +616,22 @@ namespace AquaDefender_Backend.Controllers
             {
                 var uniqueFileName = $"{Guid.NewGuid()}_{image.FileName}";
                 var filePath = Path.Combine(webRootPath, "reportImages", uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                try
                 {
-                    await image.CopyToAsync(fileStream);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await image.CopyToAsync(fileStream);
+                    }
+                    savedImagePaths.Add(filePath);
                 }
-                savedImagePaths.Add(filePath);
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "An error occurred while saving an image.");
+                    throw; // Rethrow the exception to be caught in the calling method
+                }
             }
 
             return savedImagePaths;
         }
-
     }
 }

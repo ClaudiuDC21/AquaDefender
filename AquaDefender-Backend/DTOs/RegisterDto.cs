@@ -27,7 +27,7 @@ namespace AquaDefender_Backend.DTOs
         public string City { get; set; }
 
         [Required(ErrorMessage = "Parola este obligatorie.")]
-        [StringLength(100, ErrorMessage = "Parola trebuie să aibă peste 8 caractere.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Parola trebuie să aibă peste 8 caractere.", MinimumLength = 8)]
         public string Password { get; set; }
     }
 }

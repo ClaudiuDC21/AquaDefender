@@ -4,13 +4,13 @@ import { Observable, catchError, filter, forkJoin, map, switchMap } from 'rxjs';
 import { ReportService } from '../../../report/services/report.service';
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
-import { LocationService } from '../../../other-services/location.service';
+import { LocationService } from '../../../utils/location.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { ReportStatus } from '../../../report/enums/status';
 import { SeverityLevel } from '../../../report/enums/severity';
 import { Report } from '../../../report/models/report.model';
 import { ViewportScroller } from '@angular/common';
-import { IconService } from '../../../other-services/icon.service';
+import { IconService } from '../../../utils/icon.service';
 import JSZip from 'jszip';
 
 @Component({

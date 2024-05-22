@@ -26,10 +26,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('AquaDefender-Frontend');
   });
 
-  it('should render title', () => {
+  it('should render router outlet', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, AquaDefender-Frontend');
+    expect(compiled.querySelector('router-outlet')).not.toBeNull();
   });
 });

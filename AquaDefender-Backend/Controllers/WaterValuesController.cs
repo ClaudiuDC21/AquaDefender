@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using AquaDefender_Backend.Service.Interfaces;
 
 namespace AquaDefender_Backend.Controllers
@@ -15,10 +16,12 @@ namespace AquaDefender_Backend.Controllers
     public class WaterValuesController : ControllerBase
     {
         private readonly IWaterValuesService _waterValuesService;
+        private readonly ILogger<WaterValuesController> _logger;
 
-        public WaterValuesController(IWaterValuesService waterValuesService)
+        public WaterValuesController(IWaterValuesService waterValuesService, ILogger<WaterValuesController> logger)
         {
-            _waterValuesService = waterValuesService;
+            _waterValuesService = waterValuesService ?? throw new ArgumentNullException(nameof(waterValuesService));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpGet("{id}")]
@@ -34,14 +37,22 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest("Id-ul trebuie să fie un număr întreg pozitiv.");
             }
 
-            var waterValues = await _waterValuesService.GetWaterValuesByIdAsync(id);
-
-            if (waterValues == null)
+            try
             {
-                return NotFound($"Valorile de apă cu ID-ul {id} nu au fost găsite.");
-            }
+                var waterValues = await _waterValuesService.GetWaterValuesByIdAsync(id);
 
-            return Ok(waterValues);
+                if (waterValues == null)
+                {
+                    return NotFound($"Valorile de apă cu ID-ul {id} nu au fost găsite.");
+                }
+
+                return Ok(waterValues);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting the water values with ID {id}.");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpGet("waterinfo/{waterInfoId}")]
@@ -57,14 +68,22 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest("Id-ul informației despre apă trebuie să fie un număr întreg pozitiv.");
             }
 
-            var waterValues = await _waterValuesService.GetAllWaterValuesByWaterInfoIdAsync(waterInfoId);
-
-            if (waterValues == null)
+            try
             {
-                return NotFound($"Nu au fost găsite valori de apă pentru informația despre apă cu ID-ul {waterInfoId}.");
-            }
+                var waterValues = await _waterValuesService.GetAllWaterValuesByWaterInfoIdAsync(waterInfoId);
 
-            return Ok(waterValues);
+                if (waterValues == null)
+                {
+                    return NotFound($"Nu au fost găsite valori de apă pentru informația despre apă cu ID-ul {waterInfoId}.");
+                }
+
+                return Ok(waterValues);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting water values for the water info with ID {waterInfoId}.");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpGet("all")]
@@ -82,7 +101,8 @@ namespace AquaDefender_Backend.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, "An error occurred while getting all water values.");
+                return StatusCode(500, "Internal server error");
             }
         }
 
@@ -121,7 +141,8 @@ namespace AquaDefender_Backend.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, "An error occurred while creating new water values.");
+                return StatusCode(500, "Internal server error");
             }
         }
 
@@ -138,15 +159,15 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest("Id-ul trebuie să fie un număr întreg pozitiv.");
             }
 
-            var existingWaterValues = await _waterValuesService.GetWaterValuesByIdAsync(id);
-
-            if (existingWaterValues == null)
-            {
-                return NotFound($"Valorile de apă cu ID-ul {id} nu au fost găsite.");
-            }
-
             try
             {
+                var existingWaterValues = await _waterValuesService.GetWaterValuesByIdAsync(id);
+
+                if (existingWaterValues == null)
+                {
+                    return NotFound($"Valorile de apă cu ID-ul {id} nu au fost găsite.");
+                }
+
                 existingWaterValues.Name = waterValuesDto.Name;
                 existingWaterValues.MaximumAllowedValue = waterValuesDto.MaximumAllowedValue;
                 existingWaterValues.UserProvidedValue = waterValuesDto.UserProvidedValue;
@@ -158,7 +179,8 @@ namespace AquaDefender_Backend.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, $"An error occurred while updating the water values with ID {id}.");
+                return StatusCode(500, "Internal server error");
             }
         }
 
@@ -175,23 +197,23 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest("Id-ul trebuie să fie un număr întreg pozitiv.");
             }
 
-            var waterValues = await _waterValuesService.GetWaterValuesByIdAsync(id);
-
-            if (waterValues == null)
-            {
-                return NotFound($"Valorile de apă cu ID-ul {id} nu au fost găsite.");
-            }
-
             try
             {
+                var waterValues = await _waterValuesService.GetWaterValuesByIdAsync(id);
+
+                if (waterValues == null)
+                {
+                    return NotFound($"Valorile de apă cu ID-ul {id} nu au fost găsite.");
+                }
+
                 await _waterValuesService.DeleteWaterValuesAsync(id);
                 return NoContent();
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, $"An error occurred while deleting the water values with ID {id}.");
+                return StatusCode(500, "Internal server error");
             }
         }
-
     }
 }

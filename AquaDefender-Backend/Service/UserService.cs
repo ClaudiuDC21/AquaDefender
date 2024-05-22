@@ -1,20 +1,22 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AquaDefender_Backend.Domain;
 using AquaDefender_Backend.Repository.Interfaces;
 using AquaDefender_Backend.Service.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace AquaDefender_Backend.Service
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly ILogger<UserService> _logger;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, ILogger<UserService> logger)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<AppUser> GetUserByIdAsync(int userId)
@@ -24,18 +26,34 @@ namespace AquaDefender_Backend.Service
                 throw new ArgumentException("Id-ul utilizatorului trebuie să fie un număr întreg pozitiv.");
             }
 
-            var user = await _userRepository.GetUserByIdAsync(userId);
-            if (user == null)
+            try
             {
-                throw new ArgumentException($"Utilizatorul cu id-ul {userId} nu există.");
-            }
+                var user = await _userRepository.GetUserByIdAsync(userId);
+                if (user == null)
+                {
+                    throw new ArgumentException($"Utilizatorul cu id-ul {userId} nu există.");
+                }
 
-            return user;
+                return user;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting the user with ID {userId}.");
+                throw;
+            }
         }
 
         public async Task<List<AppUser>> GetAllUsersAsync()
         {
-            return await _userRepository.GetAllUsersAsync();
+            try
+            {
+                return await _userRepository.GetAllUsersAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while getting all users.");
+                throw;
+            }
         }
 
         public async Task UpdateUserAsync(AppUser user)
@@ -45,13 +63,21 @@ namespace AquaDefender_Backend.Service
                 throw new ArgumentNullException(nameof(user), "Utilizatorul nu poate fi nul.");
             }
 
-            var existingUser = await _userRepository.GetUserByIdAsync(user.Id);
-            if (existingUser == null)
+            try
             {
-                throw new ArgumentException($"Utilizatorul cu id-ul {user.Id} nu există.");
-            }
+                var existingUser = await _userRepository.GetUserByIdAsync(user.Id);
+                if (existingUser == null)
+                {
+                    throw new ArgumentException($"Utilizatorul cu id-ul {user.Id} nu există.");
+                }
 
-            await _userRepository.UpdateUserAsync(user);
+                await _userRepository.UpdateUserAsync(user);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while updating the user with ID {user.Id}.");
+                throw;
+            }
         }
 
         public async Task DeleteUserAsync(int userId)
@@ -61,14 +87,21 @@ namespace AquaDefender_Backend.Service
                 throw new ArgumentException("Id-ul utilizatorului trebuie să fie un număr întreg pozitiv.", nameof(userId));
             }
 
-            var user = await _userRepository.GetUserByIdAsync(userId);
-            if (user == null)
+            try
             {
-                throw new ArgumentException($"Utilizatorul cu id-ul {userId} nu există.");
+                var user = await _userRepository.GetUserByIdAsync(userId);
+                if (user == null)
+                {
+                    throw new ArgumentException($"Utilizatorul cu id-ul {userId} nu există.");
+                }
+
+                await _userRepository.DeleteUserAsync(userId);
             }
-
-            await _userRepository.DeleteUserAsync(userId);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while deleting the user with ID {userId}.");
+                throw;
+            }
         }
-
     }
 }

@@ -1,5 +1,5 @@
 import { Component, HostListener } from '@angular/core';
-import { IconService } from '../../other-services/icon.service';
+import { IconService } from '../../utils/icon.service';
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { ViewportScroller } from '@angular/common';
 import { NavigationEnd, Router } from '@angular/router';

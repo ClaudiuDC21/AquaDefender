@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IconService } from '../../other-services/icon.service';
+import { IconService } from '../../utils/icon.service';
 
 @Component({
   selector: 'app-alert-error',

@@ -131,7 +131,7 @@ export class ReportService {
       params = params.append('userName', userName);
     }
 
-    return this.http.get<any[]>(`${this.apiUrl}/fileredReportsByCityId`, {
+    return this.http.get<any[]>(`${this.apiUrl}/filteredReportsByCityId`, {
       params,
     });
   }

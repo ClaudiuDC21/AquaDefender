@@ -1,6 +1,7 @@
 using AquaDefender_Backend.Domain;
 using AquaDefender_Backend.Repository.Interfaces;
 using AquaDefender_Backend.Service.Interfaces;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,10 +11,12 @@ namespace AquaDefender_Backend.Services
     public class WaterValuesService : IWaterValuesService
     {
         private readonly IWaterValuesRepository _waterValuesRepository;
+        private readonly ILogger<WaterValuesService> _logger;
 
-        public WaterValuesService(IWaterValuesRepository waterValuesRepository)
+        public WaterValuesService(IWaterValuesRepository waterValuesRepository, ILogger<WaterValuesService> logger)
         {
             _waterValuesRepository = waterValuesRepository ?? throw new ArgumentNullException(nameof(waterValuesRepository));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<WaterValues> GetWaterValuesByIdAsync(int waterValuesId)
@@ -23,13 +26,21 @@ namespace AquaDefender_Backend.Services
                 throw new ArgumentException("Id-ul valorilor de apă trebuie să fie un număr întreg pozitiv.", nameof(waterValuesId));
             }
 
-            var waterValues = await _waterValuesRepository.GetWaterValuesByIdAsync(waterValuesId);
-            if (waterValues == null)
+            try
             {
-                throw new ArgumentException($"Valorile de apă cu id-ul {waterValuesId} nu există.");
-            }
+                var waterValues = await _waterValuesRepository.GetWaterValuesByIdAsync(waterValuesId);
+                if (waterValues == null)
+                {
+                    throw new ArgumentException($"Valorile de apă cu id-ul {waterValuesId} nu există.");
+                }
 
-            return waterValues;
+                return waterValues;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting the water values with ID {waterValuesId}.");
+                throw;
+            }
         }
 
         public async Task<List<WaterValues>> GetAllWaterValuesByWaterInfoIdAsync(int waterInfoId)
@@ -39,12 +50,28 @@ namespace AquaDefender_Backend.Services
                 throw new ArgumentException("Id-ul informației despre apă trebuie să fie un număr întreg pozitiv.", nameof(waterInfoId));
             }
 
-            return await _waterValuesRepository.GetAllWaterValuesByWaterInfoIdAsync(waterInfoId);
+            try
+            {
+                return await _waterValuesRepository.GetAllWaterValuesByWaterInfoIdAsync(waterInfoId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting all water values for water info ID {waterInfoId}.");
+                throw;
+            }
         }
 
         public async Task<List<WaterValues>> GetAllWaterValuesAsync()
         {
-            return await _waterValuesRepository.GetAllWaterValuesAsync();
+            try
+            {
+                return await _waterValuesRepository.GetAllWaterValuesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while getting all water values.");
+                throw;
+            }
         }
 
         public async Task CreateWaterValuesAsync(WaterValues waterValues)
@@ -54,7 +81,15 @@ namespace AquaDefender_Backend.Services
                 throw new ArgumentNullException(nameof(waterValues), "Obiectul WaterValues nu poate fi nul.");
             }
 
-            await _waterValuesRepository.CreateWaterValuesAsync(waterValues);
+            try
+            {
+                await _waterValuesRepository.CreateWaterValuesAsync(waterValues);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while creating the water values.");
+                throw;
+            }
         }
 
         public async Task UpdateWaterValuesAsync(WaterValues waterValues)
@@ -64,14 +99,22 @@ namespace AquaDefender_Backend.Services
                 throw new ArgumentNullException(nameof(waterValues), "Obiectul WaterValues nu poate fi nul.");
             }
 
-            // Verifică dacă valorile de apă există în baza de date
-            var existingWaterValues = await _waterValuesRepository.GetWaterValuesByIdAsync(waterValues.Id);
-            if (existingWaterValues == null)
+            try
             {
-                throw new ArgumentException($"Valorile de apă cu id-ul {waterValues.Id} nu există.");
-            }
+                // Verifică dacă valorile de apă există în baza de date
+                var existingWaterValues = await _waterValuesRepository.GetWaterValuesByIdAsync(waterValues.Id);
+                if (existingWaterValues == null)
+                {
+                    throw new ArgumentException($"Valorile de apă cu id-ul {waterValues.Id} nu există.");
+                }
 
-            await _waterValuesRepository.UpdateWaterValuesAsync(waterValues);
+                await _waterValuesRepository.UpdateWaterValuesAsync(waterValues);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while updating the water values with ID {waterValues.Id}.");
+                throw;
+            }
         }
 
         public async Task DeleteWaterValuesAsync(int waterValuesId)
@@ -81,15 +124,22 @@ namespace AquaDefender_Backend.Services
                 throw new ArgumentException("Id-ul valorilor de apă trebuie să fie un număr întreg pozitiv.", nameof(waterValuesId));
             }
 
-            // Verifică dacă valorile de apă există în baza de date
-            var waterValues = await _waterValuesRepository.GetWaterValuesByIdAsync(waterValuesId);
-            if (waterValues == null)
+            try
             {
-                throw new ArgumentException($"Valorile de apă cu id-ul {waterValuesId} nu există.");
+                // Verifică dacă valorile de apă există în baza de date
+                var waterValues = await _waterValuesRepository.GetWaterValuesByIdAsync(waterValuesId);
+                if (waterValues == null)
+                {
+                    throw new ArgumentException($"Valorile de apă cu id-ul {waterValuesId} nu există.");
+                }
+
+                await _waterValuesRepository.DeleteWaterValuesAsync(waterValuesId);
             }
-
-            await _waterValuesRepository.DeleteWaterValuesAsync(waterValuesId);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while deleting the water values with ID {waterValuesId}.");
+                throw;
+            }
         }
-
     }
 }

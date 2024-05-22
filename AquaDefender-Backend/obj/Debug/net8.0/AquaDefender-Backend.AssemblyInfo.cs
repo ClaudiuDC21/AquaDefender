@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AquaDefender-Backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+47432d10728181f415b8d53cdcefb705455de0b3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e427cccb1a2f00c7de45032a9803f779631de7c8")]
 [assembly: System.Reflection.AssemblyProductAttribute("AquaDefender-Backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AquaDefender-Backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

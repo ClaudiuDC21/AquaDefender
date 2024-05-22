@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../../authentication/services/authentication.service';
-import { LocationService } from '../../../other-services/location.service';
+import { LocationService } from '../../../utils/location.service';
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
 import { filter } from 'rxjs';
-import { IconService } from '../../../other-services/icon.service';
+import { IconService } from '../../../utils/icon.service';
 
 @Component({
   selector: 'app-edit-profile',

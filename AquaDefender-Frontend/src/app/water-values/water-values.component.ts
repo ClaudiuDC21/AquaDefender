@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from '../authentication/services/authentication.service';
-import { LocationService } from '../other-services/location.service';
+import { LocationService } from '../utils/location.service';
 import { WaterInfoService } from './services/water-info.service';
 import { WaterValuesService } from './services/water-values.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { WaterInfo } from './models/water-info.model';
 import { DatePipe, ViewportScroller } from '@angular/common';
 import { filter } from 'rxjs';
-import { IconService } from '../other-services/icon.service';
+import { IconService } from '../utils/icon.service';
 
 @Component({
   selector: 'app-water-values',

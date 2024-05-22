@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
-import { LocationService } from '../../../other-services/location.service';
-import { IconService } from '../../../other-services/icon.service';
+import { LocationService } from '../../../utils/location.service';
+import { IconService } from '../../../utils/icon.service';
 
 @Component({
   selector: 'app-signup',

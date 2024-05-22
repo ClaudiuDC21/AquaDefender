@@ -4,7 +4,7 @@ import { Observable, filter, forkJoin, map, switchMap } from 'rxjs';
 import { ReportService } from '../../../report/services/report.service';
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
-import { LocationService } from '../../../other-services/location.service';
+import { LocationService } from '../../../utils/location.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { ReportStatus } from '../../../report/enums/status';
 import { SeverityLevel } from '../../../report/enums/severity';
