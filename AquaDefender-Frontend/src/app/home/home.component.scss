@@ -227,20 +227,22 @@ body {
   overflow: hidden;
   background: linear-gradient(90deg, #000, #fff, #000);
   background-repeat: no-repeat;
-  background-size: 80%;
-  animation: animate 10s linear infinite;
+  background-size: 100%;
+  animation: animate 15s linear infinite;
   background-clip: text;
   -webkit-text-fill-color: rgba(255, 255, 255, 0);
 }
 
 @keyframes animate {
   0% {
-    background-position: -300%;
+    background-position: -400%;
   }
+
   100% {
     background-position: 500%;
   }
 }
+
 
 .redirect-button {
   margin: 25px auto;

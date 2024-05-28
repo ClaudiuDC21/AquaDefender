@@ -52,7 +52,7 @@
       .profile-picture {
         width: 30%; /* Sau orice altă dimensiune preferi */
         height: 200px; /* Se va ajusta în funcție de lățime */
-        background: url("../../images/AquaDefenderStema.png") no-repeat center
+        background: url("../../images/ImagineClaudiu.jpeg") no-repeat center
           center;
         background-size: contain;
         margin-left: 10%;
@@ -69,6 +69,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        text-align: left;
         margin-right: 5%;
       }
 
@@ -280,18 +281,23 @@
         }
 
         .details-container {
-          width: 50%;
-          margin-top: 15px;
+          width: auto;
+          margin: 15px auto; /* Centrăm containerul pe orizontală */
           display: flex;
           flex-direction: column;
-          align-items: center; // centrează detaliile pe orizontală
+          align-items: center; /* Centrăm conținutul pe orizontală */
           color: black;
-
-          .detail {
-            font-size: 18px;
-            margin-bottom: 10px;
-          }
+          padding: 10px; /* Adăugăm un padding pentru a nu atinge marginile */
         }
+        
+        .detail {
+          font-size: 18px;
+          margin-bottom: 10px;
+          width: 100%; /* Asigurăm că fiecare .detail ocupă întreaga lățime disponibilă */
+          text-align: left; /* Textul rămâne aliniat la stânga */
+        }
+        
+        
 
         @media (max-width: 1000px) {
           .bottom-section {
