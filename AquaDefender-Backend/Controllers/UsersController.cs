@@ -252,6 +252,11 @@ namespace AquaDefender_Backend.Controllers
         [HttpGet("{userId}/profileImage")]
         public async Task<IActionResult> GetUserProfileImage(int userId)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             if (userId <= 0)
             {
                 return BadRequest("Id-ul utilizatorului trebuie să fie un număr întreg pozitiv.");
@@ -260,13 +265,19 @@ namespace AquaDefender_Backend.Controllers
             try
             {
                 var user = await _userService.GetUserByIdAsync(userId);
-                if (user == null || string.IsNullOrEmpty(user.ProfilePicture))
+                if (user == null)
                 {
-                    return NotFound("Imaginea de profil nu a fost găsită.");
+                    return NotFound("Imaginea de profil este nula.");
                 }
 
+                if(string.IsNullOrEmpty(user.ProfilePicture))
+                {
+                    return NotFound("Imaginea de profil este goala.");
+                }
+
+                var imageStreams = new List<MemoryStream>();
                 // Assuming user.ProfilePicture contains a path like "imagesRoot\\profilePictureImages\\..."
-                var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, user.ProfilePicture);
+                var imagePath = Path.Combine(user.ProfilePicture);
 
                 // Log the constructed file path
                 _logger.LogInformation($"Profile image path: {imagePath}");
@@ -275,10 +286,10 @@ namespace AquaDefender_Backend.Controllers
                 {
                     // Log the file existence check
                     _logger.LogWarning($"Profile image not found at path: {imagePath}");
-                    return NotFound("Imaginea de profil nu a fost găsită.");
+                    return NotFound("Imaginea de profil nu a fost găsită bine.");
                 }
 
-                var imageStreams = new List<MemoryStream>();
+                
                 var imageBytes = await System.IO.File.ReadAllBytesAsync(imagePath);
                 var imageStream = new MemoryStream(imageBytes);
                 imageStreams.Add(imageStream);
@@ -288,7 +299,7 @@ namespace AquaDefender_Backend.Controllers
                 {
                     for (int i = 0; i < imageStreams.Count; i++)
                     {
-                        var entry = zipArchive.CreateEntry($"profile_image_{userId}.jpg");
+                        var entry = zipArchive.CreateEntry($"profile_image_{i + 1}.jpg");
                         using (var entryStream = entry.Open())
                         {
                             imageStreams[i].CopyTo(entryStream);

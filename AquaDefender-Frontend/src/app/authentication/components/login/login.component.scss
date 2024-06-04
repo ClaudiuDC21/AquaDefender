@@ -1,10 +1,10 @@
 .alert-container {
-  position: fixed; /* Poziționat relativ la viewport */
-  top: 120px; /* Distanță de marginea superioară */
-  right: 20px; /* Distanță de marginea dreaptă */
-  z-index: 20; /* Asigură-te că alerta apare deasupra altor elemente */
-  max-width: 30%; /* Lățime maximă */
-  width: 30%; /* Lățime */
+  position: fixed; 
+  top: 120px; 
+  right: 20px; 
+  z-index: 20; 
+  max-width: 30%; 
+  width: 30%; 
 }
 
 .login-container {

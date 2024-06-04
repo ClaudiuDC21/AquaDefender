@@ -24,7 +24,8 @@ namespace AquaDefender_Backend.Extensions
             services.AddScoped<IWaterInfoService, WaterInfoService>();
             services.AddScoped<IWaterValuesService, WaterValuesService>();
             services.AddScoped<IReportService, ReportService>();
-
+            services.AddScoped<IEmailService, EmailService>();
+            
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();
             services.AddScoped<IWaterInfoRepository, WaterInfoRepository>();
@@ -32,7 +33,7 @@ namespace AquaDefender_Backend.Extensions
             services.AddScoped<IReportRepository, ReportRepository>();
 
             services.AddDbContext<AquaDefenderDataContext>(options =>
-            options.UseSqlServer(@"Server=ASUS-LAPTOPCLAU\SQLEXPRESS;Database=AquaDefenderDatabase;Trusted_Connection=True;Encrypt=False;"));
+                       options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
             return services;
         }

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../../authentication/services/authentication.service';
-import { LocationService } from '../../../utils/location.service';
+import { LocationService } from '../../../utils/services/location.service';
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, NavigationExtras, Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
 import { filter } from 'rxjs';
-import { IconService } from '../../../utils/icon.service';
+import { IconService } from '../../../utils/services/icon.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -15,7 +15,7 @@ import { IconService } from '../../../utils/icon.service';
 })
 export class EditProfileComponent implements OnInit {
   isDropdownOpen: boolean = false;
-  minDate: string = ''; // pentru data nașterii - 100 ani
+  minDate: string = '';
   maxDate: string = '';
   isLoading = false;
   profileImagePreview: string | null = null;
@@ -26,6 +26,9 @@ export class EditProfileComponent implements OnInit {
   countyName: string = '';
   cityName: string = '';
   user: User = new User();
+
+  alertErrorMessages: string[] = [];
+  alertSuccessMessages: string[] = [];
 
   constructor(
     private locationService: LocationService,
@@ -54,6 +57,14 @@ export class EditProfileComponent implements OnInit {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
+  removeAlert(index: number): void {
+    this.alertErrorMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
+  }
+
+  removeSuccessAlert(index: number): void {
+    this.alertSuccessMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
+  }
+
   ngOnInit(): void {
     this.calculateDateLimits();
     this.loadCounties();
@@ -67,7 +78,15 @@ export class EditProfileComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('There was an error fetching the counties:', error);
+        const errorMessage =
+          'A apărut o eroare la încărcarea județelor: ' +
+          (error.message || error);
+        console.error(errorMessage, error);
+        this.alertErrorMessages.push(errorMessage);
+        if (error.error) {
+          this.alertErrorMessages.push(error.error);
+        }
+        this.isLoading = false;
       },
     });
   }
@@ -81,10 +100,14 @@ export class EditProfileComponent implements OnInit {
           this.cities = data;
         },
         error: (error) => {
-          console.error(
-            'There was an error fetching the cities for the selected county:',
-            error
-          );
+          const errorMessage =
+            'A apărut o eroare la încărcarea localităților pentru județul selectat: ' +
+            (error.message || error);
+          console.error(errorMessage, error);
+          this.alertErrorMessages.push(errorMessage);
+          if (error.error) {
+            this.alertErrorMessages.push(error.error);
+          }
         },
       });
     }
@@ -94,10 +117,13 @@ export class EditProfileComponent implements OnInit {
     console.log(this.user);
     const userId = this.authenticationService.getUserId();
     if (userId === null) {
-      console.error('Invalid user ID');
+      const errorMessage = 'ID-ul utilizatorului este invalid.';
+      console.error(errorMessage);
+      this.alertErrorMessages.push(errorMessage);
       this.isLoading = false;
       return;
     }
+
     this.isLoading = true;
     const formData = new FormData();
 
@@ -112,11 +138,17 @@ export class EditProfileComponent implements OnInit {
       // Convert string to Date object
       const birthDate = new Date(this.user.birthDate);
 
-      // Check if the date conversion is valid
-      if (!isNaN(birthDate.getTime())) {
+      // Check if the date conversion is valid and birthDate is not today's date
+      if (
+        !isNaN(birthDate.getTime()) &&
+        birthDate.toISOString().slice(0, 10) !==
+          new Date().toISOString().slice(0, 10)
+      ) {
         formData.append('BirthDate', birthDate.toISOString());
-      } else {
-        console.error('Invalid date');
+      } else if (isNaN(birthDate.getTime())) {
+        const errorMessage = 'Data de naștere este invalidă.';
+        console.error(errorMessage);
+        this.alertErrorMessages.push(errorMessage);
       }
     }
     if (this.countyName) {
@@ -133,7 +165,6 @@ export class EditProfileComponent implements OnInit {
       next: () => {
         console.log('Profile updated successfully!', formData);
 
-        
         if (this.user.userName) {
           this.authenticationService.removeUserName();
           this.authenticationService.setUserName(this.user.userName);
@@ -144,9 +175,26 @@ export class EditProfileComponent implements OnInit {
         }
 
         this.isLoading = false;
+        const successMessage = 'Profilul a fost actualizat cu succes.';
+        this.alertSuccessMessages.push(successMessage);
+
+        // Redirect to personal profile page with success message
+        const navigationExtras: NavigationExtras = {
+          queryParams: { message: successMessage },
+        };
+        this.router.navigate(
+          ['/personal-profile', userId, 'info'],
+          navigationExtras
+        );
       },
       error: (error) => {
-        console.error('Failed to update profile', error);
+        const errorMessage =
+          'Actualizarea profilului a eșuat: ' + error.message;
+        console.error(errorMessage, error);
+        this.alertErrorMessages.push(errorMessage);
+        if (error.error) {
+          this.alertErrorMessages.push(error.error);
+        }
         this.isLoading = false;
       },
     });
@@ -176,40 +224,57 @@ export class EditProfileComponent implements OnInit {
     const file = element.files ? element.files[0] : null;
 
     if (file) {
-      this.profileImagePreview = URL.createObjectURL(file);
-      this.profileImageFile = file; // Actualizează proprietatea cu fișierul nou
+      try {
+        this.profileImagePreview = URL.createObjectURL(file);
+        this.profileImageFile = file; // Update property with the new file
+      } catch (error: any) {
+        const errorMessage =
+          'Eroare la încărcarea imaginii de profil: ' +
+          (error.message || error);
+        console.error(errorMessage, error);
+        this.alertErrorMessages.push(errorMessage);
+      }
     }
-    // Nu este necesar să setezi isLoading aici decât dacă procesezi imaginea
   }
 
   removeProfileImage(): void {
-    // Dacă există un preview, revocă URL-ul blob pentru a elibera memoria
-    if (this.profileImagePreview) {
-      URL.revokeObjectURL(this.profileImagePreview);
+    try {
+      if (this.profileImagePreview) {
+        URL.revokeObjectURL(this.profileImagePreview);
+      }
+      this.profileImageFile = null; // Reset the file property
+    } catch (error: any) {
+      const errorMessage =
+        'Eroare la eliminarea imaginii de profil: ' + (error.message || error);
+      console.error(errorMessage, error);
+      this.alertErrorMessages.push(errorMessage);
     }
-    this.profileImageFile = null; // Resetează și proprietatea fișierului
   }
 
   ngOnDestroy(): void {
-    // Eliberează memoria dacă există un URL blob creat pentru preview-ul imaginii de profil
-    if (this.profileImagePreview) {
-      URL.revokeObjectURL(this.profileImagePreview);
+    try {
+      if (this.profileImagePreview) {
+        URL.revokeObjectURL(this.profileImagePreview);
+      }
+    } catch (error: any) {
+      const errorMessage =
+        'Eroare la eliberarea resurselor imaginii de profil: ' +
+        (error.message || error);
+      console.error(errorMessage, error);
+      this.alertErrorMessages.push(errorMessage);
     }
   }
 
-  // handleImageUpload(event: any): void {
-  //   const fileList: FileList | null = event.target.files;
-
-  //   if (fileList) {
-  //     this.report.imageFiles = Array.from(fileList);
-  //   }
-  // }
-
-  // removeImage(index: number): void {
-  //   this.report.imageFiles.splice(index, 1);
-  // }
-
   getPreviewImage(imageFile: File): string {
-    return URL.createObjectURL(imageFile);
+    try {
+      return URL.createObjectURL(imageFile);
+    } catch (error: any) {
+      const errorMessage =
+        'Eroare la obținerea previzualizării imaginii: ' +
+        (error.message || error);
+      console.error(errorMessage, error);
+      this.alertErrorMessages.push(errorMessage);
+      return 'path/to/default/image.jpg'; // Return a default image path in case of error
+    }
   }
 }

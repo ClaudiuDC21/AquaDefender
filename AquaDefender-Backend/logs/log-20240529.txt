@@ -1,0 +1,656 @@
+2024-05-29 12:24:20.909 +03:00 [INF] User profile is available. Using 'C:\Users\claud\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-05-29 12:24:21.793 +03:00 [INF] Now listening on: http://localhost:2002
+2024-05-29 12:24:21.795 +03:00 [INF] Now listening on: https://localhost:2112
+2024-05-29 12:24:21.918 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-05-29 12:24:21.933 +03:00 [INF] Hosting environment: Development
+2024-05-29 12:24:21.935 +03:00 [INF] Content root path: C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend
+2024-05-29 12:24:28.084 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:2002/swagger/index.html - null null
+2024-05-29 12:24:29.767 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:2002/swagger/index.html - 200 null text/html;charset=utf-8 1703.3684ms
+2024-05-29 12:24:29.914 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:2002/_framework/aspnetcore-browser-refresh.js - null null
+2024-05-29 12:24:29.935 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:2002/_vs/browserLink - null null
+2024-05-29 12:24:29.952 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:2002/_framework/aspnetcore-browser-refresh.js - 200 13776 application/javascript; charset=utf-8 37.8162ms
+2024-05-29 12:24:30.307 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:2002/_vs/browserLink - 200 null text/javascript; charset=UTF-8 370.8034ms
+2024-05-29 12:24:30.488 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:2002/swagger/v1/swagger.json - null null
+2024-05-29 12:24:30.776 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:2002/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 288.3405ms
+2024-05-29 12:24:44.397 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Report/random-new - null null
+2024-05-29 12:24:44.397 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Report/random-in-progress - null null
+2024-05-29 12:24:44.397 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Report/random-completed - null null
+2024-05-29 12:24:44.411 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:44.411 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:44.413 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:44.534 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.ReportController.GetRandomNewReports (AquaDefender-Backend)'
+2024-05-29 12:24:44.534 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.ReportController.GetRandomInProgressReports (AquaDefender-Backend)'
+2024-05-29 12:24:44.534 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.ReportController.GetRandomCompletedReports (AquaDefender-Backend)'
+2024-05-29 12:24:44.571 +03:00 [INF] Route matched with {action = "GetRandomNewReports", controller = "Report"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetRandomNewReports() on controller AquaDefender_Backend.Controllers.ReportController (AquaDefender-Backend).
+2024-05-29 12:24:44.571 +03:00 [INF] Route matched with {action = "GetRandomCompletedReports", controller = "Report"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetRandomCompletedReports() on controller AquaDefender_Backend.Controllers.ReportController (AquaDefender-Backend).
+2024-05-29 12:24:44.571 +03:00 [INF] Route matched with {action = "GetRandomInProgressReports", controller = "Report"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetRandomInProgressReports() on controller AquaDefender_Backend.Controllers.ReportController (AquaDefender-Backend).
+2024-05-29 12:24:49.805 +03:00 [INF] Executed DbCommand (340ms) [Parameters=[@__p_1='?' (DbType = Int32), @__status_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(@__p_1) [r].[Id], [r].[CityId], [r].[CountyId], [r].[Description], [r].[IsAnonymous], [r].[Latitude], [r].[LocationDetails], [r].[Longitude], [r].[ReportDate], [r].[Severity], [r].[Status], [r].[Title], [r].[UserId]
+FROM [Reports] AS [r]
+WHERE [r].[Status] = @__status_0
+ORDER BY NEWID()
+2024-05-29 12:24:49.973 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[AquaDefender_Backend.Domain.Report, AquaDefender-Backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-05-29 12:24:50.016 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.ReportController.GetRandomNewReports (AquaDefender-Backend) in 5434.1357ms
+2024-05-29 12:24:50.022 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.ReportController.GetRandomNewReports (AquaDefender-Backend)'
+2024-05-29 12:24:50.037 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Report/random-new - 200 null application/json; charset=utf-8 5640.0415ms
+2024-05-29 12:24:50.436 +03:00 [INF] Executed DbCommand (6ms) [Parameters=[@__p_1='?' (DbType = Int32), @__status_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(@__p_1) [r].[Id], [r].[CityId], [r].[CountyId], [r].[Description], [r].[IsAnonymous], [r].[Latitude], [r].[LocationDetails], [r].[Longitude], [r].[ReportDate], [r].[Severity], [r].[Status], [r].[Title], [r].[UserId]
+FROM [Reports] AS [r]
+WHERE [r].[Status] = @__status_0
+ORDER BY NEWID()
+2024-05-29 12:24:50.440 +03:00 [INF] Executed DbCommand (9ms) [Parameters=[@__p_1='?' (DbType = Int32), @__status_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(@__p_1) [r].[Id], [r].[CityId], [r].[CountyId], [r].[Description], [r].[IsAnonymous], [r].[Latitude], [r].[LocationDetails], [r].[Longitude], [r].[ReportDate], [r].[Severity], [r].[Status], [r].[Title], [r].[UserId]
+FROM [Reports] AS [r]
+WHERE [r].[Status] = @__status_0
+ORDER BY NEWID()
+2024-05-29 12:24:50.443 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[AquaDefender_Backend.Domain.Report, AquaDefender-Backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-05-29 12:24:50.447 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[AquaDefender_Backend.Domain.Report, AquaDefender-Backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-05-29 12:24:50.448 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.ReportController.GetRandomInProgressReports (AquaDefender-Backend) in 5866.3875ms
+2024-05-29 12:24:50.451 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.ReportController.GetRandomCompletedReports (AquaDefender-Backend) in 5871.5575ms
+2024-05-29 12:24:50.452 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.ReportController.GetRandomInProgressReports (AquaDefender-Backend)'
+2024-05-29 12:24:50.455 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.ReportController.GetRandomCompletedReports (AquaDefender-Backend)'
+2024-05-29 12:24:50.456 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Report/random-in-progress - 200 null application/json; charset=utf-8 6059.2654ms
+2024-05-29 12:24:50.458 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Report/random-completed - 200 null application/json; charset=utf-8 6061.1121ms
+2024-05-29 12:24:50.472 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/counties/id/5 - null null
+2024-05-29 12:24:50.472 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Report/22/hasimages - null null
+2024-05-29 12:24:50.472 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/cities/id/356 - null null
+2024-05-29 12:24:50.476 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:50.472 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Users/11 - null null
+2024-05-29 12:24:50.479 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:50.483 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:50.486 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend)'
+2024-05-29 12:24:50.487 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:50.489 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend)'
+2024-05-29 12:24:50.490 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend)'
+2024-05-29 12:24:50.493 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend)'
+2024-05-29 12:24:50.509 +03:00 [INF] Route matched with {action = "ReportHasImages", controller = "Report"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Boolean]] ReportHasImages(Int32) on controller AquaDefender_Backend.Controllers.ReportController (AquaDefender-Backend).
+2024-05-29 12:24:50.509 +03:00 [INF] Route matched with {action = "GetCityById", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.City]] GetCityById(Int32) on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 12:24:50.509 +03:00 [INF] Route matched with {action = "GetCountyById", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.County]] GetCountyById(Int32) on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 12:24:50.509 +03:00 [INF] Route matched with {action = "GetUserById", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.AppUser]] GetUserById(Int32) on controller AquaDefender_Backend.Controllers.UsersController (AquaDefender-Backend).
+2024-05-29 12:24:50.706 +03:00 [INF] Executed DbCommand (24ms) [Parameters=[@__reportId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [ReportImage] AS [r]
+        WHERE [r].[ReportId] = @__reportId_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2024-05-29 12:24:50.718 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Boolean'.
+2024-05-29 12:24:50.729 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend) in 214.9565ms
+2024-05-29 12:24:50.732 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend)'
+2024-05-29 12:24:50.734 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Report/22/hasimages - 200 null application/json; charset=utf-8 262.45ms
+2024-05-29 12:24:50.805 +03:00 [INF] Executed DbCommand (87ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[BirthDate], [u].[CityId], [u].[CountyId], [u].[Email], [u].[PasswordHash], [u].[PasswordSalt], [u].[PhoneNumber], [u].[ProfilePicture], [u].[RegistrationDate], [u].[RoleId], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2024-05-29 12:24:50.840 +03:00 [INF] Executed DbCommand (84ms) [Parameters=[@__cityId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[CityHallEmail], [c].[CountyId], [c].[Name], [c0].[Id], [c0].[Name], [c0].[WaterDeptEmail]
+FROM [City] AS [c]
+INNER JOIN [County] AS [c0] ON [c].[CountyId] = [c0].[Id]
+WHERE [c].[Id] = @__cityId_0
+2024-05-29 12:24:50.847 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.AppUser'.
+2024-05-29 12:24:50.857 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend) in 328.4919ms
+2024-05-29 12:24:50.860 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend)'
+2024-05-29 12:24:50.864 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Users/11 - 200 null application/json; charset=utf-8 392.5686ms
+2024-05-29 12:24:50.899 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.City'.
+2024-05-29 12:24:50.905 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend) in 386.7962ms
+2024-05-29 12:24:50.909 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend)'
+2024-05-29 12:24:50.910 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/cities/id/356 - 200 null application/json; charset=utf-8 438.5316ms
+2024-05-29 12:24:51.901 +03:00 [INF] Executed DbCommand (77ms) [Parameters=[@__countyId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[WaterDeptEmail], [c0].[Id], [c0].[CityHallEmail], [c0].[CountyId], [c0].[Name]
+FROM (
+    SELECT TOP(1) [c].[Id], [c].[Name], [c].[WaterDeptEmail]
+    FROM [County] AS [c]
+    WHERE [c].[Id] = @__countyId_0
+) AS [t]
+LEFT JOIN [City] AS [c0] ON [t].[Id] = [c0].[CountyId]
+ORDER BY [t].[Id]
+2024-05-29 12:24:51.919 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.County'.
+2024-05-29 12:24:51.927 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend) in 1403.0977ms
+2024-05-29 12:24:51.931 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend)'
+2024-05-29 12:24:51.934 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/counties/id/5 - 200 null application/json; charset=utf-8 1462.3444ms
+2024-05-29 12:24:51.941 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Report/22/images - null null
+2024-05-29 12:24:51.950 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:51.952 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.ReportController.GetImagesByReportIdAsync (AquaDefender-Backend)'
+2024-05-29 12:24:51.959 +03:00 [INF] Route matched with {action = "GetImagesByReportId", controller = "Report"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] GetImagesByReportIdAsync(Int32) on controller AquaDefender_Backend.Controllers.ReportController (AquaDefender-Backend).
+2024-05-29 12:24:52.013 +03:00 [INF] Executed DbCommand (19ms) [Parameters=[@__reportId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[IdImage], [r].[ImageUrl], [r].[ReportId]
+FROM [ReportImage] AS [r]
+WHERE [r].[ReportId] = @__reportId_0
+2024-05-29 12:24:52.079 +03:00 [INF] Executing FileStreamResult, sending file with download name 'images_22.zip' ...
+2024-05-29 12:24:52.117 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.ReportController.GetImagesByReportIdAsync (AquaDefender-Backend) in 154.2743ms
+2024-05-29 12:24:52.122 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.ReportController.GetImagesByReportIdAsync (AquaDefender-Backend)'
+2024-05-29 12:24:52.126 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Report/22/images - 200 495919 application/zip 185.2397ms
+2024-05-29 12:24:52.195 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Users/11 - null null
+2024-05-29 12:24:52.196 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/cities/id/1 - null null
+2024-05-29 12:24:52.196 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/counties/id/1 - null null
+2024-05-29 12:24:52.196 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Report/11/hasimages - null null
+2024-05-29 12:24:52.201 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:52.206 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:52.209 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:52.213 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:52.214 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend)'
+2024-05-29 12:24:52.216 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend)'
+2024-05-29 12:24:52.217 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend)'
+2024-05-29 12:24:52.218 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend)'
+2024-05-29 12:24:52.220 +03:00 [INF] Route matched with {action = "GetUserById", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.AppUser]] GetUserById(Int32) on controller AquaDefender_Backend.Controllers.UsersController (AquaDefender-Backend).
+2024-05-29 12:24:52.221 +03:00 [INF] Route matched with {action = "GetCityById", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.City]] GetCityById(Int32) on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 12:24:52.224 +03:00 [INF] Route matched with {action = "GetCountyById", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.County]] GetCountyById(Int32) on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 12:24:52.235 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[BirthDate], [u].[CityId], [u].[CountyId], [u].[Email], [u].[PasswordHash], [u].[PasswordSalt], [u].[PhoneNumber], [u].[ProfilePicture], [u].[RegistrationDate], [u].[RoleId], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2024-05-29 12:24:52.240 +03:00 [INF] Executed DbCommand (5ms) [Parameters=[@__cityId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[CityHallEmail], [c].[CountyId], [c].[Name], [c0].[Id], [c0].[Name], [c0].[WaterDeptEmail]
+FROM [City] AS [c]
+INNER JOIN [County] AS [c0] ON [c].[CountyId] = [c0].[Id]
+WHERE [c].[Id] = @__cityId_0
+2024-05-29 12:24:52.225 +03:00 [INF] Route matched with {action = "ReportHasImages", controller = "Report"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Boolean]] ReportHasImages(Int32) on controller AquaDefender_Backend.Controllers.ReportController (AquaDefender-Backend).
+2024-05-29 12:24:52.244 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.AppUser'.
+2024-05-29 12:24:52.244 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__countyId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[WaterDeptEmail], [c0].[Id], [c0].[CityHallEmail], [c0].[CountyId], [c0].[Name]
+FROM (
+    SELECT TOP(1) [c].[Id], [c].[Name], [c].[WaterDeptEmail]
+    FROM [County] AS [c]
+    WHERE [c].[Id] = @__countyId_0
+) AS [t]
+LEFT JOIN [City] AS [c0] ON [t].[Id] = [c0].[CountyId]
+ORDER BY [t].[Id]
+2024-05-29 12:24:52.247 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.City'.
+2024-05-29 12:24:52.251 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend) in 23.3266ms
+2024-05-29 12:24:52.261 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend)'
+2024-05-29 12:24:52.258 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend) in 27.8123ms
+2024-05-29 12:24:52.254 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@__reportId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [ReportImage] AS [r]
+        WHERE [r].[ReportId] = @__reportId_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2024-05-29 12:24:52.268 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Users/11 - 200 null application/json; charset=utf-8 71.7868ms
+2024-05-29 12:24:52.273 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend)'
+2024-05-29 12:24:52.277 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Boolean'.
+2024-05-29 12:24:52.287 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend) in 37.6412ms
+2024-05-29 12:24:52.283 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/cities/id/1 - 200 null application/json; charset=utf-8 87.6659ms
+2024-05-29 12:24:52.281 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.County'.
+2024-05-29 12:24:52.289 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend)'
+2024-05-29 12:24:52.301 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend) in 65.8771ms
+2024-05-29 12:24:52.303 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Report/11/hasimages - 200 null application/json; charset=utf-8 106.6678ms
+2024-05-29 12:24:52.305 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend)'
+2024-05-29 12:24:52.313 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/counties/id/1 - 200 null application/json; charset=utf-8 117.6202ms
+2024-05-29 12:24:52.323 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/counties/id/35 - null null
+2024-05-29 12:24:52.323 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/cities/id/2665 - null null
+2024-05-29 12:24:52.323 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Users/19 - null null
+2024-05-29 12:24:52.323 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Report/30/hasimages - null null
+2024-05-29 12:24:52.326 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:52.330 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:52.333 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:52.337 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:52.337 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend)'
+2024-05-29 12:24:52.339 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend)'
+2024-05-29 12:24:52.340 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend)'
+2024-05-29 12:24:52.341 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend)'
+2024-05-29 12:24:52.342 +03:00 [INF] Route matched with {action = "GetCountyById", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.County]] GetCountyById(Int32) on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 12:24:52.343 +03:00 [INF] Route matched with {action = "GetCityById", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.City]] GetCityById(Int32) on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 12:24:52.346 +03:00 [INF] Route matched with {action = "ReportHasImages", controller = "Report"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Boolean]] ReportHasImages(Int32) on controller AquaDefender_Backend.Controllers.ReportController (AquaDefender-Backend).
+2024-05-29 12:24:52.345 +03:00 [INF] Route matched with {action = "GetUserById", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.AppUser]] GetUserById(Int32) on controller AquaDefender_Backend.Controllers.UsersController (AquaDefender-Backend).
+2024-05-29 12:24:52.357 +03:00 [INF] Executed DbCommand (6ms) [Parameters=[@__countyId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[WaterDeptEmail], [c0].[Id], [c0].[CityHallEmail], [c0].[CountyId], [c0].[Name]
+FROM (
+    SELECT TOP(1) [c].[Id], [c].[Name], [c].[WaterDeptEmail]
+    FROM [County] AS [c]
+    WHERE [c].[Id] = @__countyId_0
+) AS [t]
+LEFT JOIN [City] AS [c0] ON [t].[Id] = [c0].[CountyId]
+ORDER BY [t].[Id]
+2024-05-29 12:24:52.359 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@__cityId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[CityHallEmail], [c].[CountyId], [c].[Name], [c0].[Id], [c0].[Name], [c0].[WaterDeptEmail]
+FROM [City] AS [c]
+INNER JOIN [County] AS [c0] ON [c].[CountyId] = [c0].[Id]
+WHERE [c].[Id] = @__cityId_0
+2024-05-29 12:24:52.364 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@__reportId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [ReportImage] AS [r]
+        WHERE [r].[ReportId] = @__reportId_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2024-05-29 12:24:52.377 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.City'.
+2024-05-29 12:24:52.381 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Boolean'.
+2024-05-29 12:24:52.382 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend) in 30.7543ms
+2024-05-29 12:24:52.383 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.County'.
+2024-05-29 12:24:52.384 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend) in 28.6827ms
+2024-05-29 12:24:52.386 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend)'
+2024-05-29 12:24:52.389 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend) in 40.9409ms
+2024-05-29 12:24:52.390 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend)'
+2024-05-29 12:24:52.392 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/cities/id/2665 - 200 null application/json; charset=utf-8 69.6332ms
+2024-05-29 12:24:52.395 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend)'
+2024-05-29 12:24:52.397 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Report/30/hasimages - 200 null application/json; charset=utf-8 73.99ms
+2024-05-29 12:24:52.405 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/counties/id/35 - 200 null application/json; charset=utf-8 81.9688ms
+2024-05-29 12:24:53.426 +03:00 [INF] Executed DbCommand (9ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[BirthDate], [u].[CityId], [u].[CountyId], [u].[Email], [u].[PasswordHash], [u].[PasswordSalt], [u].[PhoneNumber], [u].[ProfilePicture], [u].[RegistrationDate], [u].[RoleId], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2024-05-29 12:24:53.440 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.AppUser'.
+2024-05-29 12:24:53.448 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend) in 1087.5129ms
+2024-05-29 12:24:53.455 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend)'
+2024-05-29 12:24:53.460 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Users/19 - 200 null application/json; charset=utf-8 1136.9074ms
+2024-05-29 12:24:53.490 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/counties/id/35 - null null
+2024-05-29 12:24:53.491 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Users/24 - null null
+2024-05-29 12:24:53.491 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/cities/id/2627 - null null
+2024-05-29 12:24:53.492 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Report/35/hasimages - null null
+2024-05-29 12:24:53.502 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:53.512 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:53.523 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:53.533 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:53.535 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend)'
+2024-05-29 12:24:53.538 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend)'
+2024-05-29 12:24:53.541 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend)'
+2024-05-29 12:24:53.544 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend)'
+2024-05-29 12:24:53.548 +03:00 [INF] Route matched with {action = "GetCountyById", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.County]] GetCountyById(Int32) on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 12:24:53.552 +03:00 [INF] Route matched with {action = "GetUserById", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.AppUser]] GetUserById(Int32) on controller AquaDefender_Backend.Controllers.UsersController (AquaDefender-Backend).
+2024-05-29 12:24:53.555 +03:00 [INF] Route matched with {action = "GetCityById", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.City]] GetCityById(Int32) on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 12:24:53.558 +03:00 [INF] Route matched with {action = "ReportHasImages", controller = "Report"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Boolean]] ReportHasImages(Int32) on controller AquaDefender_Backend.Controllers.ReportController (AquaDefender-Backend).
+2024-05-29 12:24:53.573 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[@__countyId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[WaterDeptEmail], [c0].[Id], [c0].[CityHallEmail], [c0].[CountyId], [c0].[Name]
+FROM (
+    SELECT TOP(1) [c].[Id], [c].[Name], [c].[WaterDeptEmail]
+    FROM [County] AS [c]
+    WHERE [c].[Id] = @__countyId_0
+) AS [t]
+LEFT JOIN [City] AS [c0] ON [t].[Id] = [c0].[CountyId]
+ORDER BY [t].[Id]
+2024-05-29 12:24:53.577 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[BirthDate], [u].[CityId], [u].[CountyId], [u].[Email], [u].[PasswordHash], [u].[PasswordSalt], [u].[PhoneNumber], [u].[ProfilePicture], [u].[RegistrationDate], [u].[RoleId], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2024-05-29 12:24:53.585 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[@__cityId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[CityHallEmail], [c].[CountyId], [c].[Name], [c0].[Id], [c0].[Name], [c0].[WaterDeptEmail]
+FROM [City] AS [c]
+INNER JOIN [County] AS [c0] ON [c].[CountyId] = [c0].[Id]
+WHERE [c].[Id] = @__cityId_0
+2024-05-29 12:24:53.586 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@__reportId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [ReportImage] AS [r]
+        WHERE [r].[ReportId] = @__reportId_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2024-05-29 12:24:53.589 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.AppUser'.
+2024-05-29 12:24:53.592 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.County'.
+2024-05-29 12:24:53.592 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.City'.
+2024-05-29 12:24:53.601 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend) in 38.2243ms
+2024-05-29 12:24:53.596 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Boolean'.
+2024-05-29 12:24:53.598 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend) in 29.9722ms
+2024-05-29 12:24:53.611 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend) in 37.859ms
+2024-05-29 12:24:53.612 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend)'
+2024-05-29 12:24:53.614 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend) in 37.0495ms
+2024-05-29 12:24:53.616 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend)'
+2024-05-29 12:24:53.618 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend)'
+2024-05-29 12:24:53.619 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/counties/id/35 - 200 null application/json; charset=utf-8 129.7192ms
+2024-05-29 12:24:53.623 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend)'
+2024-05-29 12:24:53.625 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Users/24 - 200 null application/json; charset=utf-8 134.4998ms
+2024-05-29 12:24:53.626 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/cities/id/2627 - 200 null application/json; charset=utf-8 135.9579ms
+2024-05-29 12:24:53.632 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Report/35/hasimages - 200 null application/json; charset=utf-8 140.7221ms
+2024-05-29 12:24:53.639 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Report/35/images - null null
+2024-05-29 12:24:53.651 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:53.653 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.ReportController.GetImagesByReportIdAsync (AquaDefender-Backend)'
+2024-05-29 12:24:53.654 +03:00 [INF] Route matched with {action = "GetImagesByReportId", controller = "Report"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] GetImagesByReportIdAsync(Int32) on controller AquaDefender_Backend.Controllers.ReportController (AquaDefender-Backend).
+2024-05-29 12:24:53.664 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@__reportId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[IdImage], [r].[ImageUrl], [r].[ReportId]
+FROM [ReportImage] AS [r]
+WHERE [r].[ReportId] = @__reportId_0
+2024-05-29 12:24:53.881 +03:00 [INF] Executing FileStreamResult, sending file with download name 'images_35.zip' ...
+2024-05-29 12:24:53.948 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.ReportController.GetImagesByReportIdAsync (AquaDefender-Backend) in 291.6252ms
+2024-05-29 12:24:53.950 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.ReportController.GetImagesByReportIdAsync (AquaDefender-Backend)'
+2024-05-29 12:24:53.951 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Report/35/images - 200 3420310 application/zip 312.5355ms
+2024-05-29 12:24:54.072 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/counties/id/35 - null null
+2024-05-29 12:24:54.072 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Report/31/hasimages - null null
+2024-05-29 12:24:54.072 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Users/19 - null null
+2024-05-29 12:24:54.072 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/cities/id/2665 - null null
+2024-05-29 12:24:54.076 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.080 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.083 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.086 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.087 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend)'
+2024-05-29 12:24:54.088 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend)'
+2024-05-29 12:24:54.089 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend)'
+2024-05-29 12:24:54.090 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend)'
+2024-05-29 12:24:54.091 +03:00 [INF] Route matched with {action = "GetCountyById", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.County]] GetCountyById(Int32) on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 12:24:54.092 +03:00 [INF] Route matched with {action = "ReportHasImages", controller = "Report"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Boolean]] ReportHasImages(Int32) on controller AquaDefender_Backend.Controllers.ReportController (AquaDefender-Backend).
+2024-05-29 12:24:54.094 +03:00 [INF] Route matched with {action = "GetCityById", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.City]] GetCityById(Int32) on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 12:24:54.103 +03:00 [INF] Executed DbCommand (5ms) [Parameters=[@__countyId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[WaterDeptEmail], [c0].[Id], [c0].[CityHallEmail], [c0].[CountyId], [c0].[Name]
+FROM (
+    SELECT TOP(1) [c].[Id], [c].[Name], [c].[WaterDeptEmail]
+    FROM [County] AS [c]
+    WHERE [c].[Id] = @__countyId_0
+) AS [t]
+LEFT JOIN [City] AS [c0] ON [t].[Id] = [c0].[CountyId]
+ORDER BY [t].[Id]
+2024-05-29 12:24:54.106 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@__reportId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [ReportImage] AS [r]
+        WHERE [r].[ReportId] = @__reportId_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2024-05-29 12:24:54.093 +03:00 [INF] Route matched with {action = "GetUserById", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.AppUser]] GetUserById(Int32) on controller AquaDefender_Backend.Controllers.UsersController (AquaDefender-Backend).
+2024-05-29 12:24:54.110 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__cityId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[CityHallEmail], [c].[CountyId], [c].[Name], [c0].[Id], [c0].[Name], [c0].[WaterDeptEmail]
+FROM [City] AS [c]
+INNER JOIN [County] AS [c0] ON [c].[CountyId] = [c0].[Id]
+WHERE [c].[Id] = @__cityId_0
+2024-05-29 12:24:54.114 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.County'.
+2024-05-29 12:24:54.119 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[BirthDate], [u].[CityId], [u].[CountyId], [u].[Email], [u].[PasswordHash], [u].[PasswordSalt], [u].[PhoneNumber], [u].[ProfilePicture], [u].[RegistrationDate], [u].[RoleId], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2024-05-29 12:24:54.113 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Boolean'.
+2024-05-29 12:24:54.120 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.City'.
+2024-05-29 12:24:54.122 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend) in 25.1776ms
+2024-05-29 12:24:54.124 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.AppUser'.
+2024-05-29 12:24:54.125 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend) in 25.4493ms
+2024-05-29 12:24:54.126 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend) in 21.8162ms
+2024-05-29 12:24:54.127 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend)'
+2024-05-29 12:24:54.129 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend) in 13.7653ms
+2024-05-29 12:24:54.130 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend)'
+2024-05-29 12:24:54.132 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend)'
+2024-05-29 12:24:54.133 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/counties/id/35 - 200 null application/json; charset=utf-8 61.5175ms
+2024-05-29 12:24:54.134 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend)'
+2024-05-29 12:24:54.136 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Report/31/hasimages - 200 null application/json; charset=utf-8 63.8625ms
+2024-05-29 12:24:54.137 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/cities/id/2665 - 200 null application/json; charset=utf-8 65.2563ms
+2024-05-29 12:24:54.141 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Users/19 - 200 null application/json; charset=utf-8 69.4134ms
+2024-05-29 12:24:54.158 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Report/31/images - null null
+2024-05-29 12:24:54.162 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.163 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.ReportController.GetImagesByReportIdAsync (AquaDefender-Backend)'
+2024-05-29 12:24:54.165 +03:00 [INF] Route matched with {action = "GetImagesByReportId", controller = "Report"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] GetImagesByReportIdAsync(Int32) on controller AquaDefender_Backend.Controllers.ReportController (AquaDefender-Backend).
+2024-05-29 12:24:54.172 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@__reportId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[IdImage], [r].[ImageUrl], [r].[ReportId]
+FROM [ReportImage] AS [r]
+WHERE [r].[ReportId] = @__reportId_0
+2024-05-29 12:24:54.284 +03:00 [INF] Executing FileStreamResult, sending file with download name 'images_31.zip' ...
+2024-05-29 12:24:54.327 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.ReportController.GetImagesByReportIdAsync (AquaDefender-Backend) in 159.7834ms
+2024-05-29 12:24:54.330 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.ReportController.GetImagesByReportIdAsync (AquaDefender-Backend)'
+2024-05-29 12:24:54.332 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Report/31/images - 200 2092537 application/zip 173.8365ms
+2024-05-29 12:24:54.404 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/cities/id/2627 - null null
+2024-05-29 12:24:54.404 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Report/33/hasimages - null null
+2024-05-29 12:24:54.404 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/counties/id/35 - null null
+2024-05-29 12:24:54.404 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Users/19 - null null
+2024-05-29 12:24:54.408 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.412 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.415 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.417 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.418 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend)'
+2024-05-29 12:24:54.419 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend)'
+2024-05-29 12:24:54.420 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend)'
+2024-05-29 12:24:54.421 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend)'
+2024-05-29 12:24:54.422 +03:00 [INF] Route matched with {action = "GetCityById", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.City]] GetCityById(Int32) on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 12:24:54.423 +03:00 [INF] Route matched with {action = "ReportHasImages", controller = "Report"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Boolean]] ReportHasImages(Int32) on controller AquaDefender_Backend.Controllers.ReportController (AquaDefender-Backend).
+2024-05-29 12:24:54.424 +03:00 [INF] Route matched with {action = "GetCountyById", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.County]] GetCountyById(Int32) on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 12:24:54.432 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__cityId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[CityHallEmail], [c].[CountyId], [c].[Name], [c0].[Id], [c0].[Name], [c0].[WaterDeptEmail]
+FROM [City] AS [c]
+INNER JOIN [County] AS [c0] ON [c].[CountyId] = [c0].[Id]
+WHERE [c].[Id] = @__cityId_0
+2024-05-29 12:24:54.435 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__reportId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [ReportImage] AS [r]
+        WHERE [r].[ReportId] = @__reportId_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2024-05-29 12:24:54.425 +03:00 [INF] Route matched with {action = "GetUserById", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.AppUser]] GetUserById(Int32) on controller AquaDefender_Backend.Controllers.UsersController (AquaDefender-Backend).
+2024-05-29 12:24:54.440 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__countyId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[WaterDeptEmail], [c0].[Id], [c0].[CityHallEmail], [c0].[CountyId], [c0].[Name]
+FROM (
+    SELECT TOP(1) [c].[Id], [c].[Name], [c].[WaterDeptEmail]
+    FROM [County] AS [c]
+    WHERE [c].[Id] = @__countyId_0
+) AS [t]
+LEFT JOIN [City] AS [c0] ON [t].[Id] = [c0].[CountyId]
+ORDER BY [t].[Id]
+2024-05-29 12:24:54.440 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.City'.
+2024-05-29 12:24:54.447 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[BirthDate], [u].[CityId], [u].[CountyId], [u].[Email], [u].[PasswordHash], [u].[PasswordSalt], [u].[PhoneNumber], [u].[ProfilePicture], [u].[RegistrationDate], [u].[RoleId], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2024-05-29 12:24:54.442 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Boolean'.
+2024-05-29 12:24:54.449 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend) in 21.4293ms
+2024-05-29 12:24:54.451 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.County'.
+2024-05-29 12:24:54.451 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.AppUser'.
+2024-05-29 12:24:54.453 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend)'
+2024-05-29 12:24:54.452 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend) in 22.5538ms
+2024-05-29 12:24:54.456 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend) in 20.8914ms
+2024-05-29 12:24:54.456 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend) in 13.3022ms
+2024-05-29 12:24:54.458 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/cities/id/2627 - 200 null application/json; charset=utf-8 54.2377ms
+2024-05-29 12:24:54.459 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend)'
+2024-05-29 12:24:54.460 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend)'
+2024-05-29 12:24:54.462 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend)'
+2024-05-29 12:24:54.466 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Report/33/hasimages - 200 null application/json; charset=utf-8 62.2022ms
+2024-05-29 12:24:54.467 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/counties/id/35 - 200 null application/json; charset=utf-8 63.3781ms
+2024-05-29 12:24:54.468 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Users/19 - 200 null application/json; charset=utf-8 64.4822ms
+2024-05-29 12:24:54.476 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Report/33/images - null null
+2024-05-29 12:24:54.480 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.481 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.ReportController.GetImagesByReportIdAsync (AquaDefender-Backend)'
+2024-05-29 12:24:54.482 +03:00 [INF] Route matched with {action = "GetImagesByReportId", controller = "Report"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] GetImagesByReportIdAsync(Int32) on controller AquaDefender_Backend.Controllers.ReportController (AquaDefender-Backend).
+2024-05-29 12:24:54.488 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__reportId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[IdImage], [r].[ImageUrl], [r].[ReportId]
+FROM [ReportImage] AS [r]
+WHERE [r].[ReportId] = @__reportId_0
+2024-05-29 12:24:54.598 +03:00 [INF] Executing FileStreamResult, sending file with download name 'images_33.zip' ...
+2024-05-29 12:24:54.647 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.ReportController.GetImagesByReportIdAsync (AquaDefender-Backend) in 163.0988ms
+2024-05-29 12:24:54.655 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.ReportController.GetImagesByReportIdAsync (AquaDefender-Backend)'
+2024-05-29 12:24:54.661 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Report/33/images - 200 734935 application/zip 184.4679ms
+2024-05-29 12:24:54.699 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Report/29/hasimages - null null
+2024-05-29 12:24:54.698 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Users/11 - null null
+2024-05-29 12:24:54.699 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/counties/id/35 - null null
+2024-05-29 12:24:54.699 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/cities/id/2665 - null null
+2024-05-29 12:24:54.702 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.705 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.708 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.711 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.712 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend)'
+2024-05-29 12:24:54.714 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend)'
+2024-05-29 12:24:54.715 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend)'
+2024-05-29 12:24:54.716 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend)'
+2024-05-29 12:24:54.717 +03:00 [INF] Route matched with {action = "ReportHasImages", controller = "Report"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Boolean]] ReportHasImages(Int32) on controller AquaDefender_Backend.Controllers.ReportController (AquaDefender-Backend).
+2024-05-29 12:24:54.718 +03:00 [INF] Route matched with {action = "GetUserById", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.AppUser]] GetUserById(Int32) on controller AquaDefender_Backend.Controllers.UsersController (AquaDefender-Backend).
+2024-05-29 12:24:54.719 +03:00 [INF] Route matched with {action = "GetCountyById", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.County]] GetCountyById(Int32) on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 12:24:54.721 +03:00 [INF] Route matched with {action = "GetCityById", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.City]] GetCityById(Int32) on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 12:24:54.727 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__reportId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [ReportImage] AS [r]
+        WHERE [r].[ReportId] = @__reportId_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2024-05-29 12:24:54.734 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[BirthDate], [u].[CityId], [u].[CountyId], [u].[Email], [u].[PasswordHash], [u].[PasswordSalt], [u].[PhoneNumber], [u].[ProfilePicture], [u].[RegistrationDate], [u].[RoleId], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2024-05-29 12:24:54.742 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Boolean'.
+2024-05-29 12:24:54.741 +03:00 [INF] Executed DbCommand (6ms) [Parameters=[@__countyId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[WaterDeptEmail], [c0].[Id], [c0].[CityHallEmail], [c0].[CountyId], [c0].[Name]
+FROM (
+    SELECT TOP(1) [c].[Id], [c].[Name], [c].[WaterDeptEmail]
+    FROM [County] AS [c]
+    WHERE [c].[Id] = @__countyId_0
+) AS [t]
+LEFT JOIN [City] AS [c0] ON [t].[Id] = [c0].[CountyId]
+ORDER BY [t].[Id]
+2024-05-29 12:24:54.743 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@__cityId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[CityHallEmail], [c].[CountyId], [c].[Name], [c0].[Id], [c0].[Name], [c0].[WaterDeptEmail]
+FROM [City] AS [c]
+INNER JOIN [County] AS [c0] ON [c].[CountyId] = [c0].[Id]
+WHERE [c].[Id] = @__cityId_0
+2024-05-29 12:24:54.746 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.AppUser'.
+2024-05-29 12:24:54.747 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend) in 24.4474ms
+2024-05-29 12:24:54.753 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.City'.
+2024-05-29 12:24:54.753 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.County'.
+2024-05-29 12:24:54.754 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend) in 27.6868ms
+2024-05-29 12:24:54.756 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend)'
+2024-05-29 12:24:54.758 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend) in 21.7563ms
+2024-05-29 12:24:54.760 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend) in 30.0459ms
+2024-05-29 12:24:54.762 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend)'
+2024-05-29 12:24:54.764 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Report/29/hasimages - 200 null application/json; charset=utf-8 65.7394ms
+2024-05-29 12:24:54.766 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend)'
+2024-05-29 12:24:54.767 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend)'
+2024-05-29 12:24:54.768 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Users/11 - 200 null application/json; charset=utf-8 70.3961ms
+2024-05-29 12:24:54.775 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/counties/id/35 - 200 null application/json; charset=utf-8 77.4702ms
+2024-05-29 12:24:54.781 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Users/11 - null null
+2024-05-29 12:24:54.781 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/counties/id/35 - null null
+2024-05-29 12:24:54.782 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Report/25/hasimages - null null
+2024-05-29 12:24:54.781 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/cities/id/2665 - null null
+2024-05-29 12:24:54.774 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/cities/id/2665 - 200 null application/json; charset=utf-8 75.9762ms
+2024-05-29 12:24:54.798 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.801 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.804 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.807 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.811 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend)'
+2024-05-29 12:24:54.813 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend)'
+2024-05-29 12:24:54.813 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend)'
+2024-05-29 12:24:54.815 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend)'
+2024-05-29 12:24:54.816 +03:00 [INF] Route matched with {action = "GetUserById", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.AppUser]] GetUserById(Int32) on controller AquaDefender_Backend.Controllers.UsersController (AquaDefender-Backend).
+2024-05-29 12:24:54.817 +03:00 [INF] Route matched with {action = "GetCountyById", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.County]] GetCountyById(Int32) on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 12:24:54.818 +03:00 [INF] Route matched with {action = "ReportHasImages", controller = "Report"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Boolean]] ReportHasImages(Int32) on controller AquaDefender_Backend.Controllers.ReportController (AquaDefender-Backend).
+2024-05-29 12:24:54.819 +03:00 [INF] Route matched with {action = "GetCityById", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.City]] GetCityById(Int32) on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 12:24:54.826 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[BirthDate], [u].[CityId], [u].[CountyId], [u].[Email], [u].[PasswordHash], [u].[PasswordSalt], [u].[PhoneNumber], [u].[ProfilePicture], [u].[RegistrationDate], [u].[RoleId], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2024-05-29 12:24:54.833 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__reportId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [ReportImage] AS [r]
+        WHERE [r].[ReportId] = @__reportId_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2024-05-29 12:24:54.831 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@__countyId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[WaterDeptEmail], [c0].[Id], [c0].[CityHallEmail], [c0].[CountyId], [c0].[Name]
+FROM (
+    SELECT TOP(1) [c].[Id], [c].[Name], [c].[WaterDeptEmail]
+    FROM [County] AS [c]
+    WHERE [c].[Id] = @__countyId_0
+) AS [t]
+LEFT JOIN [City] AS [c0] ON [t].[Id] = [c0].[CountyId]
+ORDER BY [t].[Id]
+2024-05-29 12:24:54.839 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.AppUser'.
+2024-05-29 12:24:54.839 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@__cityId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[CityHallEmail], [c].[CountyId], [c].[Name], [c0].[Id], [c0].[Name], [c0].[WaterDeptEmail]
+FROM [City] AS [c]
+INNER JOIN [County] AS [c0] ON [c].[CountyId] = [c0].[Id]
+WHERE [c].[Id] = @__cityId_0
+2024-05-29 12:24:54.841 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Boolean'.
+2024-05-29 12:24:54.844 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend) in 22.6746ms
+2024-05-29 12:24:54.845 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.County'.
+2024-05-29 12:24:54.848 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.City'.
+2024-05-29 12:24:54.849 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend) in 20.6355ms
+2024-05-29 12:24:54.850 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend)'
+2024-05-29 12:24:54.854 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend) in 29.3869ms
+2024-05-29 12:24:54.854 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend) in 21.5793ms
+2024-05-29 12:24:54.856 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend)'
+2024-05-29 12:24:54.857 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Users/11 - 200 null application/json; charset=utf-8 76.4531ms
+2024-05-29 12:24:54.859 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend)'
+2024-05-29 12:24:54.860 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend)'
+2024-05-29 12:24:54.861 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Report/25/hasimages - 200 null application/json; charset=utf-8 79.957ms
+2024-05-29 12:24:54.868 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/counties/id/35 - 200 null application/json; charset=utf-8 88.0745ms
+2024-05-29 12:24:54.869 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/cities/id/2665 - 200 null application/json; charset=utf-8 88.4495ms
+2024-05-29 12:24:54.875 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/cities/id/263 - null null
+2024-05-29 12:24:54.875 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/counties/id/4 - null null
+2024-05-29 12:24:54.877 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Report/15/hasimages - null null
+2024-05-29 12:24:54.877 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Users/11 - null null
+2024-05-29 12:24:54.887 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.890 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.893 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.897 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:54.898 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend)'
+2024-05-29 12:24:54.899 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend)'
+2024-05-29 12:24:54.900 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend)'
+2024-05-29 12:24:54.901 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend)'
+2024-05-29 12:24:54.902 +03:00 [INF] Route matched with {action = "GetCityById", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.City]] GetCityById(Int32) on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 12:24:54.904 +03:00 [INF] Route matched with {action = "GetCountyById", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.County]] GetCountyById(Int32) on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 12:24:54.905 +03:00 [INF] Route matched with {action = "ReportHasImages", controller = "Report"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Boolean]] ReportHasImages(Int32) on controller AquaDefender_Backend.Controllers.ReportController (AquaDefender-Backend).
+2024-05-29 12:24:54.907 +03:00 [INF] Route matched with {action = "GetUserById", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AquaDefender_Backend.Domain.AppUser]] GetUserById(Int32) on controller AquaDefender_Backend.Controllers.UsersController (AquaDefender-Backend).
+2024-05-29 12:24:54.918 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[@__cityId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[CityHallEmail], [c].[CountyId], [c].[Name], [c0].[Id], [c0].[Name], [c0].[WaterDeptEmail]
+FROM [City] AS [c]
+INNER JOIN [County] AS [c0] ON [c].[CountyId] = [c0].[Id]
+WHERE [c].[Id] = @__cityId_0
+2024-05-29 12:24:54.925 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@__reportId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [ReportImage] AS [r]
+        WHERE [r].[ReportId] = @__reportId_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2024-05-29 12:24:54.920 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@__countyId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[WaterDeptEmail], [c0].[Id], [c0].[CityHallEmail], [c0].[CountyId], [c0].[Name]
+FROM (
+    SELECT TOP(1) [c].[Id], [c].[Name], [c].[WaterDeptEmail]
+    FROM [County] AS [c]
+    WHERE [c].[Id] = @__countyId_0
+) AS [t]
+LEFT JOIN [City] AS [c0] ON [t].[Id] = [c0].[CountyId]
+ORDER BY [t].[Id]
+2024-05-29 12:24:54.930 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[BirthDate], [u].[CityId], [u].[CountyId], [u].[Email], [u].[PasswordHash], [u].[PasswordSalt], [u].[PhoneNumber], [u].[ProfilePicture], [u].[RegistrationDate], [u].[RoleId], [u].[UserName]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__p_0
+2024-05-29 12:24:54.930 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.City'.
+2024-05-29 12:24:54.932 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Boolean'.
+2024-05-29 12:24:54.936 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.County'.
+2024-05-29 12:24:54.939 +03:00 [INF] Executing OkObjectResult, writing value of type 'AquaDefender_Backend.Domain.AppUser'.
+2024-05-29 12:24:54.940 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend) in 31.0419ms
+2024-05-29 12:24:54.942 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend) in 24.6694ms
+2024-05-29 12:24:54.945 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend) in 31.5069ms
+2024-05-29 12:24:54.947 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend) in 24.4364ms
+2024-05-29 12:24:54.949 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCityById (AquaDefender-Backend)'
+2024-05-29 12:24:54.951 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.ReportController.ReportHasImages (AquaDefender-Backend)'
+2024-05-29 12:24:54.953 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetCountyById (AquaDefender-Backend)'
+2024-05-29 12:24:54.955 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.UsersController.GetUserById (AquaDefender-Backend)'
+2024-05-29 12:24:54.957 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/cities/id/263 - 200 null application/json; charset=utf-8 82.0532ms
+2024-05-29 12:24:54.958 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Report/15/hasimages - 200 null application/json; charset=utf-8 81.5739ms
+2024-05-29 12:24:54.960 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/counties/id/4 - 200 null application/json; charset=utf-8 84.8151ms
+2024-05-29 12:24:54.962 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Users/11 - 200 null application/json; charset=utf-8 84.9945ms
+2024-05-29 12:24:57.532 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/counties - null null
+2024-05-29 12:24:57.541 +03:00 [INF] CORS policy execution successful.
+2024-05-29 12:24:57.546 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend)'
+2024-05-29 12:24:57.555 +03:00 [INF] Route matched with {action = "GetAllCounties", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[AquaDefender_Backend.Domain.County]]] GetAllCounties() on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 12:24:57.579 +03:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[Id], [c].[Name], [c].[WaterDeptEmail]
+FROM [County] AS [c]
+2024-05-29 12:24:57.584 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[AquaDefender_Backend.Domain.County, AquaDefender-Backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-05-29 12:24:57.587 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend) in 27.2955ms
+2024-05-29 12:24:57.589 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend)'
+2024-05-29 12:24:57.591 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/counties - 200 null application/json; charset=utf-8 59.5338ms
+2024-05-29 16:37:39.906 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/counties - null null
+2024-05-29 16:37:39.971 +03:00 [INF] CORS policy execution successful.
+2024-05-29 16:37:39.983 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend)'
+2024-05-29 16:37:40.000 +03:00 [INF] Route matched with {action = "GetAllCounties", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[AquaDefender_Backend.Domain.County]]] GetAllCounties() on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 16:37:42.231 +03:00 [INF] Executed DbCommand (97ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[Id], [c].[Name], [c].[WaterDeptEmail]
+FROM [County] AS [c]
+2024-05-29 16:37:42.301 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[AquaDefender_Backend.Domain.County, AquaDefender-Backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-05-29 16:37:42.327 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend) in 2319.1445ms
+2024-05-29 16:37:42.330 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend)'
+2024-05-29 16:37:42.332 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/counties - 200 null application/json; charset=utf-8 2442.6953ms
+2024-05-29 19:09:12.485 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/counties - null null
+2024-05-29 19:09:12.502 +03:00 [INF] CORS policy execution successful.
+2024-05-29 19:09:12.507 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend)'
+2024-05-29 19:09:12.512 +03:00 [INF] Route matched with {action = "GetAllCounties", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[AquaDefender_Backend.Domain.County]]] GetAllCounties() on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-05-29 19:09:14.412 +03:00 [INF] Executed DbCommand (94ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[Id], [c].[Name], [c].[WaterDeptEmail]
+FROM [County] AS [c]
+2024-05-29 19:09:14.420 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[AquaDefender_Backend.Domain.County, AquaDefender-Backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-05-29 19:09:14.426 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend) in 1910.6503ms
+2024-05-29 19:09:14.428 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend)'
+2024-05-29 19:09:14.430 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/counties - 200 null application/json; charset=utf-8 1949.6178ms

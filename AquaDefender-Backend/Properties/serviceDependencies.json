@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "apis1": {
+      "type": "apis"
+    },
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:ProductionConnection",
+      "dynamicId": null
+    },
+    "apis2": {
+      "type": "apis"
+    },
+    "secrets1": {
+      "type": "secrets"
+    }
+  }
+}

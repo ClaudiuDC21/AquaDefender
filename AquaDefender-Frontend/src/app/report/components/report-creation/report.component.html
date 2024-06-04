@@ -10,7 +10,7 @@
 <div class="header">
   <app-navbar *ngIf="!isLoading"></app-navbar>
 
-  <div class="alert-container">
+  <div class="alert-container" *ngIf="!isLoading">
     <div *ngFor="let errorMessage of alertErrorMessages; let i = index">
       <app-alert-error
         [message]="errorMessage"
@@ -23,20 +23,6 @@
         [message]="successMessage"
         (close)="removeSuccessAlert(j)"
       ></app-alert-success>
-    </div>
-
-    <div *ngFor="let infoMessage of alertInfoMessages; let k = index">
-      <app-alert-info
-        [message]="infoMessage"
-        (close)="removeInfoAlert(k)"
-      ></app-alert-info>
-    </div>
-
-    <div *ngFor="let warningMessage of alertWarningMessages; let l = index">
-      <app-alert-warning
-        [message]="warningMessage"
-        (close)="removeWarningAlert(l)"
-      ></app-alert-warning>
     </div>
   </div>
 
@@ -126,223 +112,181 @@
       autocomplete="off"
       novalidate
     >
-      <div class="form-group">
-        <label for="title"
-          >Titlu
-          <span class="input-count"
-            >{{ report.title.length || 0 }}/120</span
-          ></label
-        >
-        <input
-          type="text"
-          id="title"
-          class="title"
-          name="title"
-          [(ngModel)]="report.title"
-          #titleField="ngModel"
-          placeholder="Introduceți titlul raportului"
-          required
-          maxlength="120"
-        />
-        <div
-          *ngIf="titleField.errors && (titleField.dirty || titleField.touched)"
-          class="error-message"
-        >
-          <span *ngIf="titleField.errors['required']"
-            >Titlul este obligatoriu.</span
-          >
-          <span *ngIf="titleField.errors['maxlength']"
-            >Titlul nu poate depăși 120 de caractere.</span
-          >
-        </div>
+    <div class="form-group">
+      <label for="title">
+        Titlu*
+        <span class="input-count">{{ report.title.length || 0 }}/120</span>
+      </label>
+      <input
+        type="text"
+        id="title"
+        class="title"
+        name="title"
+        [(ngModel)]="report.title"
+        #titleField="ngModel"
+        placeholder="Introduceți titlul raportului"
+        required
+        maxlength="120"
+      />
+      <div
+        *ngIf="(titleField.errors && (titleField.dirty || titleField.touched)) || (formSubmissionAttempt && titleField.errors)"
+        class="error-message"
+      >
+        <span *ngIf="titleField.errors['required']">Titlul este obligatoriu.</span>
+        <span *ngIf="titleField.errors['maxlength']">Titlul nu poate depăși 120 de caractere.</span>
       </div>
+    </div>
 
-      <div class="form-group">
-        <label for="description"
-          >Descriere<span class="input-count"
-            >{{ report.description.length || 0 }}/400</span
-          ></label
-        >
-        <textarea
-          id="description"
-          name="description"
-          [(ngModel)]="report.description"
-          #descriptionField="ngModel"
-          rows="4"
-          placeholder="Detaliați incidentul"
-          required
-          maxlength="400"
-        ></textarea>
-        <div
-          *ngIf="
-            descriptionField.errors &&
-            (descriptionField.dirty || descriptionField.touched)
-          "
-          class="error-message"
-        >
-          <span *ngIf="descriptionField.errors['required']"
-            >Descrierea este obligatorie.</span
-          >
-          <span *ngIf="descriptionField.errors['maxlength']"
-            >Descrierea nu poate depăși 400 de caractere.</span
-          >
-        </div>
+    <div class="form-group">
+      <label for="description">
+        Descriere*
+        <span class="input-count">{{ report.description.length || 0 }}/400</span>
+      </label>
+      <textarea
+        id="description"
+        name="description"
+        [(ngModel)]="report.description"
+        #descriptionField="ngModel"
+        rows="4"
+        placeholder="Detaliați incidentul"
+        required
+        maxlength="400"
+      ></textarea>
+      <div
+        *ngIf="(descriptionField.errors && (descriptionField.dirty || descriptionField.touched)) || (formSubmissionAttempt && descriptionField.errors)"
+        class="error-message"
+      >
+        <span *ngIf="descriptionField.errors['required']">Descrierea este obligatorie.</span>
+        <span *ngIf="descriptionField.errors['maxlength']">Descrierea nu poate depăși 400 de caractere.</span>
       </div>
+    </div>
 
-      <div class="form-group">
-        <label for="latitude">Latitudine</label>
-        <input
-          type="text"
-          id="latitude"
-          class="form-control"
-          name="latitude"
-          [(ngModel)]="report.latitude"
-          #latitudeField="ngModel"
-          readonly
-        />
-        <!-- Error message for latitude, shown only if the model is empty -->
-        <div *ngIf="!report.latitude" class="instruction-message">
-          <span
-            >Va rugam sa apasati pe harta in locul in care ati intampinat
-            problema pentru a adauga latitudinea</span
-          >
-        </div>
+    <div class="form-group">
+      <label for="latitude">Latitudine*</label>
+      <input
+        type="text"
+        id="latitude"
+        class="form-control"
+        name="latitude"
+        [(ngModel)]="report.latitude"
+        #latitudeField="ngModel"
+        readonly
+      />
+      <div *ngIf="!report.latitude && formSubmissionAttempt" class="error-message">
+        <span>Va rugam sa apasati pe harta in locul in care ati intampinat problema pentru a adauga latitudinea</span>
       </div>
+    </div>
 
-      <div class="form-group">
-        <label for="longitude">Longitudine</label>
-        <input
-          type="text"
-          id="longitude"
-          class="form-control"
-          name="longitude"
-          [(ngModel)]="report.longitude"
-          #longitudeField="ngModel"
-          readonly
-        />
-        <!-- Error message for longitude, shown only if the model is empty -->
-        <div *ngIf="!report.longitude" class="instruction-message">
-          <span
-            >Va rugam sa apasati pe harta in locul in care ati intampinat
-            problema pentru a adauga longitudinea</span
-          >
-        </div>
+    <div class="form-group">
+      <label for="longitude">Longitudine*</label>
+      <input
+        type="text"
+        id="longitude"
+        class="form-control"
+        name="longitude"
+        [(ngModel)]="report.longitude"
+        #longitudeField="ngModel"
+        readonly
+      />
+      <div *ngIf="!report.longitude && formSubmissionAttempt" class="error-message">
+        <span>Va rugam sa apasati pe harta in locul in care ati intampinat problema pentru a adauga longitudinea</span>
       </div>
-      <div class="form-group">
-        <label for="county">Județ</label>
-        <select
-          id="county"
-          name="county"
-          [(ngModel)]="report.county"
-          #countyField="ngModel"
-          (change)="onCountyChange()"
-          required
-        >
-          <option value="" disabled selected>Selectează un județ</option>
-          <option *ngFor="let county of counties" [value]="county.id">
-            {{ county.name }}
-          </option>
-        </select>
-        <div
-          *ngIf="
-            countyField.errors && (countyField.dirty || countyField.touched)
-          "
-          class="error-message"
-        >
-          <span *ngIf="countyField.errors['required']"
-            >Selectarea unui județ este obligatorie.</span
-          >
-        </div>
-      </div>
+    </div>
 
-      <div class="form-group">
-        <label for="county">Localitate</label>
-        <select
-          id="city"
-          name="city"
-          [(ngModel)]="report.city"
-          #cityField="ngModel"
-          required
-        >
-          <option value="" disabled selected>Selectează o localitate</option>
-          <option *ngFor="let city of cities" [value]="city.id">
-            {{ city.name }}
-          </option>
-        </select>
-        <div
-          *ngIf="
-            countyField.errors && (countyField.dirty || countyField.touched)
-          "
-          class="error-message"
-        >
-          <span *ngIf="countyField.errors['required']"
-            >Selectarea unui județ este obligatorie.</span
-          >
-        </div>
+    <div class="form-group">
+      <label for="county">Județ*</label>
+      <select
+        id="county"
+        name="county"
+        [(ngModel)]="report.county"
+        #countyField="ngModel"
+        (change)="onCountyChange()"
+        required
+      >
+        <option value="" disabled selected>Selectează un județ</option>
+        <option *ngFor="let county of counties" [value]="county.id">
+          {{ county.name }}
+        </option>
+      </select>
+      <div
+        *ngIf="(countyField.errors && (countyField.dirty || countyField.touched)) || (formSubmissionAttempt && countyField.errors)"
+        class="error-message"
+      >
+        <span *ngIf="countyField.errors['required']">Selectarea unui județ este obligatorie.</span>
       </div>
+    </div>
 
-      <div class="form-group">
-        <label for="locationDetails">
-          Detalii locație<span class="input-count"
-            >{{ report.locationDetails.length || 0 }}/400</span
-          >
-        </label>
-        <textarea
-          id="locationDetails"
-          name="locationDetails"
-          [(ngModel)]="report.locationDetails"
-          #locationDetailsField="ngModel"
-          rows="4"
-          placeholder="Descrieți locația detaliat"
-          maxlength="400"
-          required
-        ></textarea>
-        <div
-          *ngIf="
-            locationDetailsField.errors &&
-            (locationDetailsField.dirty || locationDetailsField.touched)
-          "
-          class="error-message"
-        >
-          <span *ngIf="locationDetailsField.errors['required']"
-            >Detalierea locației este obligatorie.</span
-          >
-          <span *ngIf="locationDetailsField.errors['maxlength']"
-            >Detalierea nu poate depăși 400 de caractere.</span
-          >
-        </div>
+    <div class="form-group">
+      <label for="city">Localitate*</label>
+      <select
+        id="city"
+        name="city"
+        [(ngModel)]="report.city"
+        #cityField="ngModel"
+        required
+      >
+        <option value="" disabled selected>Selectează o localitate</option>
+        <option *ngFor="let city of cities" [value]="city.id">
+          {{ city.name }}
+        </option>
+      </select>
+      <div
+        *ngIf="(cityField.errors && (cityField.dirty || cityField.touched)) || (formSubmissionAttempt && cityField.errors)"
+        class="error-message"
+      >
+        <span *ngIf="cityField.errors['required']">Selectarea unei localități este obligatorie.</span>
       </div>
+    </div>
 
-      <div class="form-group">
-        <label for="severity">Gradul de severitate</label>
-        <select
-          id="severity"
-          name="severity"
-          [(ngModel)]="report.severity"
-          #severityField="ngModel"
-          required
-        >
-          <option value="-1" disabled selected>
-            Selectează un grad de severitate:
-          </option>
-          <option value="0">Minor</option>
-          <option value="1">Moderat</option>
-          <option value="2">Serios</option>
-          <option value="3">Sever</option>
-          <option value="4">Critic</option>
-        </select>
-        <div
-          *ngIf="
-            severityField.errors &&
-            (severityField.dirty || severityField.touched)
-          "
-          class="error-message"
-        >
-          <span *ngIf="severityField.errors['required']">
-            Selectarea gradului de severitate este obligatorie.
-          </span>
-        </div>
+    <div class="form-group">
+      <label for="locationDetails">
+        Detalii locație*
+        <span class="input-count">{{ report.locationDetails.length || 0 }}/400</span>
+      </label>
+      <textarea
+        id="locationDetails"
+        name="locationDetails"
+        [(ngModel)]="report.locationDetails"
+        #locationDetailsField="ngModel"
+        rows="4"
+        placeholder="Descrieți locația detaliat"
+        maxlength="400"
+        required
+      ></textarea>
+      <div
+        *ngIf="(locationDetailsField.errors && (locationDetailsField.dirty || locationDetailsField.touched)) || (formSubmissionAttempt && locationDetailsField.errors)"
+        class="error-message"
+      >
+        <span *ngIf="locationDetailsField.errors['required']">Detalierea locației este obligatorie.</span>
+        <span *ngIf="locationDetailsField.errors['maxlength']">Detalierea nu poate depăși 400 de caractere.</span>
       </div>
+    </div>
+
+    <div class="form-group">
+      <label for="severity">Gradul de severitate*</label>
+      <select
+        id="severity"
+        name="severity"
+        [(ngModel)]="report.severity"
+        #severityField="ngModel"
+        required
+      >
+        <option value="-1" disabled>Selectează un grad de severitate:</option>
+        <option value="0">Minor</option>
+        <option value="1">Moderat</option>
+        <option value="2">Serios</option>
+        <option value="3">Sever</option>
+        <option value="4">Critic</option>
+      </select>
+      <div
+        *ngIf="(severityField.errors && (severityField.dirty || severityField.touched)) || (formSubmissionAttempt && report.severity === -1)"
+        class="error-message"
+      >
+        <span *ngIf="report.severity === -1">Trebuie să selectați un grad de severitate valid.</span>
+      </div>
+    </div>
+    
+
 
       <label for="poze">Adaugă poze</label>
       <div class="file-input-container">
@@ -381,10 +325,13 @@
       </label>
 
       <div class="button">
-        <button type="submit" [disabled]="!reportForm.form.valid">
+        <button type="submit" [disabled]="isLoading ">
           <span class="button-text">Trimite raportul</span>
           <div class="fill-container"></div>
         </button>
+      </div>
+      <div *ngIf="formSubmissionAttempt && reportForm.invalid" class="error-message invalid">
+        Formularul este invalid. Vă rugăm să completați căsuțele obligatorii.
       </div>
     </form>
   </div>

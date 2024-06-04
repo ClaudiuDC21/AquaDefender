@@ -12,6 +12,15 @@
   );
   color: white;
 
+  .alert-container {
+    position: fixed; 
+    top: 120px; 
+    right: 20px; 
+    z-index: 20; 
+    max-width: 30%; 
+    width: 30%; 
+  }  
+
   .inner-header {
     min-height: 75vh;
     margin: 0 auto;
@@ -149,6 +158,21 @@
         .label {
           text-align: center;
           font-size: 12px; /* Încă mai mic pentru vizibilitate pe ecrane foarte mici */
+        }
+      }
+      @media (max-width: 788px) {
+        .alert-container {
+            right: 140px; /* Ajustează distanța de la marginea dreaptă */
+            width: 40%; /* Lățime ajustată pentru ecrane medii */
+            
+          }
+      }
+      
+      @media (max-width: 480px) {
+        .alert-container {
+            right: 150px; /* Ajustează distanța de la marginea dreaptă */
+            width: 80%; /* Lățime ajustată pentru ecrane mici */
+           
         }
       }
 

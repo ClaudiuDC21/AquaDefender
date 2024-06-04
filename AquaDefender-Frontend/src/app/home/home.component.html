@@ -2,7 +2,7 @@
 
 <app-navbar *ngIf="!isLoading"></app-navbar>
 
-<div class="alert-container">
+<div class="alert-container" *ngIf="!isLoading">
   <div *ngFor="let successMessage of alertSuccessMessages; let j = index">
     <app-alert-success
       [message]="successMessage"

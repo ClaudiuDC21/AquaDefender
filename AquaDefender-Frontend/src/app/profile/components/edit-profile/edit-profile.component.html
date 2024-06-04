@@ -3,6 +3,22 @@
 <div class="header" *ngIf="!isLoading">
   <app-navbar *ngIf="!isLoading"></app-navbar>
 
+  <div class="alert-container" *ngIf="!isLoading">
+    <div *ngFor="let errorMessage of alertErrorMessages; let i = index">
+      <app-alert-error
+        [message]="errorMessage"
+        (close)="removeAlert(i)"
+      ></app-alert-error>
+    </div>
+  
+    <div *ngFor="let successMessage of alertSuccessMessages; let j = index">
+      <app-alert-success
+        [message]="successMessage"
+        (close)="removeSuccessAlert(j)"
+      ></app-alert-success>
+    </div>
+  </div>
+
   <div class="inner-header flex" *ngIf="!isLoading">
     <div class="back-container">
       <h1 class="form-title">Editare Profil</h1>
@@ -62,43 +78,49 @@
             id="phone"
             name="phone"
             [(ngModel)]="user.phoneNumber"
-            pattern="[0-9]{10}"
-            required
+            #phone="ngModel"
+            pattern="^(\+4|)?07[0-8]\d{7}$"
           />
+          <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="error-message">
+           <div *ngIf="phone.errors?.['pattern']">Numărul de telefon trebuie să aibă 10 cifre și să fie în formatul valid din România.</div>
+          </div>
         </div>
+        
+        
 
         <div class="form-group">
-          <label for="county">Judet:</label>
+          <label for="county">Județ:</label>
           <select
             id="county"
             name="county"
             [(ngModel)]="countyName"
             (change)="onCountyChange()"
-            required
+            #county="ngModel"
           >
-            <option value="" disabled selected>Selecteaza un judet</option>
+            <option value="" disabled selected>Selectează un județ</option>
             <option *ngFor="let county of counties" [value]="county.id">
               {{ county.name }}
             </option>
           </select>
         </div>
-
+        
         <div class="form-group">
           <label for="city">Localitate:</label>
           <select
             id="city"
             name="city"
             [(ngModel)]="cityName"
-            required
+            #city="ngModel"
             [disabled]="cities.length === 0"
           >
-            <option value="" disabled selected>Selecteaza o localitate</option>
+            <option value="" disabled selected>Selectează o localitate</option>
             <option *ngFor="let city of cities" [value]="city.id">
               {{ city.name }}
             </option>
           </select>
         </div>
-        <button class="button" type="submit">
+
+        <button class="button" type="submit" [disabled]="phone.invalid">
           <fa-icon
             [icon]="iconService.faUserEdit"
             class="button-icon"

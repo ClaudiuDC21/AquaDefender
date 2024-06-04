@@ -1,16 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../../authentication/services/authentication.service';
-import { Observable, catchError, filter, forkJoin, map, switchMap } from 'rxjs';
+import {
+  Observable,
+  catchError,
+  filter,
+  forkJoin,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
 import { ReportService } from '../../../report/services/report.service';
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
-import { LocationService } from '../../../utils/location.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { LocationService } from '../../../utils/services/location.service';
+import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router';
 import { ReportStatus } from '../../../report/enums/status';
 import { SeverityLevel } from '../../../report/enums/severity';
 import { Report } from '../../../report/models/report.model';
 import { ViewportScroller } from '@angular/common';
-import { IconService } from '../../../utils/icon.service';
+import { IconService } from '../../../utils/services/icon.service';
 import JSZip from 'jszip';
 
 @Component({
@@ -39,6 +47,10 @@ export class PersonalProfileComponent implements OnInit {
 
   showDeleteConfirmation: boolean = false;
   isLoading = false;
+  filtersApplied = false;
+
+  alertErrorMessages: string[] = [];
+  alertSuccessMessages: string[] = [];
 
   severityOptionsUI = [
     { display: 'Toate', value: SeverityLevel.All },
@@ -63,6 +75,7 @@ export class PersonalProfileComponent implements OnInit {
     private locationService: LocationService,
     private router: Router,
     private viewportScroller: ViewportScroller,
+    private route: ActivatedRoute,
     public iconService: IconService
   ) {
     this.router.events
@@ -74,13 +87,24 @@ export class PersonalProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUserData();
+    
+    this.route.queryParams.subscribe((params) => {
+      const message = params['message'];
+      if (message && !this.alertSuccessMessages.includes(message)) {
+        this.alertSuccessMessages.push(message);
+        this.router.navigate([], {
+          queryParams: { message: null },
+          queryParamsHandling: 'merge',
+        });
+      }
+    });
   }
 
   get isAuthenticated() {
     return this.authenticationService.getAuthStatus();
   }
 
-  getUserId(){
+  getUserId() {
     return this.authenticationService.getUserId() ?? 0;
   }
 
@@ -90,6 +114,14 @@ export class PersonalProfileComponent implements OnInit {
 
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  removeAlert(index: number): void {
+    this.alertErrorMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
+  }
+
+  removeSuccessAlert(index: number): void {
+    this.alertSuccessMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
   }
 
   openDeleteConfirmation(): void {
@@ -102,18 +134,23 @@ export class PersonalProfileComponent implements OnInit {
 
   confirmDelete(): void {
     this.isLoading = true;
-    const userId = 4;
+    const userId = this.getUserId();
     this.userService.deleteUser(userId).subscribe({
       next: (response) => {
-        // Logica pentru când ștergerea a avut succes
         this.authenticationService.logout();
         this.isLoading = false;
-        this.router.navigate(['/']); // Redirect to home page
-        console.log('User-ul cu id-ul' + userId + 'a fpst sters cu succes.');
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            message: 'Profilul dumneavoastră fost șters cu succes.',
+          },
+        };
+        this.router.navigate(['/home'], navigationExtras);
       },
       error: (error) => {
-        // Logica pentru când ștergerea a eșuat
+        this.isLoading = false;
+        const errorMessage = 'A apărut o eroare la ștergerea user-ului.';
         console.error('There was an error deleting the user', error);
+        this.alertErrorMessages.push(errorMessage);
       },
     });
   }
@@ -126,33 +163,53 @@ export class PersonalProfileComponent implements OnInit {
         next: (totalReports) => {
           this.animateNumber('totalReports', totalReports, 2000);
         },
-        // handle error
+        error: (error) => {
+          console.error('Error getting total reports:', error);
+          this.alertErrorMessages.push(
+            'A apărut o eroare la preluarea numărului total de rapoarte.'
+          );
+        },
       });
 
       this.reportService.getNewReportsByUserId(userId).subscribe({
         next: (newReports) => {
           this.animateNumber('newReports', newReports, 2000);
         },
-        // handle error
+        error: (error) => {
+          console.error('Error getting new reports:', error);
+          this.alertErrorMessages.push(
+            'A apărut o eroare la preluarea numărului de rapoarte noi.'
+          );
+        },
       });
 
       this.reportService.getInProgressReportsByUserId(userId).subscribe({
         next: (casesInProgress) => {
           this.animateNumber('casesInProgress', casesInProgress, 2000);
         },
-        // handle error
+        error: (error) => {
+          console.error('Error getting in-progress reports:', error);
+          this.alertErrorMessages.push(
+            'A apărut o eroare la preluarea numărului de rapoarte în curs de desfășurare.'
+          );
+        },
       });
 
       this.reportService.getResolvedReportsByUserId(userId).subscribe({
         next: (resolvedReports) => {
           this.animateNumber('resolvedReports', resolvedReports, 2000);
         },
-        // handle error
+        error: (error) => {
+          console.error('Error getting resolved reports:', error);
+          this.alertErrorMessages.push(
+            'A apărut o eroare la preluarea numărului de rapoarte rezolvate.'
+          );
+        },
       });
     }
   }
 
-  loadUserData() {
+  async loadUserData() {
     this.isLoading = true;
     // Check if the user is authenticated and retrieve userId from local storage
     if (this.isAuthenticated) {
@@ -172,23 +229,73 @@ export class PersonalProfileComponent implements OnInit {
             })
           )
           .subscribe({
-            next: (result) => {
+            next: async (result) => {
               // Update the names based on the results
               this.countyName = result.countyName.name;
               this.cityName = result.cityName.name;
+              this.user.profilePictureUrl = await this.getProfilePicture(userId);
+              console.log(this.user.profilePictureUrl);
+              this.user.currentIndex = 0;
               this.isLoading = false;
               this.loadStatistics();
             },
             error: (error) => {
               console.error('Error fetching location data:', error);
+              this.alertErrorMessages.push(
+                'A apărut o eroare la preluarea datelor de locație.'
+              );
               this.isLoading = false;
             },
           });
       } else {
         console.error('User ID not found in local storage');
+        this.alertErrorMessages.push(
+          'ID-ul utilizatorului nu a fost găsit în stocarea locală.'
+        );
         this.isLoading = false;
       }
+    } else {
+      console.error('User is not authenticated');
+      this.alertErrorMessages.push('Utilizatorul nu este autentificat.');
+      this.isLoading = false;
     }
+  }
+
+  async getProfilePicture(userId: number) {
+    try {
+      const response = await this.userService.getUserProfileImage(userId)
+        .toPromise();
+  
+      if (response instanceof Blob) {
+        const zip = new JSZip();
+        const zipData = await zip.loadAsync(response);
+  
+        const imageFiles = Object.values(zipData.files);
+        const imageUrls: string[] = [];
+  
+        for (const file of imageFiles) {
+          const imageUrl = URL.createObjectURL(await file.async('blob'));
+          imageUrls.push(imageUrl);
+        }
+  
+        if (imageUrls.length > 0) {
+          return imageUrls;
+        } else {
+          console.error('No images found in the ZIP file.');
+          this.alertErrorMessages.push('Nu au fost găsite imagini în fișierul ZIP.');
+        }
+      } else {
+        console.error('Unexpected response format:', response);
+        this.alertErrorMessages.push('Formatul răspunsului este neașteptat.');
+      }
+    } catch (error) {
+      console.error('Error fetching images:', error);
+      this.alertErrorMessages.push('A apărut o eroare la preluarea imaginilor.');
+    }
+  
+    console.log('Returning default paths.');
+    this.alertErrorMessages.push('Se returnează căile implicite ale imaginilor.');
+    return ['path/to/default/image.jpg'];
   }
 
   calculateAge(birthDate: Date): number {
@@ -209,32 +316,50 @@ export class PersonalProfileComponent implements OnInit {
 
   applyFilters() {
     this.isLoading = true;
+    this.filtersApplied = true;
     const userId = this.authenticationService.getUserId(); // Replace this with the actual authenticated user's ID
-    if (userId) {
-      this.reportService
-        .getFilteredReportsbyUserId(
-          userId,
-          this.selectedStatus,
-          this.selectedSeverity
-        )
-        .pipe(
-          catchError((error) => {
-            console.error('Error processing report details:', error);
-            this.isLoading = false;
-            return []; // Return an empty array to avoid crashing the application
-          })
-        )
-        .subscribe((reports) => {
-          if (reports.length === 0) {
-            console.error('No reports fetched');
-            this.isLoading = false;
-            return;
-          }
 
-          // Process report details
-          this.processReportDetails(reports);
-        });
+    if (!userId) {
+      const errorMessage = 'ID-ul utilizatorului este invalid.';
+      console.error(errorMessage);
+      this.alertErrorMessages.push(errorMessage);
+      this.isLoading = false;
+      return;
     }
+
+    this.reportService
+      .getFilteredReportsbyUserId(
+        userId,
+        this.selectedStatus,
+        this.selectedSeverity
+      )
+      .pipe(
+        catchError((error) => {
+          const errorMessage =
+            'Eroare la procesarea detaliilor raportului: ' + error.message;
+          console.error(errorMessage);
+          this.alertErrorMessages.push(errorMessage);
+          this.isLoading = false;
+          return of([]); // Return an empty observable to avoid crashing the application
+        })
+      )
+      .subscribe((reports) => {
+        this.isLoading = false;
+        this.reports = reports; // Update the reports property with the fetched data
+
+        if (reports.length === 0) {
+          const errorMessage =
+            'Nu au fost găsite rapoarte cu filtrele adăugate.';
+          console.error(errorMessage);
+          this.alertErrorMessages.push(errorMessage);
+          return;
+        }
+
+        // Process report details
+        this.processReportDetails(reports);
+        this.alertSuccessMessages.push('Filtrele au fost aplicate cu succes.');
+        this.isLoading = false;
+      });
   }
 
   private async processReportDetails(reports: any[]): Promise<void> {
@@ -244,33 +369,38 @@ export class PersonalProfileComponent implements OnInit {
         const details = await forkJoin({
           county: this.locationService.getCountyById(report.countyId),
           city: this.locationService.getCityById(report.cityId),
-          user: this.userService.getUserById(report.userId), // Get the username
-          hasImages: this.reportService.checkIfReportHasImages(report.id), // Check if the report has images
+          user: this.userService.getUserById(report.userId),
+          hasImages: this.reportService.checkIfReportHasImages(report.id),
         }).toPromise();
 
         if (details) {
           report.county = details.county?.name;
           report.city = details.city?.name;
-          report.username = details.user?.userName; // Store the username
-          report.hasImages = details.hasImages; // Store the image check result
+          report.username = details.user?.userName;
+          report.hasImages = details.hasImages;
 
           if (report.hasImages) {
             report.imageUrls = await this.getReportImages(report.id);
+            console.log(report.imageUrls);
           } else {
-            report.imageUrls = []; // Use an empty array if no images
+            report.imageUrls = []; // Ensure it's an empty array if no images are found
           }
         }
 
         report.currentIndex = 0;
         report.statusText = this.getStatusText(report.status);
-        report.severityText = this.getSeverityText(report.severity); // Map status numeric to text
-      } catch (error) {
+        report.severityText = this.getSeverityText(report.severity);
+      } catch (error: any) {
         console.error('Error loading report details:', error);
+        this.alertErrorMessages.push(
+          'Eroare la încărcarea detaliilor raportului: ' + error.message
+        );
+        report.imageUrls = []; // Ensure it's initialized even if there's an error
+        report.hasImages = false; // Ensure hasImages is initialized even if there's an error
       }
     }
 
     this.reports = reports;
-    this.isLoading = false;
   }
 
   getStatusText(status: number): string {
@@ -308,34 +438,39 @@ export class PersonalProfileComponent implements OnInit {
       const response = await this.reportService
         .getImagesByReportId(reportId)
         .toPromise();
-
+  
       if (response instanceof Blob) {
         const zip = new JSZip();
         const zipData = await zip.loadAsync(response);
-
+  
         const imageFiles = Object.values(zipData.files);
         const imageUrls: string[] = [];
-
+  
         for (const file of imageFiles) {
           const imageUrl = URL.createObjectURL(await file.async('blob'));
           imageUrls.push(imageUrl);
         }
-
+  
         if (imageUrls.length > 0) {
           return imageUrls;
         } else {
           console.error('No images found in the ZIP file.');
+          this.alertErrorMessages.push('Nu au fost găsite imagini în fișierul ZIP.');
         }
       } else {
         console.error('Unexpected response format:', response);
+        this.alertErrorMessages.push('Formatul răspunsului este neașteptat.');
       }
     } catch (error) {
       console.error('Error fetching images:', error);
+      this.alertErrorMessages.push('A apărut o eroare la preluarea imaginilor.');
     }
-
+  
     console.log('Returning default paths.');
+    this.alertErrorMessages.push('Se returnează căile implicite ale imaginilor.');
     return ['path/to/default/image.jpg'];
   }
+  
 
   nextImage(report: any) {
     if (report.imageUrls && report.imageUrls.length > 0) {

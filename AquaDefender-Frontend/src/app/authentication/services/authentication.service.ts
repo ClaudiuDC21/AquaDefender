@@ -2,12 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs'; // Adjust the path as necessary
 import { UserRole } from '../enums/user-role';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private apiUrl = 'https://localhost:2112/Authentication'; // backend url
+  private baseUrl = environment.apiUrl;
+  private apiUrl = `${this.baseUrl}/Authentication`;
   private tokenKey = 'auth_token'; // key to store the token in local storage
   private emailKey = 'auth_email'; // key to store the email in local storage
   private userIDKey = 'user_id';

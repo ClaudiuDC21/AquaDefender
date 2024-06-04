@@ -15,7 +15,7 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
-// Adăugați Serilog pentru logging
+// Add Serilog for logging
 builder.Host.UseSerilog();
 
 builder.Services.AddControllers();
@@ -34,10 +34,17 @@ builder.Services.AddSwaggerGen(c =>
             Email = "aquadefender00@gmail.com",
         },
     });
-
 });
 
-builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost4200", builder =>
+        builder
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithOrigins("https://localhost:4200")
+            .AllowCredentials());
+});
 
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
@@ -47,13 +54,21 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    });
+}
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
 }
 
-app.UseCors(builder => builder
-    .AllowAnyHeader()
-    .AllowAnyMethod()
-    .WithOrigins("http://localhost:4200"));
+app.UseHttpsRedirection(); // Add HTTPS redirection
+app.UseStaticFiles();
+
+app.UseCors("AllowLocalhost4200"); // Apply the CORS policy globally
 
 var env = app.Services.GetRequiredService<IWebHostEnvironment>();
 env.WebRootPath = "imagesRoot";

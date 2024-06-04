@@ -13,5 +13,7 @@ namespace AquaDefender_Backend.Repository.Interfaces
         Task<List<City>> GetAllCitiesByCountyIdAsync(int countyId);
         Task<City> GetCityByNameAsync(string cityName);
         Task<County> GetCountyByNameAsync(string countyName);
+        Task<string> GetCityEmailByIdAsync(int cityId);
+        Task<string> GetCountyEmailByIdAsync(int countyId);
     }
 }

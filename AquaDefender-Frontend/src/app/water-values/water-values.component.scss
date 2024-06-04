@@ -30,15 +30,15 @@
 
   .flex {
     display: flex;
-    flex-direction: row; // Default to row to have side-by-side tables
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap; // Allows items to wrap onto the next line
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: center; /* Center elements vertically */
+    align-items: center; /* Center elements horizontally */
+    flex-wrap: wrap; /* Allows items to wrap onto the next line */
     text-align: center;
     padding: 20px;
     position: relative;
   }
-
+  
   .header-wrapper {
     display: flex;
     justify-content: center;
@@ -132,14 +132,15 @@
 
   .buttons-container {
     display: flex;
-    justify-content: end; /* Alinează butoanele la dreapta */
+    justify-content: center; /* Alinează butoanele la dreapta */
     padding: 10px; /* Spațiu în interiorul containerului */
     width: 100%;
   }
 
   .redirectToLogin {
     display: flex;
-    justify-content: center; /* Alinează butoanele la dreapta */
+    justify-content: center;
+    align-items: center; /* Alinează butoanele la dreapta */
     padding: 10px; /* Spațiu în interiorul containerului */
     width: 100%;
   }
@@ -152,8 +153,8 @@
     font-size: 2rem;
     border-radius: 8px;
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+    justify-content: column;
+    align-items: center;
     border-radius: 100vw;
     overflow: hidden; /* This ensures that any child elements that overflow the button's boundaries are not rendered outside */
     position: relative;
@@ -170,8 +171,10 @@
     ); // force safari to respect border radius
 
     fa-icon {
-      margin-right: 8px; // Spațiu între iconiță și text
+      margin-right: 8px; /* Spațiu între iconiță și text */
       z-index: 2;
+      display: flex; /* Folosim flex pentru centrare */
+      align-items: center; /* Centrare verticală */
     }
 
     .button-text {
@@ -216,27 +219,22 @@
   }
 
   .right-table {
-    width: 50%;
+    width: 65%;
     margin-top: 50px;
   }
 
-  .left-table {
-    width: 50%;
-    margin-top: 80px;
-  }
-
-  .adding-margin {
-    margin-top: 45px; /* Adjusted margin when isAdding */
-  }
-
   .table-wrapper {
-    margin: 20px 70px 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
     box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
   }
 
   .fl-table {
     border-radius: 5px;
-    font-size: 12px;
+    font-size: 18px;
     font-weight: normal;
     border: none;
     border-collapse: collapse;
@@ -259,6 +257,7 @@
   .fl-table th {
     text-align: center;
     padding: 20px 8px;
+    
   }
 
   .fl-table td {
@@ -280,7 +279,7 @@
     background: #f8f8f8;
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: 900px) {
     .fl-table {
       display: block;
       width: 100%;
@@ -361,19 +360,18 @@
   }
 
   @media (max-width: 1100px) {
-    .flex {
-      flex-direction: column; // Stack elements vertically
-      align-items: center; // Center-align the flex items
-    }
 
     .table-wrapper {
-      margin: 20px -3px -3px;
+      margin: 10px 0;
       box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
     }
 
-    .left-table,
+    .textarea-container {
+      width: 100%; /* Ajustăm lățimea containerului textarea pentru ecrane mai mici */
+    }
+
     .right-table {
-      width: 90%; // Each table takes up 90% of the width on smaller screens
+      width: 80%; // Each table takes up 90% of the width on smaller screens
       margin-top: 20px; // Increase margin-top for better spacing
       margin-bottom: 20px; // Adds bottom margin for separation between tables
     }
@@ -386,7 +384,7 @@
 
     select {
       width: 60%; // Adjust the width of form elements to 90%
-      margin: 20px auto; // Center the form and add vertical spacing
+      margin: 10px auto; // Center the form and add vertical spacing
     }
 
     .header-content {
@@ -400,12 +398,6 @@
         font-size: 1.3em !important;
         margin-top: 5px;
       }
-    }
-  }
-
-  @media (max-width: 1800px) {
-    .left-table {
-      margin-top: 90px;
     }
   }
 
@@ -452,30 +444,32 @@
   .textarea-container,
   .notes-container {
     margin-top: 20px;
+    width: 100%;
     background-color: none;
-    textarea,
-    p {
-      width: 100%;
-      max-width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 14px;
-      color: #000000;
-    }
-    textarea:focus {
-      border-color: #66afe9;
-      outline: 0;
-      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
-        0 0 8px rgba(102, 175, 233, 0.6);
-    }
-    p {
-      background-color: #f5f5f5; // Un fond ușor diferit pentru a distinge zona de text neditabilă
-      min-height: 64px; // Înălțime minimă pentru a menține consistența cu textarea
-      overflow-y: auto; // Permite scroll dacă textul este prea lung
-      margin-bottom: 0; // Elimină margin-ul implicit al paragrafului, dacă este necesar
-    }
+    text-align: left;
   }
+  
+  .textarea-container textarea,
+  .notes-container p {
+    width: 100%;
+    max-width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #000000;
+    box-sizing: border-box; /* Include padding-ul și border-ul în lățime */
+  }
+  
+ 
+  .textarea-container textarea,
+  .notes-container p {
+    background-color: #f5f5f5;
+    min-height: 64px;
+    overflow-y: auto;
+    margin-bottom: 0;
+  }
+  
 
   .save-button-container {
     display: flex;

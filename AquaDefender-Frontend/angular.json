@@ -54,8 +54,14 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "10kb",
+                  "maximumError": "20kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
                 }
               ],
               "outputHashing": "all"
@@ -69,6 +75,11 @@
           "defaultConfiguration": "production"
         },
         "serve": {
+          "options": {
+            "ssl": true,
+            "sslCert": "./ssl/localhost.pem",
+            "sslKey": "./ssl/localhost-key.pem"
+          },
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {

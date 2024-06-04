@@ -18,6 +18,7 @@ export class Report {
     imageFiles: File[] = [];
     imageUrls: string[] = [];
     currentIndex: number = 0;
+    hasImages:boolean = false;
 
 
   constructor(
@@ -39,7 +40,8 @@ export class Report {
     severityText: string = '',
     imageFiles: File[] = [],
     imageUrls: string[] = [],
-    currentIndex: number = 0
+    currentIndex: number = 0,
+    hasImages:boolean = false
   ) {
     this.id = id;
     this.title = title;
@@ -60,5 +62,6 @@ export class Report {
     this.imageFiles = imageFiles;
     this.imageUrls = imageUrls;
     this.currentIndex = currentIndex;
+    this.hasImages = hasImages;
   }
 }

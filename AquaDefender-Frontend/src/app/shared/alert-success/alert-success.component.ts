@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IconService } from '../../utils/icon.service';
+import { IconService } from '../../utils/services/icon.service';
 
 @Component({
   selector: 'app-alert-success',

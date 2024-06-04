@@ -12,11 +12,21 @@
   );
   color: white;
 
+  .alert-container {
+    position: fixed; 
+    top: 120px; 
+    right: 20px; 
+    z-index: 20; 
+    max-width: 30%; 
+    width: 30%; 
+  }
+  
+
   .inner-header {
     min-height: 75vh;
     margin: 0 auto;
     padding: 0;
-
+  
     .flex {
       display: flex;
       justify-content: center;
@@ -25,7 +35,7 @@
       width: 100%;
       height: 100%;
     }
-
+  
     .back-container {
       width: 70%;
       background-color: white;
@@ -33,7 +43,7 @@
       margin-bottom: 100px;
       padding: 20px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      min-height: 60vh; /* Înălțimea minimă pentru a asigura un anumit aspect inițial */
+      min-height: 60vh;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
@@ -41,26 +51,37 @@
       position: relative;
       z-index: 2;
       top: 100px;
-
+  
       .top-section {
         width: 100%;
         display: flex;
-        justify-content: space-between; /* Distribuie pe orizontală imaginea și numele */
+        justify-content: space-between;
         align-items: center;
       }
-
+  
       .profile-picture {
-        width: 30%; /* Sau orice altă dimensiune preferi */
-        height: 200px; /* Se va ajusta în funcție de lățime */
-        background: url("../../images/ImagineClaudiu.jpeg") no-repeat center
-          center;
-        background-size: contain;
-        margin-left: 10%;
-        display: flex;
-        justify-content: center; /* Centrează imaginea pe orizontală */
-        align-items: center; /* Centrează imaginea pe verticală */
+        width: 200px;
+        height: 300px;
+        margin-left: 17%;
+        z-index: 500;
+        background-size: cover;
+        background-position: center;
+        overflow: hidden;
+        position: relative; /* Ensure positioning context for slides */
       }
-
+  
+      .slide {
+        display: flex;
+        height: 100%;
+      }
+  
+      .image {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+      }
+  
       .name-container {
         height: 100%;
         width: 40%;
@@ -72,46 +93,48 @@
         text-align: left;
         margin-right: 5%;
       }
-
+  
       @media (max-width: 750px) {
         .top-section {
-          flex-direction: column; /* Aranjează elementele pe verticală la ecrane mici */
-          align-items: center; /* Centrează elementele pe orizontală */
+          flex-direction: column;
+          align-items: center;
         }
-
+  
         .profile-picture {
-          margin: 0; /* Elimină marginile */
-          margin-bottom: 10px; /* Adaugă spațiu sub imagine */
-          width: 70%; /* Ajustează lățimea imaginii la ecrane mici */
+          margin: 0;
+          margin-bottom: 10px;
+          width: 70%;
         }
-
+  
         .name-container {
-          width: 100%; /* Ocupă întreaga lățime */
-          margin: 0; /* Elimină marginile */
-          text-align: center; /* Centrează textul */
-          display: flex; /* Asigură alinierea centrată */
-          justify-content: center; /* Centrează pe orizontală */
-          align-items: center; /* Centrează pe verticală */
+          width: 100%;
+          margin: 0;
+          text-align: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
       }
-
+  
       @media (max-width: 500px) {
         .profile-picture {
-          width: 90% !important; /* Ajustează lățimea imaginii pentru ecrane foarte mici */
+          width: 90% !important;
         }
-
+  
         .name-container {
-          width: 100%; /* Ocupă întreaga lățime */
-          text-align: center; /* Centrează textul */
+          width: 100%;
+          text-align: center;
         }
       }
-
+  
       @media (max-width: 1000px) {
         .profile-picture {
-          width: 50%; /* Ajustează lățimea imaginii pentru ecrane foarte mici */
+          width: 50%;
         }
       }
-
+    
+  
+  
       .bottom-section {
         width: 100%;
         display: flex;
@@ -305,7 +328,7 @@
           }
 
           .details-container {
-            width: 100%; /* Ocupă întreaga lățime */
+            width: auto; /* Ocupă întreaga lățime */
             margin-bottom: 20px; /* Adaugă spațiu sub detalii */
             order: -1; /* Mută detaliile deasupra butoanelor */
           }
@@ -417,6 +440,22 @@
         .label {
           text-align: center;
           font-size: 12px; /* Încă mai mic pentru vizibilitate pe ecrane foarte mici */
+        }
+      }
+
+      @media (max-width: 788px) {
+        .alert-container {
+            right: 140px; /* Ajustează distanța de la marginea dreaptă */
+            width: 40%; /* Lățime ajustată pentru ecrane medii */
+            
+          }
+      }
+      
+      @media (max-width: 480px) {
+        .alert-container {
+            right: 150px; /* Ajustează distanța de la marginea dreaptă */
+            width: 80%; /* Lățime ajustată pentru ecrane mici */
+           
         }
       }
 

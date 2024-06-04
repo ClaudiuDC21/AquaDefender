@@ -2,13 +2,46 @@
 <div class="header" *ngIf="!isLoading">
   <app-navbar *ngIf="!isLoading"></app-navbar>
 
+  <div class="alert-container" *ngIf="!isLoading">
+    <div *ngFor="let successMessage of alertSuccessMessages; let j = index">
+      <app-alert-success
+        [message]="successMessage"
+        (close)="removeSuccessAlert(j)"
+      ></app-alert-success>
+    </div>
+
+    <div *ngFor="let errorMessage of alertErrorMessages; let i = index">
+      <app-alert-error
+        [message]="errorMessage"
+        (close)="removeAlert(i)"
+      ></app-alert-error>
+    </div>
+  </div>
+
   <div class="inner-header flex" *ngIf="!isLoading">
     <div class="back-container">
       <div class="top-section">
-        <div class="profile-picture"></div>
+        <div
+          class="profile-picture"
+          *ngIf="user.profilePictureUrl && user.profilePictureUrl.length > 0"
+        >
+          <div
+            class="slide"
+            [ngStyle]="{
+              transform: 'translateX(-' + user.currentIndex * 100 + '%)'
+            }"
+          >
+            <!-- Slide-uri -->
+            <div
+              class="image"
+              *ngFor="let image of user.profilePictureUrl; let i = index"
+              [style.background-image]="'url(' + image + ')'"
+              [attr.data-index]="i"
+            ></div>
+          </div>
+        </div>
         <div class="name-container">{{ user.userName }}</div>
       </div>
-
       <div class="bottom-section">
         <div class="button-section">
           <button
@@ -31,13 +64,15 @@
             <span class="button-text">Modificare Parolă</span>
             <div class="fill-container"></div>
           </button>
-          <button class="redirect-button delete-button" (click)="openDeleteConfirmation()">
+          <button
+            class="redirect-button delete-button"
+            (click)="openDeleteConfirmation()"
+          >
             <fa-icon [icon]="iconService.faTrash" class="button-icon"></fa-icon>
             <span class="button-text">Ștergere Profil</span>
             <div class="fill-container"></div>
           </button>
         </div>
-        
 
         <div class="popup-container" *ngIf="showDeleteConfirmation">
           <div class="popup">
@@ -58,7 +93,8 @@
           <div class="detail">
             Vârstă:
             {{
-              calculateAge(user.birthDate) >= 120 || calculateAge(user.birthDate) < 5
+              calculateAge(user.birthDate) >= 120 ||
+              calculateAge(user.birthDate) < 5
                 ? "nespecificat"
                 : calculateAge(user.birthDate)
             }}
@@ -131,71 +167,83 @@
       </div>
 
       <div *ngIf="!isLoading">
-        <div *ngFor="let report of reports" class="report-container">
-          <div class="heading">
-            <p class="name-title">
-              {{ report.username }} a adăugat un nou raport
-            </p>
-            <!-- Adăugat clasa report-title la p -->
-            <p class="date-reported">
-              {{ report.reportDate | date : "dd.MM.yyyy" }}
-            </p>
-          </div>
+        <div
+          *ngIf="filtersApplied && reports.length === 0"
+          class="no-reports-message"
+        >
+          Nu au fost găsite rapoarte cu aceste filtre.
+        </div>
 
-          <div
-            class="current-status"
-            [ngClass]="getStatusClass(report.statusText)"
-          >
-            <ng-container [ngSwitch]="report.statusText">
-              <fa-icon
-                *ngSwitchCase="'Nou'"
-                [icon]="iconService.faHourglassStart"
-              ></fa-icon>
-              <fa-icon
-                *ngSwitchCase="'În Progres'"
-                [icon]="iconService.faHourglassHalf"
-              ></fa-icon>
-              <fa-icon
-                *ngSwitchCase="'Rezolvat'"
-                [icon]="iconService.faCheckCircle"
-              ></fa-icon>
-              <fa-icon *ngSwitchDefault [icon]="iconService.faInfo"></fa-icon>
-            </ng-container>
-            <p>{{ report.statusText }}</p>
-          </div>
-          <p class="report-title">{{ report.title }}</p>
-          <p class="description">{{ report.description }}</p>
-          <p class="location-description">
-            Problema a fost raportată în județul {{ report.county }}, comuna
-            {{ report.city }}, la coordonatele:
-            {{ report.latitude | customNumberCoordonate }} latitudine si
-            {{ report.longitude | customNumberCoordonate }} longitudine.
-          </p>
-          <p class="location-description">
-            Detaliile locatiei: {{ report.locationDetails }}
-          </p>
-          <div class="location-description">
-            Acest raport are un grad de severitate {{ report.severityText }}.
-          </div>
-          <div class="image-container" *ngIf="report.imageUrls.length > 0">
-            <!-- Container pentru slide-uri -->
-            <div
-              class="slide"
-              [ngStyle]="{
-                transform: 'translateX(-' + report.currentIndex * 100 + '%)'
-              }"
-            >
-              <!-- Slide-uri -->
-              <div
-                class="image"
-                *ngFor="let image of report.imageUrls; let i = index"
-                [style.background-image]="'url(' + image + ')'"
-                [attr.data-index]="i"
-              ></div>
+        <div *ngIf="!isLoading">
+          <div *ngFor="let report of reports" class="report-container">
+            <div class="heading">
+              <p class="name-title">
+                {{
+                  report.isAnonymous ? "Un utilizator anonim" : report.username
+                }}
+                a adăugat un nou raport
+              </p>
+              <!-- Adăugat clasa report-title la p -->
+              <p class="date-reported">
+                {{ report.reportDate | date : "dd.MM.yyyy" }}
+              </p>
             </div>
-            <!-- Butoanele pentru navigarea între imagini -->
-            <button class="prev" (click)="prevImage(report)">&#8249;</button>
-            <button class="next" (click)="nextImage(report)">&#8250;</button>
+
+            <div
+              class="current-status"
+              [ngClass]="getStatusClass(report.statusText)"
+            >
+              <ng-container [ngSwitch]="report.statusText">
+                <fa-icon
+                  *ngSwitchCase="'Nou'"
+                  [icon]="iconService.faHourglassStart"
+                ></fa-icon>
+                <fa-icon
+                  *ngSwitchCase="'În Progres'"
+                  [icon]="iconService.faHourglassHalf"
+                ></fa-icon>
+                <fa-icon
+                  *ngSwitchCase="'Rezolvat'"
+                  [icon]="iconService.faCheckCircle"
+                ></fa-icon>
+                <fa-icon *ngSwitchDefault [icon]="iconService.faInfo"></fa-icon>
+              </ng-container>
+              <p>{{ report.statusText }}</p>
+            </div>
+            <p class="report-title">{{ report.title }}</p>
+            <p class="description">{{ report.description }}</p>
+            <p class="location-description">
+              Problema a fost raportată în județul {{ report.county }}, comuna
+              {{ report.city }}, la coordonatele:
+              {{ report.latitude | customNumberCoordonate }} latitudine si
+              {{ report.longitude | customNumberCoordonate }} longitudine.
+            </p>
+            <p class="location-description">
+              Detaliile locatiei: {{ report.locationDetails }}
+            </p>
+            <div class="location-description">
+              Acest raport are un grad de severitate {{ report.severityText }}.
+            </div>
+            <div class="image-container" *ngIf="report.imageUrls.length > 0">
+              <!-- Container pentru slide-uri -->
+              <div
+                class="slide"
+                [ngStyle]="{
+                  transform: 'translateX(-' + report.currentIndex * 100 + '%)'
+                }"
+              >
+                <!-- Slide-uri -->
+                <div
+                  class="image"
+                  *ngFor="let image of report.imageUrls; let i = index"
+                  [style.background-image]="'url(' + image + ')'"
+                  [attr.data-index]="i"
+                ></div>
+              </div>
+              <!-- Butoanele pentru navigarea între imagini -->
+              <button class="prev" (click)="prevImage(report)">&#8249;</button>
+              <button class="next" (click)="nextImage(report)">&#8250;</button>
+            </div>
           </div>
         </div>
       </div>

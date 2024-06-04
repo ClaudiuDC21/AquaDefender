@@ -216,12 +216,12 @@ namespace AquaDefender_Backend.Repository
         }
 
         public async Task<IEnumerable<Report>> GetReportsByCityAndFilters(
-            int cityId,
-            ReportStatus? status,
-            SeverityLevel? severity,
-            DateTime? startDate,
-            DateTime? endDate,
-            string userName)
+    int cityId,
+    ReportStatus? status,
+    SeverityLevel? severity,
+    DateTime? startDate,
+    DateTime? endDate,
+    string userName)
         {
             try
             {
@@ -239,14 +239,33 @@ namespace AquaDefender_Backend.Repository
                     query = query.Where(r => r.Severity == severity.Value);
                 }
 
-                if (startDate.HasValue)
+                if (startDate.HasValue && endDate.HasValue)
                 {
-                    query = query.Where(r => r.ReportDate >= startDate.Value);
+                    if (startDate.Value.Date == endDate.Value.Date)
+                    {
+                        // If start date and end date are the same, filter for the entire day
+                        var nextDay = startDate.Value.Date.AddDays(1);
+                        query = query.Where(r => r.ReportDate >= startDate.Value.Date && r.ReportDate < nextDay);
+                    }
+                    else
+                    {
+                        // Adjust endDate to include the entire end date day
+                        var adjustedEndDate = endDate.Value.Date.AddDays(1);
+                        query = query.Where(r => r.ReportDate >= startDate.Value && r.ReportDate < adjustedEndDate);
+                    }
                 }
-
-                if (endDate.HasValue)
+                else
                 {
-                    query = query.Where(r => r.ReportDate <= endDate.Value);
+                    if (startDate.HasValue)
+                    {
+                        query = query.Where(r => r.ReportDate >= startDate.Value);
+                    }
+
+                    if (endDate.HasValue)
+                    {
+                        var adjustedEndDate = endDate.Value.Date.AddDays(1);
+                        query = query.Where(r => r.ReportDate < adjustedEndDate);
+                    }
                 }
 
                 if (!string.IsNullOrEmpty(userName))

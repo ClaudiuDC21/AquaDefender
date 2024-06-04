@@ -114,5 +114,33 @@ namespace AquaDefender_Backend.Repository
                 throw;
             }
         }
+
+        public async Task<string> GetCityEmailByIdAsync(int cityId)
+        {
+            try
+            {
+                var city = await _dbContext.City.FirstOrDefaultAsync(c => c.Id == cityId);
+                return city?.CityHallEmail;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting the email for city with ID {cityId}.");
+                throw;
+            }
+        }
+
+        public async Task<string> GetCountyEmailByIdAsync(int countyId)
+        {
+            try
+            {
+                var county = await _dbContext.County.FirstOrDefaultAsync(c => c.Id == countyId);
+                return county?.WaterDeptEmail;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting the email for county with ID {countyId}.");
+                throw;
+            }
+        }
     }
 }

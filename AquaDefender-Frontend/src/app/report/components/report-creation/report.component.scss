@@ -270,6 +270,9 @@
       margin-top: 0; /* Pull error message closer to input */
       margin-bottom: 0px;
     }
+    .invalid{
+      margin: 10px auto;
+    }
 
     .error-message{
       color: #ff5252;

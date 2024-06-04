@@ -92,7 +92,7 @@
     >
       <button type="button" *ngIf="isAdding" (click)="activateDate()">
         <fa-icon [icon]="iconService.calendarCheck"></fa-icon>
-        <span class="button-text">Activeaza Data</span>
+        <span class="button-text">Oprește adăugarea</span>
         <div class="fill-container"></div>
       </button>
       <button type="button" (click)="addReport()">
@@ -114,30 +114,6 @@
         <span class="button-text">Șterge acest raport</span>
         <div class="fill-container"></div>
       </button>
-    </div>
-
-    <div class="left-table" [class.adding-margin]="isAdding" *ngIf="!isLoading">
-      <p class="left-title">Parametrii normali ale apei potabile</p>
-      <div class="table-wrapper">
-        <table class="fl-table">
-          <thead>
-            <tr>
-              <th>Parametru</th>
-              <th>Valoare maximă admisă</th>
-              <th>Unitate de măsură</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row of tableData">
-              <td>{{ row.param }}</td>
-              <td>{{ row.value }}</td>
-              <td>{{ row.unit }}</td>
-            </tr>
-          </tbody>
-
-          <tbody></tbody>
-        </table>
-      </div>
     </div>
 
     <div class="right-table" *ngIf="!isAuthenticated()">
@@ -180,7 +156,7 @@
           <option *ngFor="let city of cities" [value]="city.id">
             {{ city.name }}
           </option></select
-        ><br />
+        >
         <span *ngIf="!isAdding">din data de: </span>
         <select
           *ngIf="!isAdding"
@@ -204,12 +180,14 @@
             <tr>
               <th>Parametru</th>
               <th>Valoare maximă admisă</th>
+              <th>Valoarea din localitatea ta</th>
               <th>Unitate de măsură</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let row of tableData">
               <td>{{ row.param }}</td>
+              <td>{{ row.value }}</td>
               <td>
                 <div *ngIf="editMode; else showUserProvidedValue">
                   <input
@@ -225,11 +203,9 @@
               <td>{{ row.unit }}</td>
             </tr>
           </tbody>
-
-          <tbody></tbody>
         </table>
         <div *ngIf="editMode; else showNotes">
-          <div class="textarea-container">
+          <div class="notes-container">
             <textarea
               id="additionalNotes"
               [(ngModel)]="waterInfo.additionalNotes"
@@ -238,13 +214,13 @@
             ></textarea>
           </div>
         </div>
-        <!-- Afișarea notelor doar dacă există -->
         <ng-template #showNotes>
           <div *ngIf="waterInfo.additionalNotes" class="notes-container">
             <p>{{ waterInfo.additionalNotes }}</p>
           </div>
         </ng-template>
       </div>
+
       <div
         class="buttons-container"
         *ngIf="!isLoading && isAuthenticated() && isNotUser()"
@@ -297,7 +273,7 @@
             <fa-icon [icon]="iconService.faClose"></fa-icon>
           </button>
           <p>
-            Ești sigur că vrei să activezi apariția datei? Acest lucru va șterge
+            Ești sigur că vrei să oprești adăugarea acestui raport? Acest lucru va șterge
             progresele făcute până acum.
           </p>
           <div class="popup-actions">

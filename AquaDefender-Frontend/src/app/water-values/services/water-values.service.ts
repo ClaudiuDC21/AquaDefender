@@ -2,13 +2,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WaterValuesService {
-  private apiUrl = 'https://localhost:2112/WaterValues'; // presupunând ruta pentru WaterValuesController
-
+  private baseUrl = environment.apiUrl;
+  private apiUrl = `${this.baseUrl}/WaterValues`;
+  
   constructor(private http: HttpClient) {}
 
   getWaterValuesById(id: number): Observable<any> {

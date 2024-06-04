@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../../authentication/services/authentication.service';
-import { LocationService } from '../../../utils/location.service';
+import { LocationService } from '../../../utils/services/location.service';
 import { Report } from '../../models/report.model';
 import { ReportService } from '../../services/report.service';
 import { SeverityLevel } from '../../enums/severity';
@@ -8,11 +8,19 @@ import { User } from '../../../profile/models/user.model';
 import { ReportStatus } from '../../enums/status';
 import { NavigationEnd, Router } from '@angular/router';
 import { UserService } from '../../../profile/services/user.service';
-import { Observable, catchError, filter, forkJoin, map, switchMap } from 'rxjs';
+import {
+  Observable,
+  catchError,
+  filter,
+  forkJoin,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
 import { ReportStatistics } from '../../models/report-statistics.model';
 import { ViewportScroller } from '@angular/common';
 import JSZip from 'jszip';
-import { IconService } from '../../../utils/icon.service';
+import { IconService } from '../../../utils/services/icon.service';
 
 @Component({
   selector: 'app-report-management',
@@ -36,6 +44,7 @@ export class ReportManagementComponent implements OnInit {
   reports: Report[] = [];
   countyName: string = '';
   cityName: string = '';
+  currentReportId: number | null = null;
 
   severityOptions = Object.values(SeverityLevel);
   statusOptions = Object.values(ReportStatus);
@@ -44,6 +53,7 @@ export class ReportManagementComponent implements OnInit {
   selectedStatus: ReportStatus = ReportStatus.All;
 
   showDeleteConfirmation: boolean = false;
+  statusChangeMessage: string = '';
   isLoading = false;
   filtersApplied = false;
 
@@ -51,6 +61,9 @@ export class ReportManagementComponent implements OnInit {
   selectedEndDate: string = '';
   userNameSearch: string = '';
   today: Date = new Date();
+
+  alertErrorMessages: string[] = [];
+  alertSuccessMessages: string[] = [];
 
   cityId: string | null = this.authenticationService.getCityId();
 
@@ -100,7 +113,7 @@ export class ReportManagementComponent implements OnInit {
     return this.authenticationService.getAuthStatus();
   }
 
-  isNotUser(){
+  isNotUser() {
     return this.authenticationService.isNotUser();
   }
 
@@ -110,6 +123,14 @@ export class ReportManagementComponent implements OnInit {
 
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  removeAlert(index: number): void {
+    this.alertErrorMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
+  }
+
+  removeSuccessAlert(index: number): void {
+    this.alertSuccessMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
   }
 
   loadStatistics(cityId: number): void {
@@ -140,9 +161,11 @@ export class ReportManagementComponent implements OnInit {
 
     if (userId === null) {
       console.error('Invalid user ID');
+      this.alertErrorMessages.push('ID-ul utilizatorului este invalid.');
       this.isLoading = false;
       return;
     }
+
     this.userService
       .getUserById(userId)
       .pipe(
@@ -152,16 +175,28 @@ export class ReportManagementComponent implements OnInit {
           return forkJoin({
             cityName: this.locationService.getCityById(userData.cityId),
           });
+        }),
+        catchError((error) => {
+          console.error('Error fetching user data:', error);
+          this.alertErrorMessages.push(
+            'Eroare la obținerea datelor utilizatorului: ' + error.message
+          );
+          this.isLoading = false;
+          return of(null); // Return an observable to complete the stream
         })
       )
       .subscribe({
         next: (result) => {
+          if (!result) {
+            return;
+          }
           const cityIdNumber =
             this.cityId !== null ? parseInt(this.cityId, 10) : null;
 
           // Check if cityIdNumber is valid before making the API call
           if (cityIdNumber === null || isNaN(cityIdNumber)) {
             console.error('Invalid city ID');
+            this.alertErrorMessages.push('ID-ul orașului este invalid.');
             this.isLoading = false;
             return;
           }
@@ -171,6 +206,10 @@ export class ReportManagementComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error fetching location data:', error);
+          this.alertErrorMessages.push(
+            'Eroare la obținerea datelor locației: ' + error.message
+          );
+          this.isLoading = false;
         },
       });
   }
@@ -194,12 +233,29 @@ export class ReportManagementComponent implements OnInit {
   applyFilters() {
     this.isLoading = true;
     this.filtersApplied = true;
+
+    // Check if end date is earlier than start date
+    if (
+      this.selectedEndDate &&
+      this.selectedStartDate &&
+      this.selectedEndDate < this.selectedStartDate
+    ) {
+      const errorMessage =
+        'Data de sfârșit nu poate fi mai mică decât data de început.';
+      console.error(errorMessage);
+      this.alertErrorMessages.push(errorMessage);
+      this.isLoading = false;
+      return;
+    }
+
     const cityIdNumber =
       this.cityId !== null ? parseInt(this.cityId, 10) : null;
 
     // Check if cityIdNumber is valid before making the API call
     if (cityIdNumber === null || isNaN(cityIdNumber)) {
-      console.error('Invalid city ID');
+      const errorMessage = 'ID-ul orașului este invalid.';
+      console.error(errorMessage);
+      this.alertErrorMessages.push(errorMessage);
       this.isLoading = false;
       return;
     }
@@ -215,20 +271,35 @@ export class ReportManagementComponent implements OnInit {
       )
       .pipe(
         catchError((error) => {
-          console.error('Error processing report details:', error);
+          const errorMessage =
+            'Eroare la procesarea detaliilor raportului: ' + error.message;
+          console.error(errorMessage);
+          this.alertErrorMessages.push(errorMessage);
           this.isLoading = false;
-          return []; // sau returnează un observabil gol pentru a evita crash-ul aplicației
+          return of([]); // Return an empty observable to avoid app crash
         })
       )
       .subscribe((reports) => {
+        // Filter out anonymous reports if userNameSearch is not empty
+        if (this.userNameSearch) {
+          reports = reports.filter((report) => !report.isAnonymous);
+        }
+
+        this.reports = reports; // Update the reports property with the fetched data
+
         if (reports.length === 0) {
-          console.error('No reports fetched');
+          const errorMessage =
+            'Nu au fost găsite rapoarte cu filtrele adăugate.';
+          console.error(errorMessage);
+          this.alertErrorMessages.push(errorMessage);
           this.isLoading = false;
           return;
         }
 
-        // Procesăm detaliile raportului
+        // Process report details
         this.processReportDetails(reports);
+        this.alertSuccessMessages.push('Filtrele au fost aplicate cu succes.');
+        this.isLoading = false;
       });
   }
 
@@ -258,13 +329,13 @@ export class ReportManagementComponent implements OnInit {
 
         report.currentIndex = 0;
         report.statusText = this.getStatusText(report.status); // Mapează statusul numeric la text
+        report.severityText = this.getSeverityText(report.severity);
       } catch (error) {
         console.error('Error loading report details:', error);
       }
     }
 
     this.reports = reports;
-    this.isLoading = false;
   }
 
   // Metodă pentru a mapează statusul numeric la text
@@ -278,6 +349,23 @@ export class ReportManagementComponent implements OnInit {
         return 'Rezolvat';
       default:
         return 'Necunoscut';
+    }
+  }
+
+  getSeverityText(severity: number): string {
+    switch (severity) {
+      case 0:
+        return 'minor';
+      case 1:
+        return 'moderat';
+      case 2:
+        return 'serios';
+      case 3:
+        return 'sever';
+      case 4:
+        return 'critic';
+      default:
+        return 'necunoscut';
     }
   }
 
@@ -302,16 +390,26 @@ export class ReportManagementComponent implements OnInit {
         if (imageUrls.length > 0) {
           return imageUrls;
         } else {
-          console.error('No images found in the ZIP file.');
+          const noImagesError = 'Nu au fost găsite imagini în fișierul ZIP.';
+          console.error(noImagesError);
+          this.alertErrorMessages.push(noImagesError);
         }
       } else {
-        console.error('Unexpected response format:', response);
+        const unexpectedResponseError =
+          'Format de răspuns neașteptat: ' + response;
+        console.error(unexpectedResponseError);
+        this.alertErrorMessages.push(unexpectedResponseError);
       }
-    } catch (error) {
-      console.error('Error fetching images:', error);
+    } catch (error: any) {
+      const fetchImagesError =
+        'Eroare la obținerea imaginilor: ' + error.message;
+      console.error(fetchImagesError);
+      this.alertErrorMessages.push(fetchImagesError);
     }
 
-    console.log('Returning default paths.');
+    const defaultPathMessage = 'Întoarcere la căile implicite.';
+    console.log(defaultPathMessage);
+    this.alertErrorMessages.push(defaultPathMessage);
     return ['path/to/default/image.jpg'];
   }
 
@@ -329,31 +427,41 @@ export class ReportManagementComponent implements OnInit {
     }
   }
 
-  
-
   updateStatus(report: any) {
     if (report.status !== null) {
+      const oldStatusText = this.getStatusText(report.status);
+
       console.log(report.status);
-      this.reportService.updateReportStatus(report.id, report.status).subscribe({
-        next: response => {
-          console.log('Status updated successfully', response);
-          // Opțional: Actualizează `report.statusText` sau alte acțiuni necesare după update
-        },
-        error: error => console.error('Failed to update status', error)
-      });
+      this.currentReportId = report.id; // Store the ID of the report being updated
+      this.reportService
+        .updateReportStatus(report.id, report.status)
+        .subscribe({
+          next: (response) => {
+            console.log('Status updated successfully', response);
+            const newStatusText = this.getStatusText(report.status);
+            this.statusChangeMessage = `Statusul acestui raport a fost schimbat în "${newStatusText}".\nPentru a putea vedea modificările va trebui să aplicați din nou filtrele dorite!`;
+          },
+          error: (error) => {
+            console.error('Failed to update status', error);
+            const errorMessage =
+              'Eroare la actualizarea statusului raportului: ' + error.message;
+            this.alertErrorMessages.push(errorMessage);
+            this.currentReportId = null; // Reset on error
+          },
+        });
     }
   }
 
   getStatusClass(statusText: string): string {
     switch (statusText) {
       case 'Nou':
-        return 'status-new';  // Clasa pentru statusul "Nou"
+        return 'status-new'; // Clasa pentru statusul "Nou"
       case 'În Progres':
-        return 'status-in-progress';  // Clasa pentru statusul "În Progres"
+        return 'status-in-progress'; // Clasa pentru statusul "În Progres"
       case 'Rezolvat':
-        return 'status-resolved';  // Clasa pentru statusul "Rezolvat"
+        return 'status-resolved'; // Clasa pentru statusul "Rezolvat"
       default:
-        return 'status-unknown';  // Clasa implicită pentru orice altă valoare
+        return 'status-unknown'; // Clasa implicită pentru orice altă valoare
     }
   }
 

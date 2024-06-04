@@ -2,14 +2,29 @@
 
 <app-navbar *ngIf="!isLoading"></app-navbar>
 
-<div class="header">
+<div class="header" *ngIf="!isLoading">
 
-
+  <div class="alert-container" *ngIf="!isLoading">
+    <div *ngFor="let successMessage of alertSuccessMessages; let j = index">
+      <app-alert-success
+        [message]="successMessage"
+        (close)="removeSuccessAlert(j)"
+      ></app-alert-success>
+    </div>
+  
+    <div *ngFor="let errorMessage of alertErrorMessages; let i = index">
+      <app-alert-error
+        [message]="errorMessage"
+        (close)="removeAlert(i)"
+      ></app-alert-error>
+    </div>
+  </div>
   <div class="inner-header flex" *ngIf="!isLoading">
     <div class="back-container">
       <div class="report-management-header">
         <h1>
-          Centralizarea și Managementul Rapoartelor Locale din {{ cityName }}
+          Centralizarea și Managementul Rapoartelor Locale din
+          {{ isAuthenticated() ? cityName : "localitatea ta" }}
         </h1>
       </div>
 
@@ -150,14 +165,17 @@
           *ngIf="filtersApplied && reports.length === 0"
           class="no-reports-message"
         >
-          Nu au fost găsite rapoarte.
+          Nu au fost găsite rapoarte cu aceste filtre.
         </div>
 
         <div *ngIf="!isLoading">
           <div *ngFor="let report of reports" class="report-container">
             <div class="heading">
               <p class="name-title">
-                {{ report.username }} a adăugat un nou raport
+                {{
+                  report.isAnonymous ? "Un utilizator anonim" : report.username
+                }}
+                a adăugat un nou raport
               </p>
               <!-- Adăugat clasa report-title la p -->
               <p class="date-reported">
@@ -197,6 +215,9 @@
             <p class="location-description">
               Detaliile locatiei: {{ report.locationDetails }}
             </p>
+            <div class="location-description">
+              Acest raport are un grad de severitate {{ report.severityText }}.
+            </div>
             <div class="image-container" *ngIf="report.imageUrls.length > 0">
               <!-- Container pentru slide-uri -->
               <div
@@ -222,24 +243,35 @@
                 >Selectează statusul raportului, daca a fost facut vreun
                 progres:</label
               >
-              <select id="status" [(ngModel)]="report.status">
-                <option [ngValue]="0">Nou</option>
-                <option [ngValue]="1">În Progres</option>
-                <option [ngValue]="2">Rezolvat</option>
-              </select>
-            </div>
-            <div class="button-status" *ngIf="report.status !== null && isNotUser()">
-              <button type="button" (click)="updateStatus(report)">
-                <span class="button-text">Modifică statusul</span>
-                <div class="fill-container"></div>
-              </button>
+              <div>
+                <select id="status" [(ngModel)]="report.status">
+                  <option [ngValue]="0">Nou</option>
+                  <option [ngValue]="1">În Progres</option>
+                  <option [ngValue]="2">Rezolvat</option>
+                </select>
+              </div>
+              <div
+                class="button-status"
+                *ngIf="report.status !== null && isNotUser()"
+              >
+                <button type="button" (click)="updateStatus(report)">
+                  <span class="button-text">Modifică statusul</span>
+                  <div class="fill-container"></div>
+                </button>
+              </div>
+              <div
+                *ngIf="currentReportId === report.id && statusChangeMessage"
+                class="status-change-message"
+              >
+                <pre>{{ statusChangeMessage }}</pre>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div>
+    <div *ngIf="!isLoading">
       <svg
         class="waves"
         xmlns="http://www.w3.org/2000/svg"

@@ -180,5 +180,64 @@ namespace AquaDefender_Backend.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpGet("city/{cityId}/email")]
+        public async Task<IActionResult> GetCityEmail(int cityId)
+        {
+            if (cityId <= 0)
+            {
+                return BadRequest("City ID must be a positive integer.");
+            }
+
+            try
+            {
+                var email = await _locationService.GetCityEmailByIdAsync(cityId);
+                if (email == null)
+                {
+                    return NotFound($"City with ID {cityId} not found.");
+                }
+                return Ok(new { email = email });
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex, $"Validation error occurred while getting the email for city with ID {cityId}.");
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting the email for city with ID {cityId}.");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("county/{countyId}/email")]
+        public async Task<IActionResult> GetCountyEmail(int countyId)
+        {
+            if (countyId <= 0)
+            {
+                return BadRequest("County ID must be a positive integer.");
+            }
+
+            try
+            {
+                var email = await _locationService.GetCountyEmailByIdAsync(countyId);
+                if (email == null)
+                {
+                    return NotFound($"County with ID {countyId} not found.");
+                }
+                return Ok(new { email = email });
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex, $"Validation error occurred while getting the email for county with ID {countyId}.");
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting the email for county with ID {countyId}.");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
     }
 }

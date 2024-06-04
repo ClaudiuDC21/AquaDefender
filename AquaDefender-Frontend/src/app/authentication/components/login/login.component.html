@@ -15,15 +15,6 @@
   </div>
 </div>
 
-<div class="alert-container" *ngIf="alertErrorMessages.length > 0 && !isLoading">
-  <div *ngFor="let errorMessage of alertErrorMessages; let i = index">
-    <app-alert-error
-      [message]="errorMessage"
-      (close)="removeAlert(i)"
-    ></app-alert-error>
-  </div>
-</div>
-
 <div class="header" *ngIf="!isLoading">
   <div class="login-container" *ngIf="!isLoading">
     <div class="login-box">

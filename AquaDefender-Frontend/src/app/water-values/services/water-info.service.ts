@@ -2,13 +2,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WaterInfoService {
-  private apiUrl = 'https://localhost:2112/WaterInfo'; // assuming the WaterInfoController route
-
+  private baseUrl = environment.apiUrl;
+  private apiUrl = `${this.baseUrl}/WaterInfo`;
+  
   constructor(private http: HttpClient) {}
 
   getWaterInfoById(id: number): Observable<any> {

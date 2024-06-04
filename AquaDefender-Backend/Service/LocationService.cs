@@ -174,5 +174,51 @@ namespace AquaDefender_Backend.Service
                 throw;
             }
         }
+
+        public async Task<string> GetCityEmailByIdAsync(int cityId)
+        {
+            if (cityId <= 0)
+            {
+                throw new ArgumentException("City ID must be a positive integer.");
+            }
+
+            try
+            {
+                var email = await _locationRepository.GetCityEmailByIdAsync(cityId);
+                if (email == null)
+                {
+                    throw new ArgumentException($"City with ID {cityId} does not exist.");
+                }
+                return email;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting the email for city with ID {cityId}.");
+                throw;
+            }
+        }
+
+        public async Task<string> GetCountyEmailByIdAsync(int countyId)
+        {
+            if (countyId <= 0)
+            {
+                throw new ArgumentException("County ID must be a positive integer.");
+            }
+
+            try
+            {
+                var email = await _locationRepository.GetCountyEmailByIdAsync(countyId);
+                if (email == null)
+                {
+                    throw new ArgumentException($"County with ID {countyId} does not exist.");
+                }
+                return email;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting the email for county with ID {countyId}.");
+                throw;
+            }
+        }
     }
 }
