@@ -76,10 +76,6 @@ env.WebRootPath = "imagesRoot";
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-    endpoints.MapFallbackToFile("index.html"); // Asigură-te că index.html este servit pentru orice rută neacoperită
-});
+app.MapControllers();
 
 app.Run();
