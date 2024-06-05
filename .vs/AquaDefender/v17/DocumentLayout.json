@@ -3,12 +3,15 @@
   "WorkspaceRootPath": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2E16CDC4-ED79-4CE0-8C2D-AA22EF85B445}|AquaDefender-Backend\\AquaDefender-Backend.csproj|c:\\claudiu\\facultate\\licenta\\aquadefender\\aquadefender-backend\\extensions\\applicationserviceextenstions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2E16CDC4-ED79-4CE0-8C2D-AA22EF85B445}|AquaDefender-Backend\\AquaDefender-Backend.csproj|solutionrelative:aquadefender-backend\\extensions\\applicationserviceextenstions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2E16CDC4-ED79-4CE0-8C2D-AA22EF85B445}|AquaDefender-Backend\\AquaDefender-Backend.csproj|c:\\claudiu\\facultate\\licenta\\aquadefender\\aquadefender-backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2E16CDC4-ED79-4CE0-8C2D-AA22EF85B445}|AquaDefender-Backend\\AquaDefender-Backend.csproj|solutionrelative:aquadefender-backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\claud\\AppData\\Local\\Temp\\.vsdbgsrc\\198bf116f7049a2e3e03f29a33fa5180331819d2741ad4116d0479027e6bf834\\PhysicalFileProvider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2E16CDC4-ED79-4CE0-8C2D-AA22EF85B445}|AquaDefender-Backend\\AquaDefender-Backend.csproj|c:\\claudiu\\facultate\\licenta\\aquadefender\\aquadefender-backend\\extensions\\applicationserviceextenstions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2E16CDC4-ED79-4CE0-8C2D-AA22EF85B445}|AquaDefender-Backend\\AquaDefender-Backend.csproj|solutionrelative:aquadefender-backend\\extensions\\applicationserviceextenstions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2E16CDC4-ED79-4CE0-8C2D-AA22EF85B445}|AquaDefender-Backend\\AquaDefender-Backend.csproj|c:\\claudiu\\facultate\\licenta\\aquadefender\\aquadefender-backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -193,11 +196,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "ApplicationServiceExtenstions.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Extensions\\ApplicationServiceExtenstions.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Extensions\\ApplicationServiceExtenstions.cs",
@@ -205,25 +208,37 @@
               "RelativeToolTip": "AquaDefender-Backend\\Extensions\\ApplicationServiceExtenstions.cs",
               "ViewState": "AQIAAA8AAAAAAAAAAAAAABkAAABAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-28T11:02:07.513Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-02-28T11:02:07.513Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Program.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Program.cs",
               "ToolTip": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Program.cs",
               "RelativeToolTip": "AquaDefender-Backend\\Program.cs",
-              "ViewState": "AQIAAA8AAAAAAAAAAAAAABkAAAAmAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-02-28T11:02:04.111Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
+              "Title": "PhysicalFileProvider.cs",
+              "DocumentMoniker": "C:\\Users\\claud\\AppData\\Local\\Temp\\.vsdbgsrc\\198bf116f7049a2e3e03f29a33fa5180331819d2741ad4116d0479027e6bf834\\PhysicalFileProvider.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\Users\\claud\\AppData\\Local\\Temp\\.vsdbgsrc\\198bf116f7049a2e3e03f29a33fa5180331819d2741ad4116d0479027e6bf834\\PhysicalFileProvider.cs",
+              "ToolTip": "C:\\Users\\claud\\AppData\\Local\\Temp\\.vsdbgsrc\\198bf116f7049a2e3e03f29a33fa5180331819d2741ad4116d0479027e6bf834\\PhysicalFileProvider.cs [Read Only]",
+              "RelativeToolTip": "..\\..\\..\\..\\Users\\claud\\AppData\\Local\\Temp\\.vsdbgsrc\\198bf116f7049a2e3e03f29a33fa5180331819d2741ad4116d0479027e6bf834\\PhysicalFileProvider.cs [Read Only]",
+              "ViewState": "AQIAAFQAAAAAAAAAAAAQwGsAAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-04T14:14:22.276Z",
+              "EditorCaption": " [Read Only]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "EmailController.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Controllers\\EmailController.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Controllers\\EmailController.cs",
@@ -235,7 +250,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\appsettings.json",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\appsettings.json",
@@ -243,12 +258,11 @@
               "RelativeToolTip": "AquaDefender-Backend\\appsettings.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-06-04T09:44:31.283Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-04T09:44:31.283Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "AquaDefender-Backend",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\AquaDefender-Backend.csproj",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\AquaDefender-Backend.csproj",
@@ -259,7 +273,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "AquaDefender-Backend.csproj.user",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\AquaDefender-Backend.csproj.user",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\AquaDefender-Backend.csproj.user",
@@ -271,7 +285,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "WaterInfoService.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Service\\WaterInfoService.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Service\\WaterInfoService.cs",
@@ -283,7 +297,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 46,
               "Title": "20240415101053_AddedBirthDateInsteadOfAge.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240415101053_AddedBirthDateInsteadOfAge.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240415101053_AddedBirthDateInsteadOfAge.cs",
@@ -295,7 +309,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "AppUser.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Domain\\AppUser.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Domain\\AppUser.cs",
@@ -307,7 +321,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "AuthenticationController.cs",
               "DocumentMoniker": "C:\\Users\\claud\\AppData\\Local\\Temp\\.vsdbgsrc\\68d91de6ed9faaa38db5a276fb9297fa324f6920c3cd350c9e2dea2c0aabf6dd\\AuthenticationController.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\Users\\claud\\AppData\\Local\\Temp\\.vsdbgsrc\\68d91de6ed9faaa38db5a276fb9297fa324f6920c3cd350c9e2dea2c0aabf6dd\\AuthenticationController.cs",
@@ -319,7 +333,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "20240415100705_AddedBirthDateInsteadOfAge.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240415100705_AddedBirthDateInsteadOfAge.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240415100705_AddedBirthDateInsteadOfAge.cs",
@@ -330,7 +344,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "Report.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Domain\\Report.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Domain\\Report.cs",
@@ -342,7 +356,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "20240411085535_UserIdOnDeleteCascade.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240411085535_UserIdOnDeleteCascade.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240411085535_UserIdOnDeleteCascade.cs",
@@ -354,7 +368,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "20240411085511_U.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240411085511_U.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240411085511_U.cs",
@@ -365,7 +379,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "20240330113407_addCascadeOnReportImagesDelete.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240330113407_addCascadeOnReportImagesDelete.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240330113407_addCascadeOnReportImagesDelete.cs",
@@ -377,7 +391,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "AquaDefenderDataContext.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\AquaDefenderDataContext.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\AquaDefenderDataContext.cs",
@@ -389,7 +403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "20240328184622_ModifiedIntoDeleteOnCascade.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240328184622_ModifiedIntoDeleteOnCascade.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240328184622_ModifiedIntoDeleteOnCascade.cs",
@@ -401,7 +415,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "20240327155625_WaterValuesInModelBuilder.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240327155625_WaterValuesInModelBuilder.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240327155625_WaterValuesInModelBuilder.cs",
@@ -413,7 +427,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 44,
               "Title": "20240327155429_WaterValuesInData.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240327155429_WaterValuesInData.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240327155429_WaterValuesInData.cs",
@@ -425,7 +439,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 45,
               "Title": "20240327152758_AllValuesIntoListOfValues.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240327152758_AllValuesIntoListOfValues.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240327152758_AllValuesIntoListOfValues.cs",
@@ -437,7 +451,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "20240325093240_AddedNewColumnWaterValues.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240325093240_AddedNewColumnWaterValues.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240325093240_AddedNewColumnWaterValues.cs",
@@ -449,7 +463,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 43,
               "Title": "20240325085735_ChangedFloatToStringWaterValues.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240325085735_ChangedFloatToStringWaterValues.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240325085735_ChangedFloatToStringWaterValues.cs",
@@ -461,7 +475,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "20240325081732_AddedQualityWaterValues.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240325081732_AddedQualityWaterValues.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240325081732_AddedQualityWaterValues.cs",
@@ -472,7 +486,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "AuthenticationController.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Controllers\\AuthenticationController.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Controllers\\AuthenticationController.cs",
@@ -484,7 +498,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "WaterInfo.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Domain\\WaterInfo.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Domain\\WaterInfo.cs",
@@ -496,7 +510,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 38,
               "Title": "LocationController.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Controllers\\LocationController.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Controllers\\LocationController.cs",
@@ -508,7 +522,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "LoginDto.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\DTOs\\LoginDto.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\DTOs\\LoginDto.cs",
@@ -520,7 +534,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "UserRole.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Domain\\UserRole.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Domain\\UserRole.cs",
@@ -532,7 +546,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 39,
               "Title": "20240321090011_PhoneNumberOnUserClass.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240321090011_PhoneNumberOnUserClass.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240321090011_PhoneNumberOnUserClass.cs",
@@ -544,7 +558,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "RegisterDto.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\DTOs\\RegisterDto.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\DTOs\\RegisterDto.cs",
@@ -556,7 +570,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "City.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Domain\\City.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Domain\\City.cs",
@@ -568,7 +582,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 40,
               "Title": "WaterInfoController.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Controllers\\WaterInfoController.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Controllers\\WaterInfoController.cs",
@@ -580,7 +594,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "UserDto.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\DTOs\\UserDto.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\DTOs\\UserDto.cs",
@@ -592,7 +606,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 41,
               "Title": "LocationRepository.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Repository\\LocationRepository.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Repository\\LocationRepository.cs",
@@ -604,7 +618,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "UserRepository.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Repository\\UserRepository.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Repository\\UserRepository.cs",
@@ -616,7 +630,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 42,
               "Title": "20240321065034_AddeedJSONIgnoreOnLocation.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240321065034_AddeedJSONIgnoreOnLocation.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240321065034_AddeedJSONIgnoreOnLocation.cs",
@@ -628,7 +642,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "County.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Domain\\County.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Domain\\County.cs",
@@ -640,7 +654,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "IUserRepository.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Repository\\Interfaces\\IUserRepository.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Repository\\Interfaces\\IUserRepository.cs",
@@ -652,7 +666,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "ReportImage.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Domain\\ReportImage.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Domain\\ReportImage.cs",
@@ -664,7 +678,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "20240320072837_AddedClasses.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Migrations\\20240320072837_AddedClasses.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Migrations\\20240320072837_AddedClasses.cs",
@@ -675,7 +689,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "20240320072605_AddedClasses.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240320072605_AddedClasses.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240320072605_AddedClasses.cs",
@@ -686,7 +700,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "20240320071714_AddedAllClasses.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240320071714_AddedAllClasses.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240320071714_AddedAllClasses.cs",
@@ -697,7 +711,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "20240320071340_AddedAllClasses.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240320071340_AddedAllClasses.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240320071340_AddedAllClasses.cs",
@@ -708,7 +722,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "20240320071009_DEletedUserIdFromReport.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240320071009_DEletedUserIdFromReport.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240320071009_DEletedUserIdFromReport.cs",
@@ -719,7 +733,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 36,
               "Title": "20240320070905_ChangedTypeOfUserId.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240320070905_ChangedTypeOfUserId.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240320070905_ChangedTypeOfUserId.cs",
@@ -730,7 +744,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 37,
               "Title": "20240320070801_AddedAllClasses.cs",
               "DocumentMoniker": "C:\\claudiu\\Facultate\\Licenta\\AquaDefender\\AquaDefender-Backend\\Data\\Migrations\\20240320070801_AddedAllClasses.cs",
               "RelativeDocumentMoniker": "AquaDefender-Backend\\Data\\Migrations\\20240320070801_AddedAllClasses.cs",

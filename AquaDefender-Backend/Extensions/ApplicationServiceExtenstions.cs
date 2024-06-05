@@ -33,7 +33,7 @@ namespace AquaDefender_Backend.Extensions
             services.AddScoped<IReportRepository, ReportRepository>();
 
             services.AddDbContext<AquaDefenderDataContext>(options =>
-                       options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+                       options.UseSqlServer(config.GetConnectionString("ProductionConnection")));
 
             return services;
         }
