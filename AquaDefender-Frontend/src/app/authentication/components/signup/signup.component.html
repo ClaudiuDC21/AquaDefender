@@ -2,7 +2,7 @@
 
 <app-loading *ngIf="isLoading"></app-loading>
 
-<div class="alert-container">
+<div class="alert-container" *ngIf="!isLoading">
   <div *ngFor="let errorMessage of alertErrorMessages; let i = index">
     <app-alert-error
       [message]="errorMessage"
@@ -91,7 +91,7 @@
           #countyField="ngModel"
           (change)="onCountyChange()"
           required>
-          <option value="" disabled selected>Selecteaza un județ</option>
+          <option value="" disabled selected>Selectează un județ</option>
           <option *ngFor="let county of counties" [value]="county.id">
             {{ county.name }}
           </option>
@@ -110,7 +110,7 @@
           #cityField="ngModel"
           required
           [disabled]="cities.length === 0">
-          <option value="" disabled selected>Selecteaza o localitate</option>
+          <option value="" disabled selected>Selectează o localitate</option>
           <option *ngFor="let city of cities" [value]="city.id">
             {{ city.name }}
           </option>
@@ -128,7 +128,7 @@
         name="password"
         [(ngModel)]="password"
         #passwordField="ngModel"
-        placeholder="Creeaza o parola sigura"
+        placeholder="Creeaza o parolă sigura"
         required
         pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,}"
         >

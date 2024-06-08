@@ -13,7 +13,12 @@ import { ReportService } from '../../../report/services/report.service';
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
 import { LocationService } from '../../../utils/services/location.service';
-import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  NavigationExtras,
+  Router,
+} from '@angular/router';
 import { ReportStatus } from '../../../report/enums/status';
 import { SeverityLevel } from '../../../report/enums/severity';
 import { Report } from '../../../report/models/report.model';
@@ -27,7 +32,6 @@ import JSZip from 'jszip';
   styleUrls: ['./personal-profile.component.scss'],
 })
 export class PersonalProfileComponent implements OnInit {
-  isDropdownOpen: boolean = false;
   stats = {
     totalReports: 0,
     newReports: 0,
@@ -87,7 +91,7 @@ export class PersonalProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUserData();
-    
+
     this.route.queryParams.subscribe((params) => {
       const message = params['message'];
       if (message && !this.alertSuccessMessages.includes(message)) {
@@ -100,7 +104,7 @@ export class PersonalProfileComponent implements OnInit {
     });
   }
 
-  get isAuthenticated() {
+  isAuthenticated() {
     return this.authenticationService.getAuthStatus();
   }
 
@@ -108,20 +112,12 @@ export class PersonalProfileComponent implements OnInit {
     return this.authenticationService.getUserId() ?? 0;
   }
 
-  onLogout() {
-    this.authenticationService.logout();
-  }
-
-  toggleDropdown(): void {
-    this.isDropdownOpen = !this.isDropdownOpen;
-  }
-
   removeAlert(index: number): void {
-    this.alertErrorMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
+    this.alertErrorMessages.splice(index, 1); 
   }
 
   removeSuccessAlert(index: number): void {
-    this.alertSuccessMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
+    this.alertSuccessMessages.splice(index, 1); 
   }
 
   openDeleteConfirmation(): void {
@@ -157,7 +153,7 @@ export class PersonalProfileComponent implements OnInit {
 
   loadStatistics(): void {
     this.isLoading = false;
-    const userId = this.authenticationService.getUserId(); // Înlocuiește cu ID-ul utilizatorului actual
+    const userId = this.authenticationService.getUserId(); 
     if (userId) {
       this.reportService.getTotalReportsByUserId(userId).subscribe({
         next: (totalReports) => {
@@ -211,9 +207,8 @@ export class PersonalProfileComponent implements OnInit {
 
   async loadUserData() {
     this.isLoading = true;
-    // Check if the user is authenticated and retrieve userId from local storage
-    if (this.isAuthenticated) {
-      const userId = this.authenticationService.getUserId(); // Get userId from local storage
+    if (this.isAuthenticated()) {
+      const userId = this.authenticationService.getUserId();
       if (userId) {
         this.userService
           .getUserById(userId)
@@ -225,15 +220,23 @@ export class PersonalProfileComponent implements OnInit {
                   userData.countyId
                 ),
                 cityName: this.locationService.getCityById(userData.cityId),
+                hasProfilePicture: this.userService.hasProfilePicture(userId),
               });
             })
           )
           .subscribe({
             next: async (result) => {
-              // Update the names based on the results
               this.countyName = result.countyName.name;
               this.cityName = result.cityName.name;
-              this.user.profilePictureUrl = await this.getProfilePicture(userId);
+              this.user.hasProfilePicture = result.hasProfilePicture;
+
+              console.log(this.user.hasProfilePicture)
+              if (this.user.hasProfilePicture) {
+                this.user.profilePictureUrl = await this.getProfilePicture(
+                  userId
+                );
+              }
+
               console.log(this.user.profilePictureUrl);
               this.user.currentIndex = 0;
               this.isLoading = false;
@@ -263,26 +266,29 @@ export class PersonalProfileComponent implements OnInit {
 
   async getProfilePicture(userId: number) {
     try {
-      const response = await this.userService.getUserProfileImage(userId)
+      const response = await this.userService
+        .getUserProfileImage(userId)
         .toPromise();
-  
+
       if (response instanceof Blob) {
         const zip = new JSZip();
         const zipData = await zip.loadAsync(response);
-  
+
         const imageFiles = Object.values(zipData.files);
         const imageUrls: string[] = [];
-  
+
         for (const file of imageFiles) {
           const imageUrl = URL.createObjectURL(await file.async('blob'));
           imageUrls.push(imageUrl);
         }
-  
+
         if (imageUrls.length > 0) {
           return imageUrls;
         } else {
           console.error('No images found in the ZIP file.');
-          this.alertErrorMessages.push('Nu au fost găsite imagini în fișierul ZIP.');
+          this.alertErrorMessages.push(
+            'Nu au fost găsite imagini în fișierul ZIP.'
+          );
         }
       } else {
         console.error('Unexpected response format:', response);
@@ -290,12 +296,16 @@ export class PersonalProfileComponent implements OnInit {
       }
     } catch (error) {
       console.error('Error fetching images:', error);
-      this.alertErrorMessages.push('A apărut o eroare la preluarea imaginilor.');
+      this.alertErrorMessages.push(
+        'A apărut o eroare la preluarea imaginilor.'
+      );
     }
-  
+
     console.log('Returning default paths.');
-    this.alertErrorMessages.push('Se returnează căile implicite ale imaginilor.');
-    return ['path/to/default/image.jpg'];
+    this.alertErrorMessages.push(
+      'Se returnează căile implicite ale imaginilor.'
+    );
+    return ['../../images/defaultProfileImage.jpg'];
   }
 
   calculateAge(birthDate: Date): number {
@@ -306,7 +316,6 @@ export class PersonalProfileComponent implements OnInit {
     let age = today.getFullYear() - birthDateObj.getFullYear();
     const m = today.getMonth() - birthDateObj.getMonth();
 
-    // Ajustează vârsta dacă ziua de naștere nu a trecut încă în anul curent
     if (m < 0 || (m === 0 && today.getDate() < birthDateObj.getDate())) {
       age--;
     }
@@ -317,7 +326,7 @@ export class PersonalProfileComponent implements OnInit {
   applyFilters() {
     this.isLoading = true;
     this.filtersApplied = true;
-    const userId = this.authenticationService.getUserId(); // Replace this with the actual authenticated user's ID
+    const userId = this.authenticationService.getUserId(); 
 
     if (!userId) {
       const errorMessage = 'ID-ul utilizatorului este invalid.';
@@ -340,12 +349,12 @@ export class PersonalProfileComponent implements OnInit {
           console.error(errorMessage);
           this.alertErrorMessages.push(errorMessage);
           this.isLoading = false;
-          return of([]); // Return an empty observable to avoid crashing the application
+          return of([]); 
         })
       )
       .subscribe((reports) => {
         this.isLoading = false;
-        this.reports = reports; // Update the reports property with the fetched data
+        this.reports = reports;
 
         if (reports.length === 0) {
           const errorMessage =
@@ -355,7 +364,6 @@ export class PersonalProfileComponent implements OnInit {
           return;
         }
 
-        // Process report details
         this.processReportDetails(reports);
         this.alertSuccessMessages.push('Filtrele au fost aplicate cu succes.');
         this.isLoading = false;
@@ -383,7 +391,7 @@ export class PersonalProfileComponent implements OnInit {
             report.imageUrls = await this.getReportImages(report.id);
             console.log(report.imageUrls);
           } else {
-            report.imageUrls = []; // Ensure it's an empty array if no images are found
+            report.imageUrls = []; 
           }
         }
 
@@ -395,8 +403,8 @@ export class PersonalProfileComponent implements OnInit {
         this.alertErrorMessages.push(
           'Eroare la încărcarea detaliilor raportului: ' + error.message
         );
-        report.imageUrls = []; // Ensure it's initialized even if there's an error
-        report.hasImages = false; // Ensure hasImages is initialized even if there's an error
+        report.imageUrls = []; 
+        report.hasImages = false;
       }
     }
 
@@ -438,24 +446,26 @@ export class PersonalProfileComponent implements OnInit {
       const response = await this.reportService
         .getImagesByReportId(reportId)
         .toPromise();
-  
+
       if (response instanceof Blob) {
         const zip = new JSZip();
         const zipData = await zip.loadAsync(response);
-  
+
         const imageFiles = Object.values(zipData.files);
         const imageUrls: string[] = [];
-  
+
         for (const file of imageFiles) {
           const imageUrl = URL.createObjectURL(await file.async('blob'));
           imageUrls.push(imageUrl);
         }
-  
+
         if (imageUrls.length > 0) {
           return imageUrls;
         } else {
           console.error('No images found in the ZIP file.');
-          this.alertErrorMessages.push('Nu au fost găsite imagini în fișierul ZIP.');
+          this.alertErrorMessages.push(
+            'Nu au fost găsite imagini în fișierul ZIP.'
+          );
         }
       } else {
         console.error('Unexpected response format:', response);
@@ -463,14 +473,17 @@ export class PersonalProfileComponent implements OnInit {
       }
     } catch (error) {
       console.error('Error fetching images:', error);
-      this.alertErrorMessages.push('A apărut o eroare la preluarea imaginilor.');
+      this.alertErrorMessages.push(
+        'A apărut o eroare la preluarea imaginilor.'
+      );
     }
-  
+
     console.log('Returning default paths.');
-    this.alertErrorMessages.push('Se returnează căile implicite ale imaginilor.');
+    this.alertErrorMessages.push(
+      'Se returnează căile implicite ale imaginilor.'
+    );
     return ['path/to/default/image.jpg'];
   }
-  
 
   nextImage(report: any) {
     if (report.imageUrls && report.imageUrls.length > 0) {
@@ -489,13 +502,13 @@ export class PersonalProfileComponent implements OnInit {
   getStatusClass(statusText: string): string {
     switch (statusText) {
       case 'Nou':
-        return 'status-new'; // Clasa pentru statusul "Nou"
+        return 'status-new';
       case 'În Progres':
-        return 'status-in-progress'; // Clasa pentru statusul "În Progres"
+        return 'status-in-progress';
       case 'Rezolvat':
-        return 'status-resolved'; // Clasa pentru statusul "Rezolvat"
+        return 'status-resolved';
       default:
-        return 'status-unknown'; // Clasa implicită pentru orice altă valoare
+        return 'status-unknown'; 
     }
   }
 
@@ -504,7 +517,7 @@ export class PersonalProfileComponent implements OnInit {
     target: number,
     duration: number
   ): Observable<number> {
-    const totalFrames = (duration / 1000) * 60; // De exemplu, pentru 60 de FPS
+    const totalFrames = (duration / 1000) * 60; 
     const increment = (target - current) / totalFrames;
     let frame = 0;
 
@@ -514,13 +527,13 @@ export class PersonalProfileComponent implements OnInit {
         const value = current + increment * frame;
 
         if (frame >= totalFrames) {
-          observer.next(target); // Asigură-te că ultima valoare este exact ținta
+          observer.next(target);
           observer.complete();
           clearInterval(intervalId);
         } else {
           observer.next(value);
         }
-      }, 1000 / 60); // Aproximativ 60 de FPS
+      }, 1000 / 60); 
 
       return () => clearInterval(intervalId);
     });
@@ -534,7 +547,7 @@ export class PersonalProfileComponent implements OnInit {
     this.animateValue(0, target, duration).subscribe((value: number) => {
       this.stats[property] = Math.floor(value);
       if (this.stats[property] === target) {
-        this.stats[property] = target; // pentru a asigura că se oprește la target
+        this.stats[property] = target;
       }
     });
   }

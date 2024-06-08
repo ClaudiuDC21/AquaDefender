@@ -1,4 +1,3 @@
-// water-info.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -10,7 +9,7 @@ import { environment } from '../../../environments/environment';
 export class WaterInfoService {
   private baseUrl = environment.apiUrl;
   private apiUrl = `${this.baseUrl}/WaterInfo`;
-  
+
   constructor(private http: HttpClient) {}
 
   getWaterInfoById(id: number): Observable<any> {
@@ -25,7 +24,6 @@ export class WaterInfoService {
     return this.http.get<any[]>(`${this.apiUrl}/city/${cityId}`);
   }
 
-  // În water-info.service.ts
   getReportByDateAndCity(date: string, cityId: number): Observable<any> {
     return this.http.get<any>(
       `${this.apiUrl}/report?date=${date}&cityId=${cityId}`

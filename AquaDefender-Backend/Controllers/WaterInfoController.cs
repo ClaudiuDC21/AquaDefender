@@ -2,11 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using AquaDefender_Backend.Services.Interfaces;
 using AquaDefender_Backend.DTOs;
 using AquaDefender_Backend.Domain;
-using System.Threading.Tasks;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
 
 namespace AquaDefender_Backend.Controllers
 {
@@ -142,9 +137,24 @@ namespace AquaDefender_Backend.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (string.IsNullOrEmpty(waterInfoDto.County) || !int.TryParse(waterInfoDto.County, out int countyId))
+            {
+                return BadRequest("Județul este invalid sau nu a fost specificat.");
+            }
+
+            if (string.IsNullOrEmpty(waterInfoDto.City) || !int.TryParse(waterInfoDto.City, out int cityId))
+            {
+                return BadRequest("Orașul este invalid sau nu a fost specificat.");
+            }
+
+            if (waterInfoDto.DateReported == DateTime.MinValue)
+            {
+                return BadRequest("Data raportului este invalidă.");
+            }
+
             try
             {
-                var existingReport = await _waterInfoService.GetReportByDateAndCityAsync(waterInfoDto.DateReported, int.Parse(waterInfoDto.City));
+                var existingReport = await _waterInfoService.GetReportByDateAndCityAsync(waterInfoDto.DateReported, cityId);
                 if (existingReport != null)
                 {
                     return BadRequest("Un raport pentru această dată, județ și oraș există deja.");
@@ -153,8 +163,8 @@ namespace AquaDefender_Backend.Controllers
                 var waterInfo = new WaterInfo
                 {
                     Name = waterInfoDto.Name,
-                    CountyId = int.Parse(waterInfoDto.County),
-                    CityId = int.Parse(waterInfoDto.City),
+                    CountyId = countyId,
+                    CityId = cityId,
                     DateReported = DateTime.Now,
                     AdditionalNotes = waterInfoDto.AdditionalNotes
                 };
@@ -169,6 +179,7 @@ namespace AquaDefender_Backend.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateWaterInfo(int id, [FromBody] WaterInfoDto waterInfoDto)

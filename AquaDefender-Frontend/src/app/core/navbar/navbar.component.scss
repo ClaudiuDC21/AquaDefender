@@ -8,7 +8,6 @@
     right: 0;
     z-index: 100;
   
-    /* Schimbă fundalul la scroll */
     &.scrolled {
       background-color: rgba(255, 255, 255, 0.8);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -123,7 +122,7 @@
   }
 
   .menu-icon {
-    display: none; /* Ascuns inițial, va fi afișat pe ecrane mici */
+    display: none; 
     cursor: pointer;
     margin: 0 15px;
     padding: 12px 24px;
@@ -146,15 +145,14 @@
   @media (max-width: 999px) {
     .navbar-center,
     .navbar-right {
-      display: none; /* Ascunde butoanele când ecranul este sub 1000px */
+      display: none; 
     }
   
     .menu-icon {
-      display: block; /* Afișează butonul de meniu */
+      display: block; 
     }
   }
   
-  /* Stil pentru meniu dropdown */
   .dropdown-content {
     display: none;
     position: absolute;
@@ -177,5 +175,5 @@
   }
   
   .navbar.scrolled .navbar-center .nav-button {
-    color: #3498db !important; /* Schimbă culoarea butoanelor din centrul navbar-ului la scroll */
+    color: #3498db !important; 
   }

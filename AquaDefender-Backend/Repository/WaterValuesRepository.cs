@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AquaDefender_Backend.Data;
 using AquaDefender_Backend.Domain;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace AquaDefender_Backend.Repository.Interfaces
 {
@@ -58,7 +53,7 @@ namespace AquaDefender_Backend.Repository.Interfaces
                 throw;
             }
         }
-        
+
         public async Task CreateWaterValuesAsync(WaterValues waterValues)
         {
             if (waterValues == null)

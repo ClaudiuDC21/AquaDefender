@@ -1,10 +1,6 @@
 using AquaDefender_Backend.Domain;
 using AquaDefender_Backend.Repository.Interfaces;
 using AquaDefender_Backend.Service.Interfaces;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace AquaDefender_Backend.Services
 {
@@ -101,7 +97,6 @@ namespace AquaDefender_Backend.Services
 
             try
             {
-                // Verifică dacă valorile de apă există în baza de date
                 var existingWaterValues = await _waterValuesRepository.GetWaterValuesByIdAsync(waterValues.Id);
                 if (existingWaterValues == null)
                 {
@@ -126,7 +121,6 @@ namespace AquaDefender_Backend.Services
 
             try
             {
-                // Verifică dacă valorile de apă există în baza de date
                 var waterValues = await _waterValuesRepository.GetWaterValuesByIdAsync(waterValuesId);
                 if (waterValues == null)
                 {

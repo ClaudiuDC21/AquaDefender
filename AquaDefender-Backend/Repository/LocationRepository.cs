@@ -2,11 +2,6 @@ using AquaDefender_Backend.Data;
 using AquaDefender_Backend.Domain;
 using AquaDefender_Backend.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AquaDefender_Backend.Repository
 {

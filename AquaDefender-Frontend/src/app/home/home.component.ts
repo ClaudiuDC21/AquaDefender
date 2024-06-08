@@ -1,14 +1,13 @@
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../authentication/services/authentication.service';
 import { Report } from '../report/models/report.model';
 import { ReportService } from '../report/services/report.service';
 import { LocationService } from '../utils/services/location.service';
-import { Observable, catchError, filter, forkJoin, map, switchMap } from 'rxjs';
+import { catchError, filter, forkJoin, map, switchMap } from 'rxjs';
 import JSZip from 'jszip';
 import { IconService } from '../utils/services/icon.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
-import { User } from '../profile/models/user.model';
 import { UserService } from '../profile/services/user.service';
 
 @Component({
@@ -18,16 +17,7 @@ import { UserService } from '../profile/services/user.service';
 })
 export class HomeComponent implements OnInit {
   isLoading = false;
-  isDropdownOpen: boolean = false;
-  showResponsiveDropdown: boolean = false;
-  users: any;
-  cityName: string = '';
   reports: Report[] = [];
-  currentIndex: number = 0;
-  reportImages: string[] = [
-    'https://www.americanrivers.org/wp-content/uploads/2022/08/Untitled-design-43-2-1024x576.png',
-    'https://images.nationalgeographic.org/image/upload/t_edhub_resource_key_image/v1638882947/EducationHub/photos/tourists-at-victoria-falls.jpg',
-  ];
 
   alertErrorMessages: string[] = [];
   alertSuccessMessages: string[] = [];
@@ -48,7 +38,6 @@ export class HomeComponent implements OnInit {
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         this.viewportScroller.scrollToPosition([0, 0]);
-        this.closeAllDropdowns();
       });
   }
 
@@ -56,7 +45,7 @@ export class HomeComponent implements OnInit {
     this.loadReports();
     this.route.queryParams.subscribe((params) => {
       const message = params['message'];
-      const reportCount = params['reportCount']; // Obține numărul de rapoarte noi
+      const reportCount = params['reportCount'];
 
       if (message && !this.alertSuccessMessages.includes(message)) {
         this.alertSuccessMessages.push(message);
@@ -91,36 +80,19 @@ export class HomeComponent implements OnInit {
   }
 
   removeAlert(index: number): void {
-    this.alertErrorMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
+    this.alertErrorMessages.splice(index, 1);
   }
 
   removeSuccessAlert(index: number): void {
-    this.alertSuccessMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
+    this.alertSuccessMessages.splice(index, 1);
   }
 
   removeInfoAlert(index: number): void {
-    this.alertInfoMessages.splice(index, 1); // Remove the info message at the specified index
+    this.alertInfoMessages.splice(index, 1);
   }
 
   removeWarningAlert(index: number): void {
-    this.alertWarningMessages.splice(index, 1); // Remove the warning message at the specified index
-  }
-
-  onLogout() {
-    this.authenticationService.logout();
-  }
-
-  toggleDropdown(): void {
-    this.isDropdownOpen = !this.isDropdownOpen;
-  }
-
-  enableResposiveDropdown(): void {
-    this.showResponsiveDropdown = !this.showResponsiveDropdown;
-  }
-
-  private closeAllDropdowns(): void {
-    this.showResponsiveDropdown = false;
-    this.isDropdownOpen = false; // Opțional, în funcție de necesități
+    this.alertWarningMessages.splice(index, 1);
   }
 
   private async loadReports(): Promise<void> {
@@ -134,7 +106,7 @@ export class HomeComponent implements OnInit {
       .pipe(
         catchError((error) => {
           console.error('Error loading reports', error);
-          return []; // sau returnează un observabil gol pentru a evita crash-ul aplicației
+          return [];
         })
       )
       .subscribe((results) => {
@@ -162,26 +134,25 @@ export class HomeComponent implements OnInit {
         const details = await forkJoin({
           county: this.locationService.getCountyById(report.countyId),
           city: this.locationService.getCityById(report.cityId),
-          user: this.userService.getUserById(report.userId), // Adăugăm obținerea numelui utilizatorului aici
-          hasImages: this.reportService.checkIfReportHasImages(report.id), // Adăugăm verificarea imaginilor aici
+          user: this.userService.getUserById(report.userId),
+          hasImages: this.reportService.checkIfReportHasImages(report.id),
         }).toPromise();
 
         if (details) {
           report.county = details.county?.name;
           report.city = details.city?.name;
-          report.username = details.user?.userName; // Stocăm numele utilizatorului
-          report.hasImages = details.hasImages; // Stocăm rezultatul verificării imaginilor
-
+          report.username = details.user?.userName;
+          report.hasImages = details.hasImages;
           if (report.hasImages) {
             report.imageUrls = await this.getReportImages(report.id);
           } else {
-            report.imageUrls = []; // Dacă nu sunt imagini, folosim un array gol
+            report.imageUrls = [];
           }
         }
 
         report.currentIndex = 0;
         report.statusText = this.getStatusText(report.status);
-        report.severityText = this.getSeverityText(report.severity); // Map status numeric to text
+        report.severityText = this.getSeverityText(report.severity); 
       } catch (error) {
         const errorMessage =
           'Eroare la încărcarea detaliilor raportului: ' + error;
@@ -279,11 +250,11 @@ export class HomeComponent implements OnInit {
       case 'Nou':
         return 'status-new';
       case 'În Progres':
-        return 'status-in-progress'; 
+        return 'status-in-progress';
       case 'Rezolvat':
-        return 'status-resolved'; 
+        return 'status-resolved';
       default:
-        return 'status-unknown'; 
+        return 'status-unknown';
     }
   }
 }

@@ -1,10 +1,6 @@
 using AquaDefender_Backend.Domain;
 using AquaDefender_Backend.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace AquaDefender_Backend.Controllers
 {

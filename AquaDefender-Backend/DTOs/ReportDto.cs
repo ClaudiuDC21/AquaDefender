@@ -1,7 +1,4 @@
 using AquaDefender_Backend.Domain;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AquaDefender_Backend.DTOs

@@ -28,7 +28,6 @@ import { IconService } from '../../../utils/services/icon.service';
   styleUrl: './report-management.component.scss',
 })
 export class ReportManagementComponent implements OnInit {
-  isDropdownOpen: boolean = false;
   stats = {
     totalReports: 0,
     newReports: 0,
@@ -117,29 +116,21 @@ export class ReportManagementComponent implements OnInit {
     return this.authenticationService.isNotUser();
   }
 
-  onLogout() {
-    this.authenticationService.logout();
-  }
-
-  toggleDropdown(): void {
-    this.isDropdownOpen = !this.isDropdownOpen;
-  }
-
   removeAlert(index: number): void {
-    this.alertErrorMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
+    this.alertErrorMessages.splice(index, 1); 
   }
 
   removeSuccessAlert(index: number): void {
-    this.alertSuccessMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
+    this.alertSuccessMessages.splice(index, 1); 
   }
 
   loadStatistics(cityId: number): void {
-    this.isLoading = true; // Set loading state to true at the start of the operation
+    this.isLoading = true; 
     this.reportService.loadStatistics(cityId).subscribe({
       next: (statistics: ReportStatistics) => {
-        this.stats = statistics; // Update the stats object with the received data
+        this.stats = statistics; 
         this.animateStatistics();
-        this.isLoading = false; // Reset loading state after all data has been received and processed
+        this.isLoading = false; 
       },
       error: (error) => {
         console.error('Error loading statistics:', error);
@@ -149,7 +140,7 @@ export class ReportManagementComponent implements OnInit {
   }
 
   private animateStatistics() {
-    const keys = Object.keys(this.stats) as (keyof typeof this.stats)[]; // Type assertion here
+    const keys = Object.keys(this.stats) as (keyof typeof this.stats)[]; 
     keys.forEach((key) => {
       this.animateNumber(key, this.stats[key], 2000);
     });
@@ -157,7 +148,7 @@ export class ReportManagementComponent implements OnInit {
 
   loadUserData() {
     this.isLoading = true;
-    const userId = this.authenticationService.getUserId(); // Obtain dynamic userId
+    const userId = this.authenticationService.getUserId(); 
 
     if (userId === null) {
       console.error('Invalid user ID');
@@ -171,7 +162,6 @@ export class ReportManagementComponent implements OnInit {
       .pipe(
         switchMap((userData: User) => {
           this.user = userData;
-          // În paralel, obține numele județului și orașului folosind ID-urile
           return forkJoin({
             cityName: this.locationService.getCityById(userData.cityId),
           });
@@ -182,7 +172,7 @@ export class ReportManagementComponent implements OnInit {
             'Eroare la obținerea datelor utilizatorului: ' + error.message
           );
           this.isLoading = false;
-          return of(null); // Return an observable to complete the stream
+          return of(null); 
         })
       )
       .subscribe({
@@ -193,7 +183,6 @@ export class ReportManagementComponent implements OnInit {
           const cityIdNumber =
             this.cityId !== null ? parseInt(this.cityId, 10) : null;
 
-          // Check if cityIdNumber is valid before making the API call
           if (cityIdNumber === null || isNaN(cityIdNumber)) {
             console.error('Invalid city ID');
             this.alertErrorMessages.push('ID-ul orașului este invalid.');
@@ -222,7 +211,6 @@ export class ReportManagementComponent implements OnInit {
     let age = today.getFullYear() - birthDateObj.getFullYear();
     const m = today.getMonth() - birthDateObj.getMonth();
 
-    // Ajustează vârsta dacă ziua de naștere nu a trecut încă în anul curent
     if (m < 0 || (m === 0 && today.getDate() < birthDateObj.getDate())) {
       age--;
     }
@@ -234,7 +222,6 @@ export class ReportManagementComponent implements OnInit {
     this.isLoading = true;
     this.filtersApplied = true;
 
-    // Check if end date is earlier than start date
     if (
       this.selectedEndDate &&
       this.selectedStartDate &&
@@ -251,7 +238,6 @@ export class ReportManagementComponent implements OnInit {
     const cityIdNumber =
       this.cityId !== null ? parseInt(this.cityId, 10) : null;
 
-    // Check if cityIdNumber is valid before making the API call
     if (cityIdNumber === null || isNaN(cityIdNumber)) {
       const errorMessage = 'ID-ul orașului este invalid.';
       console.error(errorMessage);
@@ -276,16 +262,15 @@ export class ReportManagementComponent implements OnInit {
           console.error(errorMessage);
           this.alertErrorMessages.push(errorMessage);
           this.isLoading = false;
-          return of([]); // Return an empty observable to avoid app crash
+          return of([]); 
         })
       )
       .subscribe((reports) => {
-        // Filter out anonymous reports if userNameSearch is not empty
         if (this.userNameSearch) {
           reports = reports.filter((report) => !report.isAnonymous);
         }
 
-        this.reports = reports; // Update the reports property with the fetched data
+        this.reports = reports; 
 
         if (reports.length === 0) {
           const errorMessage =
@@ -296,7 +281,6 @@ export class ReportManagementComponent implements OnInit {
           return;
         }
 
-        // Process report details
         this.processReportDetails(reports);
         this.alertSuccessMessages.push('Filtrele au fost aplicate cu succes.');
         this.isLoading = false;
@@ -304,41 +288,43 @@ export class ReportManagementComponent implements OnInit {
   }
 
   private async processReportDetails(reports: any[]): Promise<void> {
+    this.isLoading = true;
     for (const report of reports) {
       console.log(report);
       try {
         const details = await forkJoin({
           county: this.locationService.getCountyById(report.countyId),
           city: this.locationService.getCityById(report.cityId),
-          user: this.userService.getUserById(report.userId), // Adăugăm obținerea numelui utilizatorului aici
-          hasImages: this.reportService.checkIfReportHasImages(report.id), // Adăugăm verificarea imaginilor aici
+          user: this.userService.getUserById(report.userId), 
+          hasImages: this.reportService.checkIfReportHasImages(report.id), 
         }).toPromise();
 
         if (details) {
           report.county = details.county?.name;
           report.city = details.city?.name;
-          report.username = details.user?.userName; // Stocăm numele utilizatorului
-          report.hasImages = details.hasImages; // Stocăm rezultatul verificării imaginilor
+          report.username = details.user?.userName; 
+          report.hasImages = details.hasImages; 
 
           if (report.hasImages) {
             report.imageUrls = await this.getReportImages(report.id);
           } else {
-            report.imageUrls = []; // Dacă nu sunt imagini, folosim un array gol
+            report.imageUrls = []; 
           }
         }
 
         report.currentIndex = 0;
-        report.statusText = this.getStatusText(report.status); // Mapează statusul numeric la text
+        report.statusText = this.getStatusText(report.status); 
         report.severityText = this.getSeverityText(report.severity);
+        this.isLoading = false;
       } catch (error) {
         console.error('Error loading report details:', error);
+        this.isLoading = false;
       }
     }
 
     this.reports = reports;
   }
 
-  // Metodă pentru a mapează statusul numeric la text
   getStatusText(status: number): string {
     switch (status) {
       case 0:
@@ -432,7 +418,7 @@ export class ReportManagementComponent implements OnInit {
       const oldStatusText = this.getStatusText(report.status);
 
       console.log(report.status);
-      this.currentReportId = report.id; // Store the ID of the report being updated
+      this.currentReportId = report.id;
       this.reportService
         .updateReportStatus(report.id, report.status)
         .subscribe({
@@ -446,7 +432,7 @@ export class ReportManagementComponent implements OnInit {
             const errorMessage =
               'Eroare la actualizarea statusului raportului: ' + error.message;
             this.alertErrorMessages.push(errorMessage);
-            this.currentReportId = null; // Reset on error
+            this.currentReportId = null; 
           },
         });
     }
@@ -455,13 +441,13 @@ export class ReportManagementComponent implements OnInit {
   getStatusClass(statusText: string): string {
     switch (statusText) {
       case 'Nou':
-        return 'status-new'; // Clasa pentru statusul "Nou"
+        return 'status-new';
       case 'În Progres':
-        return 'status-in-progress'; // Clasa pentru statusul "În Progres"
+        return 'status-in-progress';
       case 'Rezolvat':
-        return 'status-resolved'; // Clasa pentru statusul "Rezolvat"
+        return 'status-resolved';
       default:
-        return 'status-unknown'; // Clasa implicită pentru orice altă valoare
+        return 'status-unknown'; 
     }
   }
 
@@ -470,7 +456,7 @@ export class ReportManagementComponent implements OnInit {
     target: number,
     duration: number
   ): Observable<number> {
-    const totalFrames = (duration / 1000) * 60; // De exemplu, pentru 60 de FPS
+    const totalFrames = (duration / 1000) * 60; 
     const increment = (target - current) / totalFrames;
     let frame = 0;
 
@@ -480,13 +466,13 @@ export class ReportManagementComponent implements OnInit {
         const value = current + increment * frame;
 
         if (frame >= totalFrames) {
-          observer.next(target); // Asigură-te că ultima valoare este exact ținta
+          observer.next(target); 
           observer.complete();
           clearInterval(intervalId);
         } else {
           observer.next(value);
         }
-      }, 1000 / 60); // Aproximativ 60 de FPS
+      }, 1000 / 60);
 
       return () => clearInterval(intervalId);
     });
@@ -500,7 +486,7 @@ export class ReportManagementComponent implements OnInit {
     this.animateValue(0, target, duration).subscribe((value: number) => {
       this.stats[property] = Math.floor(value);
       if (this.stats[property] === target) {
-        this.stats[property] = target; // pentru a asigura că se oprește la target
+        this.stats[property] = target;
       }
     });
   }

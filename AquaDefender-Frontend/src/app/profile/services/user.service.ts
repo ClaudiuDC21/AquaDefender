@@ -1,6 +1,6 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -38,11 +38,20 @@ export class UserService {
   getUserProfileImage(userId: number): Observable<Blob> {
     const url = `${this.apiUrl}/${userId}/profileImage`;
 
-    // Specify responseType as 'blob' to handle binary data
     return this.http.get(url, { responseType: 'blob' });
   }
 
   deleteUser(userId: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${userId}`);
+  }
+
+  hasProfilePicture(userId: number): Observable<boolean> {
+    return this.http.get(`${this.apiUrl}/${userId}/hasProfilePicture`).pipe(
+      map((response: any) => response.hasProfilePicture),
+      catchError(error => {
+        console.error('Error checking profile picture:', error);
+        return of(false);
+      })
+    );
   }
 }

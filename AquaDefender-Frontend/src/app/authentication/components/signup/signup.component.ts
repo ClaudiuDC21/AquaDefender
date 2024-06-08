@@ -18,9 +18,9 @@ export class SignupComponent implements OnInit {
   password: string = '';
   confirmPassword: string = '';
   errorMessage: string = '';
-  counties: any[] = []; // To store counties
+  counties: any[] = []; 
   cities: any[] = [];
-  selectedCountyIndex: number | null = null; // Holds the selected index
+  selectedCountyIndex: number | null = null; 
   isLoading = false;
 
   alertErrorMessages: string[] = [];
@@ -51,20 +51,16 @@ export class SignupComponent implements OnInit {
   }
 
   removeAlert(index: number): void {
-    this.alertErrorMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
-  }
+    this.alertErrorMessages.splice(index, 1); }
 
   removeSuccessAlert(index: number): void {
-    this.alertSuccessMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
-  }
+    this.alertSuccessMessages.splice(index, 1);  }
 
   removeInfoAlert(index: number): void {
-    this.alertInfoMessages.splice(index, 1); // Remove the info message at the specified index
-  }
+    this.alertInfoMessages.splice(index, 1);  }
   
   removeWarningAlert(index: number): void {
-    this.alertWarningMessages.splice(index, 1); // Remove the warning message at the specified index
-  }
+    this.alertWarningMessages.splice(index, 1);  }
 
   loadCounties(): void {
     this.isLoading = true;
@@ -83,7 +79,7 @@ export class SignupComponent implements OnInit {
   }
   
   onCountyChange(): void {
-    this.city = ''; // Resetează selecția orașului
+    this.city = ''; 
     if (this.county) {
       const countyId = +this.county;
       this.locationService.getAllCitiesByCountyId(countyId).subscribe({
@@ -105,7 +101,7 @@ export class SignupComponent implements OnInit {
       const errorMessage = 'Parolele nu se potrivesc. Vă rugăm să încercați din nou.';
       this.errorMessage = errorMessage;
       this.alertErrorMessages.push(errorMessage);
-      this.isLoading = false; // Resetează isLoading când parolele nu se potrivesc
+      this.isLoading = false;
       return;
     }
     

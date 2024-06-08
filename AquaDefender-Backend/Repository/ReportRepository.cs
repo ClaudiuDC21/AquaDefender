@@ -243,13 +243,11 @@ namespace AquaDefender_Backend.Repository
                 {
                     if (startDate.Value.Date == endDate.Value.Date)
                     {
-                        // If start date and end date are the same, filter for the entire day
                         var nextDay = startDate.Value.Date.AddDays(1);
                         query = query.Where(r => r.ReportDate >= startDate.Value.Date && r.ReportDate < nextDay);
                     }
                     else
                     {
-                        // Adjust endDate to include the entire end date day
                         var adjustedEndDate = endDate.Value.Date.AddDays(1);
                         query = query.Where(r => r.ReportDate >= startDate.Value && r.ReportDate < adjustedEndDate);
                     }

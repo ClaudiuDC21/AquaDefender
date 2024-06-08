@@ -4,14 +4,14 @@ import { IconService } from '../../utils/services/icon.service';
 @Component({
   selector: 'app-alert-info',
   templateUrl: './alert-info.component.html',
-  styleUrl: './alert-info.component.scss'
+  styleUrl: './alert-info.component.scss',
 })
 export class AlertInfoComponent {
   @Input() message: string = '';
   @Output() close = new EventEmitter<void>();
 
   constructor(public iconService: IconService) {}
-  
+
   ngOnInit(): void {
     setTimeout(() => {
       this.onClose();

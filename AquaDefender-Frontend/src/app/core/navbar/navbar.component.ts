@@ -15,10 +15,10 @@ export class NavbarComponent {
   showResponsiveDropdown: boolean = false;
 
   constructor(
-    public iconService: IconService,
     private authenticationService: AuthenticationService,
     private router: Router,
-    private viewportScroller: ViewportScroller
+    private viewportScroller: ViewportScroller,
+    public iconService: IconService
   ) {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -46,6 +46,7 @@ export class NavbarComponent {
 
   onLogout() {
     this.authenticationService.logout();
+    this.router.navigate(['/home']);
   }
 
   toggleDropdown(): void {
@@ -66,6 +67,6 @@ export class NavbarComponent {
 
   private closeAllDropdowns(): void {
     this.showResponsiveDropdown = false;
-    this.isDropdownOpen = false; // Opțional, în funcție de necesități
+    this.isDropdownOpen = false; 
   }
 }

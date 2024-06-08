@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AquaDefender_Backend.Domain;
 using AquaDefender_Backend.Repository.Interfaces;
 using AquaDefender_Backend.Service.Interfaces;
-using Microsoft.Extensions.Logging;
 
 namespace AquaDefender_Backend.Service
 {

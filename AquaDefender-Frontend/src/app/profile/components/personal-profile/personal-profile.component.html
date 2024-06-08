@@ -21,17 +21,13 @@
   <div class="inner-header flex" *ngIf="!isLoading">
     <div class="back-container">
       <div class="top-section">
-        <div
-          class="profile-picture"
-          *ngIf="user.profilePictureUrl && user.profilePictureUrl.length > 0"
-        >
+        <div *ngIf="user.hasProfilePicture; else noPictureTemplate" class="profile-picture">
           <div
             class="slide"
             [ngStyle]="{
               transform: 'translateX(-' + user.currentIndex * 100 + '%)'
             }"
           >
-            <!-- Slide-uri -->
             <div
               class="image"
               *ngFor="let image of user.profilePictureUrl; let i = index"
@@ -40,8 +36,12 @@
             ></div>
           </div>
         </div>
+        <ng-template #noPictureTemplate>
+          <div class="no-picture"></div>
+        </ng-template>
         <div class="name-container">{{ user.userName }}</div>
       </div>
+      
       <div class="bottom-section">
         <div class="button-section">
           <button
@@ -89,9 +89,9 @@
           </div>
         </div>
         <div class="details-container">
-          <div class="detail">Email: {{ user.email }}</div>
+          <div class="detail"><strong>Email:</strong> {{ user.email }}</div>
           <div class="detail">
-            Vârstă:
+            <strong>Vârstă:</strong>
             {{
               calculateAge(user.birthDate) >= 120 ||
               calculateAge(user.birthDate) < 5
@@ -99,16 +99,15 @@
                 : calculateAge(user.birthDate)
             }}
           </div>
-
-          <div class="detail">Nr. Telefon: {{ user.phoneNumber }}</div>
-          <div class="detail">Județ: {{ countyName }}</div>
-          <div class="detail">Localitate: {{ cityName }}</div>
+          <div class="detail"><strong>Număr de telefon:</strong> {{ user.phoneNumber }}</div>
+          <div class="detail"><strong>Județ:</strong> {{ countyName }}</div>
+          <div class="detail"><strong>Localitate:</strong> {{ cityName }}</div>
           <div class="detail">
-            Data Înregistrare: {{ user.registrationDate | date : "dd-MM-yyyy" }}
+            <strong>Data înregistrării:</strong> {{ user.registrationDate | date : "dd-MM-yyyy" }}
           </div>
         </div>
+        
       </div>
-      <!-- ... alte elemente ale template-ului tău ... -->
 
       <div class="statistics-container" *ngIf="!isLoading">
         <div class="statistics-row" *ngIf="!isLoading">
@@ -131,7 +130,6 @@
         </div>
       </div>
 
-      <!-- Dropdown pentru statusul raportului -->
       <div class="filters-section" *ngIf="!isLoading">
         <div class="report-title">
           <h2>RAPOARTELE MELE</h2>
@@ -183,7 +181,6 @@
                 }}
                 a adăugat un nou raport
               </p>
-              <!-- Adăugat clasa report-title la p -->
               <p class="date-reported">
                 {{ report.reportDate | date : "dd.MM.yyyy" }}
               </p>
@@ -224,15 +221,15 @@
             <div class="location-description">
               Acest raport are un grad de severitate {{ report.severityText }}.
             </div>
-            <div class="image-container" *ngIf="report.imageUrls.length > 0">
-              <!-- Container pentru slide-uri -->
+            <div class="image-container" *ngIf="report.hasImages">
+   
               <div
                 class="slide"
                 [ngStyle]="{
                   transform: 'translateX(-' + report.currentIndex * 100 + '%)'
                 }"
               >
-                <!-- Slide-uri -->
+             
                 <div
                   class="image"
                   *ngFor="let image of report.imageUrls; let i = index"
@@ -240,7 +237,6 @@
                   [attr.data-index]="i"
                 ></div>
               </div>
-              <!-- Butoanele pentru navigarea între imagini -->
               <button class="prev" (click)="prevImage(report)">&#8249;</button>
               <button class="next" (click)="nextImage(report)">&#8250;</button>
             </div>

@@ -15,9 +15,8 @@ import { IconService } from '../utils/services/icon.service';
   styleUrl: './water-values.component.scss',
 })
 export class WaterValuesComponent {
-  isDropdownOpen: boolean = false;
   reportId: number = 0;
-  counties: any[] = []; // To store counties
+  counties: any[] = [];
   cities: any[] = [];
   reportDates: any[] = [];
   waterInfo: WaterInfo = {
@@ -83,7 +82,7 @@ export class WaterValuesComponent {
   }
 
   removeAlert(index: number): void {
-    this.alertErrorMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
+    this.alertErrorMessages.splice(index, 1);
   }
 
   removeSuccessAlert(index: number): void {
@@ -143,7 +142,7 @@ export class WaterValuesComponent {
           this.reportDates = [...new Set(dates)].sort(
             (a, b) => new Date(b).getTime() - new Date(a).getTime()
           );
-          this.alertErrorMessages = []; // Reset the error messages on successful data fetch
+          this.alertErrorMessages = [];
         },
         error: (error) => {
           const message =
@@ -170,7 +169,11 @@ export class WaterValuesComponent {
   onDateChange(): void {
     this.isLoading = true;
     this.editMode = false;
-    if (this.waterInfo.city && this.waterInfo.dateReported && this.editMode === false) {
+    if (
+      this.waterInfo.city &&
+      this.waterInfo.dateReported &&
+      this.editMode === false
+    ) {
       this.getReportByDateAndCity();
     }
     this.isLoading = false;
@@ -246,9 +249,9 @@ export class WaterValuesComponent {
       new Date().toLocaleString('en-US', { timeZone: 'Europe/Bucharest' })
     );
     this.tableData.forEach((item) => (item.userProvidedValue = ''));
-    this.waterInfo.additionalNotes = ''; // Adăugați această linie pentru a goli textarea
+    this.waterInfo.additionalNotes = '';
   }
-  
+
   modifyReport(): void {
     setTimeout(() => {
       if (this.editMode)
@@ -377,18 +380,22 @@ export class WaterValuesComponent {
       next: (response) => {
         location.reload();
         this.isLoading = false;
-        console.log('Informațiile despre apă au fost șterse cu succes', response);
+        console.log(
+          'Informațiile despre apă au fost șterse cu succes',
+          response
+        );
         this.showDeleteConfirmation = false;
         this.alertSuccessMessages.push('Raportul a fost șters cu succes');
       },
       error: (error) => {
         this.isLoading = false;
         console.error('Eroare la ștergerea informațiilor despre apă', error);
-        this.alertErrorMessages.push('Eroare la ștergerea informațiilor despre apă: ' + error.error);
+        this.alertErrorMessages.push(
+          'Eroare la ștergerea informațiilor despre apă: ' + error.error
+        );
       },
     });
   }
-  
 
   confirmShowDate() {
     this.isAdding = false;
@@ -396,14 +403,6 @@ export class WaterValuesComponent {
     this.showDate = false;
     this.waterInfo.county = '';
     this.cities = [];
-  }
-
-  onLogout() {
-    this.authenticationService.logout();
-  }
-
-  toggleDropdown(): void {
-    this.isDropdownOpen = !this.isDropdownOpen;
   }
 
   tableData = [

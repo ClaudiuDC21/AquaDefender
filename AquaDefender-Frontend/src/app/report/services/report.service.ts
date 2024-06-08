@@ -1,6 +1,5 @@
-// report.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ReportStatistics } from '../models/report-statistics.model';
 import { environment } from '../../../environments/environment';
@@ -18,23 +17,13 @@ export class ReportService {
     return this.http.get<any>(`${this.apiUrl}/${reportId}`);
   }
 
-  getAllReports(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/all`);
-  }
-
-  getAllImages(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/images`);
-  }
-
   getImagesByReportId(reportId: number): Observable<Blob> {
     const url = `${this.apiUrl}/${reportId}/images`;
 
-    // Specify responseType as 'blob' to handle binary data
     return this.http.get(url, { responseType: 'blob' });
   }
 
   checkIfReportHasImages(reportId: number): Observable<boolean> {
-    // Verifică dacă un raport are imagini folosind un endpoint adecvat
     return this.http.get<boolean>(`${this.apiUrl}/${reportId}/hasimages`);
   }
 
@@ -63,10 +52,8 @@ export class ReportService {
   }
 
   updateReportStatus(reportId: number, newStatus: number): Observable<any> {
-    // Construiește parametrii URL-ului
     const params = new HttpParams().set('status', newStatus.toString());
 
-    // Trimite cererea PUT cu parametrii în URL
     return this.http.put<any>(`${this.apiUrl}/${reportId}/status`, null, {
       params,
     });
@@ -88,7 +75,6 @@ export class ReportService {
       params = params.append('severity', severity);
     }
 
-    // Face request-ul GET cu parametrii construiți
     return this.http.get<any[]>(`${this.apiUrl}/user/status/severity`, {
       params,
     });
@@ -98,8 +84,8 @@ export class ReportService {
     cityId: number,
     status?: string,
     severity?: string,
-    startDate?: string, // Expecting a date string from input[type=date] or a similar source
-    endDate?: string, // Same as above
+    startDate?: string,
+    endDate?: string,
     userName?: string
   ): Observable<any[]> {
     let params = new HttpParams();
@@ -113,7 +99,6 @@ export class ReportService {
       params = params.append('severity', severity);
     }
 
-    // Validate and append startDate if present
     if (startDate) {
       const start = new Date(startDate);
       if (!isNaN(start.getTime())) {
@@ -121,7 +106,6 @@ export class ReportService {
       }
     }
 
-    // Validate and append endDate if present
     if (endDate) {
       const end = new Date(endDate);
       if (!isNaN(end.getTime())) {
@@ -142,32 +126,15 @@ export class ReportService {
     return this.http.get<any[]>(`${this.apiUrl}/random-new`);
   }
 
-  // Method to get randomly selected in-progress reports
   getRandomInProgressReports(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/random-in-progress`);
   }
 
-  // Method to get randomly selected completed reports
   getRandomCompletedReports(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/random-completed`);
   }
 
-  // getImagesByReportId(reportId: number): Observable<Blob> {
-  //   const url = `${this.apiUrl}/${reportId}/images`;
-
-  //   // Specify responseType as 'blob' to handle binary data
-  //   return this.http.get(url, { responseType: 'blob'});
-  // }
-
   createReportWithImages(reportDto: FormData): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}`, reportDto);
-  }
-
-  updateReport(reportId: number, reportDto: FormData): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${reportId}`, reportDto);
-  }
-
-  deleteReport(reportId: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${reportId}`);
   }
 }

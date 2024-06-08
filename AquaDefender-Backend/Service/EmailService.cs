@@ -2,7 +2,6 @@ using AquaDefender_Backend.DTOs;
 using AquaDefender_Backend.Service.Interfaces;
 using MailKit.Net.Smtp;
 using MailKit.Security;
-using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 using MimeKit.Text;
 
@@ -19,7 +18,7 @@ namespace AquaDefender_Backend.Service
 
         public void SendEmail(EmailDto request)
         {
-           var email = new MimeMessage();
+            var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse("no-reply@aquadefender.com"));
             email.To.Add(MailboxAddress.Parse(request.To));
             email.Subject = request.Subject;

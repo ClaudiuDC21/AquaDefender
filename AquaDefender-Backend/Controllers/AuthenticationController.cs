@@ -1,16 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using AquaDefender_Backend.Data;
 using AquaDefender_Backend.Domain;
 using AquaDefender_Backend.DTOs;
 using AquaDefender_Backend.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace AquaDefender_Backend.Controllers
 {

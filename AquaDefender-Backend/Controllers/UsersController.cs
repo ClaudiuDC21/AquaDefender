@@ -1,19 +1,9 @@
-using AquaDefender_Backend.Data;
 using AquaDefender_Backend.Domain;
 using AquaDefender_Backend.DTOs;
 using AquaDefender_Backend.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using System.IO;
 using System.IO.Compression;
 
 namespace AquaDefender_Backend.Controllers
@@ -98,6 +88,21 @@ namespace AquaDefender_Backend.Controllers
                 {
                     return NotFound($"Utilizatorul cu ID-ul {userId} nu a fost găsit.");
                 }
+                if (existingUser.RoleId == 3)
+                {
+                    if (userDto.CountyId.HasValue || userDto.CityId.HasValue)
+                    {
+                        return BadRequest("Angajații primăriei nu pot modifica județul sau localitatea.");
+                    }
+                }
+                else if (existingUser.RoleId == 4)
+                {
+                    if (userDto.CountyId.HasValue && userDto.CountyId.Value != existingUser.CountyId)
+                    {
+                        return BadRequest("Angajații departamentului de apă nu pot modifica județul.");
+                    }
+
+                }
 
                 if (!string.IsNullOrEmpty(userDto.UserName))
                 {
@@ -109,7 +114,6 @@ namespace AquaDefender_Backend.Controllers
                     existingUser.BirthDate = userDto.BirthDate.Value;
                 }
 
-                // Assuming registration date should not be updated
                 existingUser.RegistrationDate = existingUser.RegistrationDate;
 
                 if (!string.IsNullOrEmpty(userDto.PhoneNumber))
@@ -124,14 +128,12 @@ namespace AquaDefender_Backend.Controllers
                 }
                 else if (userDto.CountyId.HasValue || userDto.CityId.HasValue)
                 {
-                    return BadRequest("Atât CountyId cât și CityId trebuie furnizate împreună.");
+                    return BadRequest("Atât județul cât și localitatea trebuie furnizate împreună.");
                 }
 
-                // Check if a new profile picture is uploaded
                 if (userDto.ProfilePicture != null)
                 {
                     var profileImagePath = await SaveImage(userDto.ProfilePicture, _webHostEnvironment.WebRootPath);
-                    // Assuming we have a property for the image path in the user entity
                     existingUser.ProfilePicture = profileImagePath;
                 }
 
@@ -175,7 +177,6 @@ namespace AquaDefender_Backend.Controllers
                     return NotFound($"Utilizatorul cu ID-ul {userId} nu a fost găsit.");
                 }
 
-                // Verify the old password
                 using var hmac = new HMACSHA512(user.PasswordSalt);
                 var computedOldPasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(passwordChangeDto.OldPassword));
                 if (!computedOldPasswordHash.SequenceEqual(user.PasswordHash))
@@ -183,7 +184,6 @@ namespace AquaDefender_Backend.Controllers
                     return BadRequest("Parola veche este incorectă.");
                 }
 
-                // Update to the new password
                 using var newHmac = new HMACSHA512();
                 user.PasswordHash = newHmac.ComputeHash(Encoding.UTF8.GetBytes(passwordChangeDto.NewPassword));
                 user.PasswordSalt = newHmac.Key;
@@ -229,6 +229,30 @@ namespace AquaDefender_Backend.Controllers
             }
         }
 
+        [HttpGet("{userId}/hasProfilePicture")]
+        public async Task<IActionResult> HasProfilePicture(int userId)
+        {
+            if (userId <= 0)
+            {
+                return BadRequest("Id-ul utilizatorului trebuie să fie un număr întreg pozitiv.");
+            }
+
+            try
+            {
+                bool hasProfilePicture = await _userService.HasProfilePictureAsync(userId);
+                return Ok(new { hasProfilePicture });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while checking if the user with ID {userId} has a profile picture.");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         private async Task<string> SaveImage(IFormFile image, string webRootPath)
         {
             var uniqueFileName = $"{Guid.NewGuid()}_{image.FileName}";
@@ -270,26 +294,23 @@ namespace AquaDefender_Backend.Controllers
                     return NotFound("Imaginea de profil este nula.");
                 }
 
-                if(string.IsNullOrEmpty(user.ProfilePicture))
+                if (string.IsNullOrEmpty(user.ProfilePicture))
                 {
                     return NotFound("Imaginea de profil este goala.");
                 }
 
                 var imageStreams = new List<MemoryStream>();
-                // Assuming user.ProfilePicture contains a path like "imagesRoot\\profilePictureImages\\..."
                 var imagePath = Path.Combine(user.ProfilePicture);
 
-                // Log the constructed file path
                 _logger.LogInformation($"Profile image path: {imagePath}");
 
                 if (!System.IO.File.Exists(imagePath))
                 {
-                    // Log the file existence check
                     _logger.LogWarning($"Profile image not found at path: {imagePath}");
                     return NotFound("Imaginea de profil nu a fost găsită bine.");
                 }
 
-                
+
                 var imageBytes = await System.IO.File.ReadAllBytesAsync(imagePath);
                 var imageStream = new MemoryStream(imageBytes);
                 imageStreams.Add(imageStream);

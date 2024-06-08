@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocationService {
   private baseUrl = environment.apiUrl;
   private apiUrl = `${this.baseUrl}/Locations`;
- 
+
   constructor(private http: HttpClient) {}
 
   getAllCities(): Observable<any[]> {
@@ -33,11 +33,15 @@ export class LocationService {
   }
 
   getCityByName(cityName: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/cities/${encodeURIComponent(cityName)}`);
+    return this.http.get<any>(
+      `${this.apiUrl}/cities/${encodeURIComponent(cityName)}`
+    );
   }
 
   getCountyByName(countyName: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/counties/${encodeURIComponent(countyName)}`);
+    return this.http.get<any>(
+      `${this.apiUrl}/counties/${encodeURIComponent(countyName)}`
+    );
   }
 
   getCityEmailById(cityId: number): Observable<any> {

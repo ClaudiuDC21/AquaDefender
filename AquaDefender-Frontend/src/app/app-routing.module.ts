@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './authentication/components/login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -9,7 +9,7 @@ import { PersonalProfileComponent } from './profile/components/personal-profile/
 import { EditProfileComponent } from './profile/components/edit-profile/edit-profile.component';
 import { ReportManagementComponent } from './report/components/report-management/report-management.component';
 import { ChangePasswordComponent } from './profile/components/change-password/change-password.component';
-import { NavbarComponent } from './core/navbar/navbar.component';
+
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },

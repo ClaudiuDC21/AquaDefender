@@ -32,19 +32,36 @@
       ></app-alert-warning>
     </div>
   </div>
+
   <div class="header-wrapper" *ngIf="!isLoading">
     <div class="header-content">
-      <h1 class="title">Pagina de Valori ale Apei Potabile din Comuna Ta</h1>
+      <h1 class="title">Pagina de valori ale apei potabile din comuna ta</h1>
       <h2 class="subtitle">
         Aici poți verifica valorile apei potabile raportate în comuna ta.
-        <br />În partea stângă, găsești tabelul cu valorile normale recomandate
-        ale apei potabile, iar în partea dreaptă sunt afișate valorile curente
-        din localitatea dorită, raportate la data selectată.
+        <br />
+        În tabelul de mai jos, găsești valorile normale recomandate ale apei
+        potabile, inclusiv valoarea maximă admisă și valorile curente din
+        localitatea selectată, împreună cu unitatea de măsură corespunzătoare.
       </h2>
     </div>
   </div>
 
-  <div class="help-button-container" *ngIf="!isLoading && isNotUser()">
+  <div class="centered-table" *ngIf="!isAuthenticated()">
+    <p class="left-title">
+      Află chiar acum valorile apei potabile din comuna ta
+    </p>
+    <div class="redirectToLogin">
+      <button type="button" routerLinkActive="active" routerLink="/login">
+        <span class="button-text">Autentificare</span>
+        <div class="fill-container"></div>
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="help-button-container"
+    *ngIf="!isLoading && isNotUser() && isAuthenticated()"
+  >
     <button class="help-button" type="button" (click)="toggleInstructions()">
       <i class="fa fa-question-circle" aria-hidden="true"
         ><fa-icon [icon]="iconService.faHelp"></fa-icon
@@ -53,7 +70,7 @@
     </button>
   </div>
   <div
-    *ngIf="showInstructions && !isLoading && isNotUser()"
+    *ngIf="showInstructions && !isLoading && isNotUser() && isAuthenticated()"
     class="instructions"
   >
     <h3>Instrucțiuni pentru folosirea paginii</h3>
@@ -72,9 +89,9 @@
       <br />
       De asemenea, reține că se poate adăuga un singur raport pe zi.
       <br />
-      În partea stângă a paginii, găsești tabelul cu valorile normale
-      recomandate ale apei potabile. În partea dreaptă, sunt afișate valorile
-      curente din localitatea selectată, raportate la data aleasă.
+      În tabel vei gasi 4 coloane cu diferit roluri: numele valorii potabile,
+      valoarea maximă admisa, valoarea introdusă într-o anumită localitate si
+      unitatea de măsura specifică.
       <br />
       Dacă dorești să modifici un raport existent, selectează raportul din lista
       de rapoarte disponibile. După ce ai făcut modificările necesare, nu uita
@@ -88,7 +105,9 @@
   <div class="inner-header flex" *ngIf="!isLoading">
     <div
       class="buttons-container"
-      *ngIf="!isLoading && isAuthenticated() && isNotUser()"
+      *ngIf="
+        !isLoading && isAuthenticated() && isNotUser() && isAuthenticated()
+      "
     >
       <button type="button" *ngIf="isAdding" (click)="activateDate()">
         <fa-icon [icon]="iconService.calendarCheck"></fa-icon>
@@ -116,18 +135,6 @@
       </button>
     </div>
 
-    <div class="right-table" *ngIf="!isAuthenticated()">
-      <p class="left-title">
-        Află chiar acum valorile apei potabile din comuna ta
-      </p>
-      <div class="redirectToLogin">
-        <button type="button" routerLinkActive="active" routerLink="/login">
-          <span class="button-text">Autentificare</span>
-          <div class="fill-container"></div>
-        </button>
-      </div>
-    </div>
-
     <div class="right-table" *ngIf="!isLoading && isAuthenticated()">
       <p class="right-title">
         Parametrii apei potabile în județul
@@ -143,7 +150,7 @@
             {{ county.name }}
           </option>
         </select>
-        localitatea
+        , localitatea
         <select
           id="city"
           name="city"
@@ -155,9 +162,9 @@
           <option value="" disabled selected>Selectează o localitate</option>
           <option *ngFor="let city of cities" [value]="city.id">
             {{ city.name }}
-          </option></select
-        >
-        <span *ngIf="!isAdding">din data de: </span>
+          </option>
+        </select>
+        <span *ngIf="!isAdding"> din data de: </span>
         <select
           *ngIf="!isAdding"
           id="reportDate"
@@ -167,7 +174,7 @@
           (change)="onDateChange()"
           [disabled]="reportDates.length === 0"
         >
-          <option value="" disabled selected>Selectează un raport</option>
+          <option value="" disabled selected>Selectează o dată</option>
           <option *ngFor="let date of reportDates" [value]="date">
             {{ formatDate(date) }}
           </option>
@@ -197,7 +204,7 @@
                   />
                 </div>
                 <ng-template #showUserProvidedValue>
-                  {{ row.userProvidedValue || "N/A" }}
+                  {{ row.userProvidedValue || "Nicio valoare introdusă" }}
                 </ng-template>
               </td>
               <td>{{ row.unit }}</td>
@@ -205,7 +212,7 @@
           </tbody>
         </table>
         <div *ngIf="editMode; else showNotes">
-          <div class="notes-container">
+          <div class="textarea-container">
             <textarea
               id="additionalNotes"
               [(ngModel)]="waterInfo.additionalNotes"
@@ -273,8 +280,8 @@
             <fa-icon [icon]="iconService.faClose"></fa-icon>
           </button>
           <p>
-            Ești sigur că vrei să oprești adăugarea acestui raport? Acest lucru va șterge
-            progresele făcute până acum.
+            Ești sigur că vrei să oprești adăugarea acestui raport? Acest lucru
+            va șterge progresele făcute până acum.
           </p>
           <div class="popup-actions">
             <button class="cancel-button" (click)="closePopup()">

@@ -1,12 +1,10 @@
-// src/app/directives/scroll.directive.ts
 import { Directive, HostListener, Renderer2, ElementRef } from '@angular/core';
 
 @Directive({
-  selector: '[appScroll]'
+  selector: '[appScroll]',
 })
 export class ScrollDirective {
-
-  constructor(private renderer: Renderer2, private el: ElementRef) { }
+  constructor(private renderer: Renderer2, private el: ElementRef) {}
 
   @HostListener('window:scroll', [])
   onWindowScroll() {

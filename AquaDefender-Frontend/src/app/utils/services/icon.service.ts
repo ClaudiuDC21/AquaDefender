@@ -1,9 +1,39 @@
 import { Injectable } from '@angular/core';
-import { IconDefinition, faHome, faTint, faExclamationTriangle, faTasks, faUser, faEdit, faWater, faSignInAlt, faUserPlus, faCog, faUserCircle, faEyeSlash, faEye, faXmark, faTimesCircle, faInfoCircle, faCheck, faWarning, faKey, faTrash, faHourglassStart, faHourglassHalf, faCheckCircle, faUserEdit, faQuestionCircle, faCalendarCheck, faFileMedical, faTimes, faSave } from '@fortawesome/free-solid-svg-icons';
-import { IconOptions } from 'leaflet';
+import {
+  IconDefinition,
+  faHome,
+  faTint,
+  faExclamationTriangle,
+  faTasks,
+  faUser,
+  faEdit,
+  faWater,
+  faSignInAlt,
+  faUserPlus,
+  faCog,
+  faUserCircle,
+  faEyeSlash,
+  faEye,
+  faXmark,
+  faTimesCircle,
+  faInfoCircle,
+  faCheck,
+  faWarning,
+  faKey,
+  faTrash,
+  faHourglassStart,
+  faHourglassHalf,
+  faCheckCircle,
+  faUserEdit,
+  faQuestionCircle,
+  faCalendarCheck,
+  faFileMedical,
+  faTimes,
+  faSave,
+} from '@fortawesome/free-solid-svg-icons';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class IconService {
   faHome: IconDefinition = faHome;

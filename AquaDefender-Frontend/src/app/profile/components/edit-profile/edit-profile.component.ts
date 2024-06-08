@@ -14,14 +14,13 @@ import { IconService } from '../../../utils/services/icon.service';
   styleUrl: './edit-profile.component.scss',
 })
 export class EditProfileComponent implements OnInit {
-  isDropdownOpen: boolean = false;
   minDate: string = '';
   maxDate: string = '';
   isLoading = false;
   profileImagePreview: string | null = null;
   profileImageFile: File | null = null;
 
-  counties: any[] = []; // To store counties
+  counties: any[] = [];
   cities: any[] = [];
   countyName: string = '';
   cityName: string = '';
@@ -49,20 +48,16 @@ export class EditProfileComponent implements OnInit {
     return this.authenticationService.getAuthStatus();
   }
 
-  onLogout() {
-    this.authenticationService.logout();
-  }
-
-  toggleDropdown(): void {
-    this.isDropdownOpen = !this.isDropdownOpen;
+  isCityHallEmployee(): boolean {
+    return this.authenticationService.isCityHallEmployee();
   }
 
   removeAlert(index: number): void {
-    this.alertErrorMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
+    this.alertErrorMessages.splice(index, 1);
   }
 
   removeSuccessAlert(index: number): void {
-    this.alertSuccessMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
+    this.alertSuccessMessages.splice(index, 1);
   }
 
   ngOnInit(): void {
@@ -80,7 +75,7 @@ export class EditProfileComponent implements OnInit {
       error: (error) => {
         const errorMessage =
           'A apărut o eroare la încărcarea județelor: ' +
-          (error.message || error);
+          (error.message || error.error);
         console.error(errorMessage, error);
         this.alertErrorMessages.push(errorMessage);
         if (error.error) {
@@ -92,7 +87,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   onCountyChange(): void {
-    this.cityName = ''; // Reset city selection
+    this.cityName = '';
     if (this.countyName) {
       const countyId = +this.countyName;
       this.locationService.getAllCitiesByCountyId(countyId).subscribe({
@@ -103,7 +98,7 @@ export class EditProfileComponent implements OnInit {
           const errorMessage =
             'A apărut o eroare la încărcarea localităților pentru județul selectat: ' +
             (error.message || error);
-          console.error(errorMessage, error);
+          console.error(errorMessage, error.error);
           this.alertErrorMessages.push(errorMessage);
           if (error.error) {
             this.alertErrorMessages.push(error.error);
@@ -127,7 +122,6 @@ export class EditProfileComponent implements OnInit {
     this.isLoading = true;
     const formData = new FormData();
 
-    // Adăugăm fiecare câmp în formData numai dacă există o valoare validă (diferită de null și undefined)
     if (this.user.userName) {
       formData.append('UserName', this.user.userName);
     }
@@ -135,10 +129,8 @@ export class EditProfileComponent implements OnInit {
       formData.append('PhoneNumber', this.user.phoneNumber);
     }
     if (this.user.birthDate) {
-      // Convert string to Date object
       const birthDate = new Date(this.user.birthDate);
 
-      // Check if the date conversion is valid and birthDate is not today's date
       if (
         !isNaN(birthDate.getTime()) &&
         birthDate.toISOString().slice(0, 10) !==
@@ -157,6 +149,7 @@ export class EditProfileComponent implements OnInit {
     if (this.cityName) {
       formData.append('CityId', this.cityName);
     }
+
     if (this.profileImageFile) {
       formData.append('ProfilePicture', this.profileImageFile);
     }
@@ -178,7 +171,6 @@ export class EditProfileComponent implements OnInit {
         const successMessage = 'Profilul a fost actualizat cu succes.';
         this.alertSuccessMessages.push(successMessage);
 
-        // Redirect to personal profile page with success message
         const navigationExtras: NavigationExtras = {
           queryParams: { message: successMessage },
         };
@@ -188,13 +180,10 @@ export class EditProfileComponent implements OnInit {
         );
       },
       error: (error) => {
-        const errorMessage =
-          'Actualizarea profilului a eșuat: ' + error.message;
-        console.error(errorMessage, error);
+        const errorMessage = 'Actualizarea profilului a eșuat: ' + error.error;
+        console.error( error.error);
         this.alertErrorMessages.push(errorMessage);
-        if (error.error) {
-          this.alertErrorMessages.push(error.error);
-        }
+
         this.isLoading = false;
       },
     });
@@ -225,13 +214,17 @@ export class EditProfileComponent implements OnInit {
 
     if (file) {
       try {
+        if (this.profileImagePreview) {
+          URL.revokeObjectURL(this.profileImagePreview);
+        }
+
         this.profileImagePreview = URL.createObjectURL(file);
-        this.profileImageFile = file; // Update property with the new file
+        this.profileImageFile = file;
       } catch (error: any) {
         const errorMessage =
           'Eroare la încărcarea imaginii de profil: ' +
           (error.message || error);
-        console.error(errorMessage, error);
+        console.error(errorMessage);
         this.alertErrorMessages.push(errorMessage);
       }
     }
@@ -242,11 +235,11 @@ export class EditProfileComponent implements OnInit {
       if (this.profileImagePreview) {
         URL.revokeObjectURL(this.profileImagePreview);
       }
-      this.profileImageFile = null; // Reset the file property
+      this.profileImageFile = null;
     } catch (error: any) {
       const errorMessage =
         'Eroare la eliminarea imaginii de profil: ' + (error.message || error);
-      console.error(errorMessage, error);
+      console.error(errorMessage, error.error);
       this.alertErrorMessages.push(errorMessage);
     }
   }
@@ -259,8 +252,8 @@ export class EditProfileComponent implements OnInit {
     } catch (error: any) {
       const errorMessage =
         'Eroare la eliberarea resurselor imaginii de profil: ' +
-        (error.message || error);
-      console.error(errorMessage, error);
+        (error.message || error.error);
+      console.error(errorMessage, error.error);
       this.alertErrorMessages.push(errorMessage);
     }
   }
@@ -271,10 +264,10 @@ export class EditProfileComponent implements OnInit {
     } catch (error: any) {
       const errorMessage =
         'Eroare la obținerea previzualizării imaginii: ' +
-        (error.message || error);
-      console.error(errorMessage, error);
+        (error.message || error.error);
+      console.error(errorMessage, error.error);
       this.alertErrorMessages.push(errorMessage);
-      return 'path/to/default/image.jpg'; // Return a default image path in case of error
+      return 'path/to/default/image.jpg'; 
     }
   }
 }

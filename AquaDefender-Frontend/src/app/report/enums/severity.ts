@@ -4,5 +4,5 @@ export enum SeverityLevel {
   Moderate = 'Moderate',
   Serious = 'Serious',
   Severe = 'Severe',
-  Critical = 'Critical'
+  Critical = 'Critical',
 }

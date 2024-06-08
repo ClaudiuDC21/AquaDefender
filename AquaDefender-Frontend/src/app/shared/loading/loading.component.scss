@@ -1,106 +1,109 @@
 body {
-	background: none;
-    z-index: 1000;
-	position: relative; 
+  background: none;
+  z-index: 1000;
+  position: relative;
 }
 
 @keyframes spinner-keyframes {
-	0% {
-		transform: rotate(0deg);
-	}
+  0% {
+    transform: rotate(0deg);
+  }
 
-	100% {
-		transform: rotate(360deg);
-	}
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes spinner-span-keyframes {
-	0% {
-		transform: rotate(0deg);
-	}
+  0% {
+    transform: rotate(0deg);
+  }
 
-	50% {
-		transform: rotate(360deg);
-	}
+  50% {
+    transform: rotate(360deg);
+  }
 
-	100% {
-		transform: rotate(360deg);
-	}
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .spinner-wrapper {
-	position: fixed; 
-	width: 100px;
-	height: 100px;
-	border-radius: 50px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	z-index: 1000;
-	transform: translate3d(-50%, -50%, 0);
-	box-shadow: inset 0 0 0 18px #F6F6F9, inset 0 0 0 19px #edecf3,
-		0 0 0 1px #edecf3, inset  -10px -10px 15px 20px rgba(255,255,255,0.6), inset 10px 10px 15px 5px rgba(0,0,0,0.06), -10px -10px 15px 5px rgba(255,255,255,0.6), 10px 10px 15px 5px rgba(0,0,0,0.06);
+  position: fixed;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1000;
+  transform: translate3d(-50%, -50%, 0);
+  box-shadow: inset 0 0 0 18px #f6f6f9, inset 0 0 0 19px #edecf3,
+    0 0 0 1px #edecf3, inset -10px -10px 15px 20px rgba(255, 255, 255, 0.6),
+    inset 10px 10px 15px 5px rgba(0, 0, 0, 0.06),
+    -10px -10px 15px 5px rgba(255, 255, 255, 0.6),
+    10px 10px 15px 5px rgba(0, 0, 0, 0.06);
 }
 
 .spinner {
-	width: 100px;
-	height: 100px;
-	border-radius: 50px;
-	filter: url("#goo");
-	animation-name: spinner-keyframes;
-	animation-duration: 4s;
-	animation-timing-function: linear;
-	animation-iteration-count: infinite;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  filter: url("#goo");
+  animation-name: spinner-keyframes;
+  animation-duration: 4s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 
-	span {
-		display: block;
-		width: 18px;
-		height: 18px;
-		border-radius: 9px;
-		background-color: #0084ff;
-		position: absolute;
-		top: 0;
-		left: 40px;
-		transform-origin: 10px 50px;
-		animation-name: spinner-span-keyframes;
-		animation-duration: 8s;
-		animation-timing-function: cubic-bezier(0.33, 0.045, 0, 1);
-		animation-iteration-count: infinite;
+  span {
+    display: block;
+    width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    background-color: #0084ff;
+    position: absolute;
+    top: 0;
+    left: 40px;
+    transform-origin: 10px 50px;
+    animation-name: spinner-span-keyframes;
+    animation-duration: 8s;
+    animation-timing-function: cubic-bezier(0.33, 0.045, 0, 1);
+    animation-iteration-count: infinite;
 
-		&:nth-child(1) {
-			animation-delay: -350ms;
-		}
+    &:nth-child(1) {
+      animation-delay: -350ms;
+    }
 
-		&:nth-child(2) {
-			animation-delay: 0ms;
-		}
+    &:nth-child(2) {
+      animation-delay: 0ms;
+    }
 
-		&:nth-child(3) {
-			animation-delay: 350ms;
-		}
+    &:nth-child(3) {
+      animation-delay: 350ms;
+    }
 
-		&:nth-child(4) {
-			animation-delay: 700ms;
-		}
+    &:nth-child(4) {
+      animation-delay: 700ms;
+    }
 
-		&:nth-child(5) {
-			animation-delay: 1050ms;
-		}
+    &:nth-child(5) {
+      animation-delay: 1050ms;
+    }
 
-		&:nth-child(6) {
-			animation-delay: 1400ms;
-		}
+    &:nth-child(6) {
+      animation-delay: 1400ms;
+    }
 
-		&:nth-child(7) {
-			animation-delay: 1750ms;
-		}
+    &:nth-child(7) {
+      animation-delay: 1750ms;
+    }
 
-		&:nth-child(8) {
-			animation-delay: 2100ms;
-		}
+    &:nth-child(8) {
+      animation-delay: 2100ms;
+    }
 
-		&:nth-child(9) {
-			animation-delay: 2450ms;
-		}
-	}
+    &:nth-child(9) {
+      animation-delay: 2450ms;
+    }
+  }
 }

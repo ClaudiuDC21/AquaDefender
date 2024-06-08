@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AquaDefender_Backend.Data;
 using AquaDefender_Backend.Repositories;
 using AquaDefender_Backend.Repository;
@@ -25,7 +21,7 @@ namespace AquaDefender_Backend.Extensions
             services.AddScoped<IWaterValuesService, WaterValuesService>();
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IEmailService, EmailService>();
-            
+
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();
             services.AddScoped<IWaterInfoRepository, WaterInfoRepository>();
@@ -33,7 +29,7 @@ namespace AquaDefender_Backend.Extensions
             services.AddScoped<IReportRepository, ReportRepository>();
 
             services.AddDbContext<AquaDefenderDataContext>(options =>
-                       options.UseSqlServer(config.GetConnectionString("ProductionConnection")));
+                       options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
             return services;
         }

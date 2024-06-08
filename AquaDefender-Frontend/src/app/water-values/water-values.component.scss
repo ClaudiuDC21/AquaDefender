@@ -13,12 +13,12 @@
   color: white;
 
   .alert-container {
-    position: fixed; /* Sau 'absolute' dacă nu vrei să fie poziționat relativ la viewport */
-    top: 120px; /* Ajustează conform nevoilor */
-    right: 20px; /* Împinge containerul mai spre dreapta */
-    z-index: 1050; /* Asigură-te că alerta apare deasupra altor elemente */
-    max-width: 60%; /* Ajustează lățimea maximă după preferințe */
-    width: 500px; /* Ajustează lățimea conform conținutului */ /* Centrarea alertei spre dreapta */
+    position: fixed;
+    top: 120px;
+    right: 20px;
+    z-index: 1050;
+    max-width: 60%;
+    width: 500px;
   }
 
   .inner-header {
@@ -30,20 +30,20 @@
 
   .flex {
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    justify-content: center; /* Center elements vertically */
-    align-items: center; /* Center elements horizontally */
-    flex-wrap: wrap; /* Allows items to wrap onto the next line */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     text-align: center;
     padding: 20px;
     position: relative;
   }
-  
+
   .header-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 20vh; // Ajustează înălțimea după preferințe
+    min-height: 20vh;
     width: 100%;
     margin-top: 10px;
 
@@ -54,7 +54,7 @@
       align-items: center;
       text-align: center;
       width: 100%;
-      max-width: 60%; // Asigură o lățime maximă pentru conținut
+      max-width: 60%;
 
       .title {
         font-size: 2.5em;
@@ -73,11 +73,22 @@
     }
   }
 
+  .centered-table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 25px;
+    width: 100%;
+    height: 100%;
+  }
+
   .help-button-container {
     display: flex;
-    justify-content: flex-end; // Poziționează butonul în partea dreaptă
-    width: 100%; // Ocupă întreaga lățime a containerului părinte
-    padding-right: 20px; // Adaugă un padding de 20px la dreapta pentru spațiere
+    justify-content: flex-end;
+    width: 100%;
+    padding-right: 20px;
 
     .help-button {
       display: flex;
@@ -93,7 +104,7 @@
       text-decoration: none;
 
       i {
-        margin-right: 8px; // Spațiu între iconiță și text
+        margin-right: 8px;
       }
 
       &:hover {
@@ -107,74 +118,71 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 10px auto; // Centrează div-ul pe orizontală
+    margin: 10px auto;
     padding: 20px;
     color: #fff;
-    background-color: rgb(52, 152, 219, 0.2); // Fundal semi-transparent
-    border: 1px solid rgba(0, 0, 0, 0.1); // Bordură subtilă
-    border-radius: 10px; // Borduri rotunjite pentru un aspect plăcut
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Umbre pentru un efect de adâncime
+    background-color: rgba(52, 152, 219, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 75%;
 
     h3 {
-      font-size: 2.0em;
+      font-size: 2em;
       margin-top: 0;
-      color: #ffffff; // Culoare alb mai închis pentru text
+      color: #ffffff;
     }
 
     p {
       font-size: 1.2em;
-      color: #dbdbdb; // Culoare alb mai închis pentru paragrafe
-      text-align: left; // Aliniază textul la stânga
-      width: 90%; // Asigură că paragrafele ocupă întreaga lățime disponibilă
+      color: #dbdbdb;
+      text-align: left;
+      width: 90%;
     }
   }
 
   .buttons-container {
     display: flex;
-    justify-content: center; /* Alinează butoanele la dreapta */
-    padding: 10px; /* Spațiu în interiorul containerului */
+    justify-content: center;
+    padding: 10px;
     width: 100%;
   }
 
   .redirectToLogin {
     display: flex;
     justify-content: center;
-    align-items: center; /* Alinează butoanele la dreapta */
-    padding: 10px; /* Spațiu în interiorul containerului */
+    align-items: center;
+    padding: 10px;
     width: 100%;
   }
 
   .buttons-container button,
   .redirectToLogin button {
-    margin-left: 10px; /* Adjust spacing between buttons */
+    margin-left: 10px;
     padding: 12px 24px;
     color: #fff;
     font-size: 2rem;
     border-radius: 8px;
     display: flex;
-    justify-content: column;
+    justify-content: center;
     align-items: center;
     border-radius: 100vw;
-    overflow: hidden; /* This ensures that any child elements that overflow the button's boundaries are not rendered outside */
+    overflow: hidden;
     position: relative;
     background-color: #3498db;
     font-family: "Brush Script MT", sans-serif;
     color: #fafafa;
-    border: solid 1px rgba($color: #2776aa, $alpha: 0.3);
+    border: solid 1px rgba(39, 118, 170, 0.3);
     overflow: hidden;
     cursor: pointer;
-    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); // easeOutQuart
-    mask-image: -webkit-radial-gradient(
-      white,
-      black
-    ); // force safari to respect border radius
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    mask-image: -webkit-radial-gradient(white, black);
 
     fa-icon {
-      margin-right: 8px; /* Spațiu între iconiță și text */
+      margin-right: 8px;
       z-index: 2;
-      display: flex; /* Folosim flex pentru centrare */
-      align-items: center; /* Centrare verticală */
+      display: flex;
+      align-items: center;
     }
 
     .button-text {
@@ -199,7 +207,7 @@
         height: 100%;
         background-color: #2776aa;
         border-radius: 50%;
-        transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); // easeOutQuart
+        transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         transform: translateY(-100%);
       }
     }
@@ -224,6 +232,7 @@
   }
 
   .table-wrapper {
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -246,18 +255,17 @@
   }
 
   .fl-table input {
-    width: 100%; /* Calculates width as 100% minus twice the padding */
+    width: 100%;
     border: 1px solid transparent;
-    padding: 4px; /* Small padding inside the input for text */
-    box-sizing: border-box; /* Includes padding and border in the element's width */
-    background-color: #fff; /* Ensures input background matches cell */
+    padding: 4px;
+    box-sizing: border-box;
+    background-color: #fff;
     margin: -8px 0;
   }
   .fl-table td,
   .fl-table th {
     text-align: center;
     padding: 20px 8px;
-    
   }
 
   .fl-table td {
@@ -346,7 +354,7 @@
     }
 
     .header-content {
-      max-width: 90%; // Asigură o lățime maximă pentru conținut
+      max-width: 90%;
 
       .title {
         font-size: 1.5em !important;
@@ -360,20 +368,19 @@
   }
 
   @media (max-width: 1100px) {
-
     .table-wrapper {
       margin: 10px 0;
       box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
     }
 
     .textarea-container {
-      width: 100%; /* Ajustăm lățimea containerului textarea pentru ecrane mai mici */
+      width: 100%;
     }
 
     .right-table {
-      width: 80%; // Each table takes up 90% of the width on smaller screens
-      margin-top: 20px; // Increase margin-top for better spacing
-      margin-bottom: 20px; // Adds bottom margin for separation between tables
+      width: 80%;
+      margin-top: 20px;
+      margin-bottom: 20px;
     }
 
     .fl-table td,
@@ -383,12 +390,12 @@
     }
 
     select {
-      width: 60%; // Adjust the width of form elements to 90%
-      margin: 10px auto; // Center the form and add vertical spacing
+      width: 60%;
+      margin: 10px auto;
     }
 
     .header-content {
-      max-width: 80%; // Asigură o lățime maximă pentru conținut
+      max-width: 80%;
 
       .title {
         font-size: 2em !important;
@@ -448,20 +455,18 @@
     background-color: none;
     text-align: left;
   }
-  
+
   .textarea-container textarea,
   .notes-container p {
-    width: 100%;
+    width: 100% !important;
     max-width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
     color: #000000;
-    box-sizing: border-box; /* Include padding-ul și border-ul în lățime */
   }
-  
- 
+
   .textarea-container textarea,
   .notes-container p {
     background-color: #f5f5f5;
@@ -469,14 +474,13 @@
     overflow-y: auto;
     margin-bottom: 0;
   }
-  
 
   .save-button-container {
     display: flex;
-    justify-content: flex-end; /* Alinează butonul la dreapta */
+    justify-content: flex-end;
     right: 25%;
-    padding: 10px; /* Spațiu în interiorul containerului */
-    width: 100%; /* Ocupă întreaga lățime a părintelui */
+    padding: 10px;
+    width: 100%;
   }
 
   .save-button-container button {

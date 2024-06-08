@@ -1,12 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using AquaDefender_Backend.Services.Interfaces;
 using AquaDefender_Backend.DTOs;
 using AquaDefender_Backend.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using AquaDefender_Backend.Service.Interfaces;
 
 namespace AquaDefender_Backend.Controllers

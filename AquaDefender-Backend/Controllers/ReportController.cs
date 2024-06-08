@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using AquaDefender_Backend.Domain;
 using AquaDefender_Backend.DTOs;
-using AquaDefender_Backend.Services.Interfaces;
 using AquaDefender_Backend.Service.Interfaces;
 using System.IO.Compression;
-using Microsoft.Extensions.Logging;
 
 namespace AquaDefender_Backend.Controllers
 {
@@ -27,6 +20,7 @@ namespace AquaDefender_Backend.Controllers
             _webHostEnvironment = webHostEnvironment ?? throw new ArgumentNullException(nameof(webHostEnvironment));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
         [HttpGet("{reportId}")]
         public async Task<IActionResult> GetReportById(int reportId)
         {

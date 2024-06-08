@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AquaDefender_Backend.Domain;
+﻿using AquaDefender_Backend.Domain;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace AquaDefender_Backend.Data
 {
@@ -105,7 +100,7 @@ namespace AquaDefender_Backend.Data
                 .HasOne(wv => wv.WaterInfo)
                 .WithMany(wi => wi.WaterValues)
                 .HasForeignKey(wv => wv.IdWaterInfo)
-                .OnDelete(DeleteBehavior.Cascade); // Modificat de la NoAction la Cascade
+                .OnDelete(DeleteBehavior.Cascade);
 
         }
     }

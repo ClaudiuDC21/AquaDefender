@@ -1,19 +1,19 @@
 .alert-container {
-  position: fixed; 
-  top: 120px; 
-  right: 20px; 
-  z-index: 20; 
-  max-width: 30%; 
-  width: 30%; 
+  position: fixed;
+  top: 120px;
+  right: 20px;
+  z-index: 20;
+  max-width: 30%;
+  width: 30%;
 }
 
 .login-container {
-  position: fixed; /* Schimbat de la relative la fixed pentru a fi independent de scroll */
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
-  background-color: rgba(255, 255, 255, 1); /* Fond alb transparent */
+  background-color: rgba(255, 255, 255, 1);
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -34,14 +34,14 @@
     border: none;
     background: none;
     font-size: 24px;
-    color: #333; /* sau orice culoare preferi */
+    color: #333;
     cursor: pointer;
   }
 
   .close-button:hover,
   .close-button:focus {
-    color: #666; /* culoare pentru hover */
-    background: #f0f0f0; /* fundal ușor pentru a evidenția butonul */
+    color: #666;
+    background: #f0f0f0;
   }
 
   h1 {
@@ -53,50 +53,48 @@
     display: flex;
     flex-direction: column;
 
-    .form-group { /* Keeping form width consistent */
+    .form-group {
       display: flex;
       flex-direction: column;
-      align-items: center; /* Centers labels and inputs */
+      align-items: center;
     }
 
     label {
       margin-bottom: 5px;
-      font-size: 14px;
+      font-size: 16px;
       color: #333;
-      align-self: center; /* Align labels to the start of the flex container */
-      
+      align-self: center;
     }
 
     input {
       width: 90%;
       padding: 8px;
       border: 1px solid #ccc;
-      border-radius: 4px;/* Centers the text inside the input */
-      margin-bottom: 10px; /* Space below input for aesthetics */
+      border-radius: 4px;
+      margin-bottom: 10px;
       display: flex;
       flex-direction: column;
-      align-items: center; 
+      align-items: center;
     }
     input.ng-invalid.ng-touched {
-      border-color: red; /* Red border on input if it's invalid and touched */
+      border-color: red;
     }
 
     .error-message {
       color: red;
       font-size: 12px;
       margin-left: 6%;
-      align-self: flex-start; /* Align error message to the start of the flex container */
-      margin-top: -5px; /* Pull error message closer to input */
+      align-self: flex-start;
+      margin-top: -5px;
       margin-bottom: 10px;
     }
   }
 
   .redirect-button {
-   width: 90%;
+    width: 90%;
     margin: 5px auto;
     padding: 12px 24px;
     color: #fff;
-    width: 90%; /* Adjust button width as well to match input fields */
     font-size: 2rem;
     display: flex;
     justify-content: center;
@@ -124,31 +122,29 @@
       }
     }
   }
-}
 
-@media (max-width: 600px) {
-  .login-container {
-    width: 80%; /* Set width to 80% when viewport width is less than 600px */
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  h1{
-    margin-bottom: 30px;
-  }
-}
-
-@media (max-width: 788px) {
-  .alert-container {
-      right: 140px; /* Ajustează distanța de la marginea dreaptă */
-      width: 40%; /* Lățime ajustată pentru ecrane medii */
-      
+  @media (max-width: 600px) {
+    .login-container {
+      width: 80%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
-}
+    h1 {
+      margin-bottom: 30px;
+    }
+  }
 
-@media (max-width: 480px) {
-  .alert-container {
-      right: 150px; /* Ajustează distanța de la marginea dreaptă */
-      width: 80%; /* Lățime ajustată pentru ecrane mici */
-     
+  @media (max-width: 788px) {
+    .alert-container {
+      right: 140px;
+      width: 40%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .alert-container {
+      right: 150px;
+      width: 80%;
+    }
   }
 }

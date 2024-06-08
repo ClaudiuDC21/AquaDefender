@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../../authentication/services/authentication.service';
 import * as L from 'leaflet';
@@ -13,7 +12,7 @@ import {
   Router,
 } from '@angular/router';
 import { filter, forkJoin } from 'rxjs';
-import { AbstractControl, FormArray, FormGroup, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { IconService } from '../../../utils/services/icon.service';
 import { EmailService } from '../../../utils/services/email.service';
 import { UserService } from '../../../profile/services/user.service';
@@ -24,14 +23,13 @@ import { UserService } from '../../../profile/services/user.service';
   styleUrl: './report.component.scss',
 })
 export class ReportComponent implements OnInit {
-  isDropdownOpen: boolean = false;
   showInstructions: boolean = false;
   formSubmissionAttempt: boolean = false;
   report: Report = {
-    id: 0, // sau poți omite acest rând dacă dorești, deoarece este opțional
+    id: 0,
     title: '',
     description: '',
-    reportDate: undefined, // sau poți folosi `new Date()` dacă vrei să inițializezi cu data curentă
+    reportDate: undefined,
     userId: 0,
     username: '',
     county: '',
@@ -49,15 +47,18 @@ export class ReportComponent implements OnInit {
     currentIndex: 0,
     hasImages: false,
   };
-  counties: any[] = []; // To store counties
+  counties: any[] = [];
   cities: any[] = [];
   imagePreviews: string[] = [];
 
   isLoading = false;
   alertErrorMessages: string[] = [];
   alertSuccessMessages: string[] = [];
-  alertInfoMessages: string[] = [];
-  alertWarningMessages: string[] = [];
+
+  minLatitude = 43.606235154;
+  maxLatitude = 48.263996537;
+  minLongitude = 20.264543212;
+  maxLongitude = 29.772245796;
 
   private map: any;
   private currentMarker: any;
@@ -98,10 +99,9 @@ export class ReportComponent implements OnInit {
           )
           .openOn(this.map);
 
-        // Asociem popup-ul cu marker-ul
         this.currentMarker.bindPopup(popup);
       });
-    }, 1000); // Delay of 2 seconds (2000 milliseconds)
+    }, 1000);
     this.route.queryParams.subscribe((params) => {
       const message = params['message'];
       if (message && !this.alertSuccessMessages.includes(message)) {
@@ -146,11 +146,11 @@ export class ReportComponent implements OnInit {
   }
 
   removeAlert(index: number): void {
-    this.alertErrorMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
+    this.alertErrorMessages.splice(index, 1);
   }
 
   removeSuccessAlert(index: number): void {
-    this.alertSuccessMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
+    this.alertSuccessMessages.splice(index, 1);
   }
 
   loadCounties(): void {
@@ -169,7 +169,7 @@ export class ReportComponent implements OnInit {
   }
 
   onCountyChange(): void {
-    this.report.city = ''; // Reset city selection
+    this.report.city = '';
     if (this.report.county) {
       const countyId = +this.report.county;
       this.locationService.getAllCitiesByCountyId(countyId).subscribe({
@@ -187,12 +187,18 @@ export class ReportComponent implements OnInit {
     }
   }
 
-  onLogout() {
-    this.authenticationService.logout();
-  }
 
-  toggleDropdown(): void {
-    this.isDropdownOpen = !this.isDropdownOpen;
+  isLocationValid(): boolean {
+    const latitude = this.report.latitude;
+    const longitude = this.report.longitude;
+    return (
+      latitude !== null &&
+      longitude !== null &&
+      latitude >= this.minLatitude &&
+      latitude <= this.maxLatitude &&
+      longitude >= this.minLongitude &&
+      longitude <= this.maxLongitude
+    );
   }
 
   markFormControlsAsTouched(form: NgForm) {
@@ -203,20 +209,33 @@ export class ReportComponent implements OnInit {
   }
 
   createReport(reportForm: NgForm) {
-    this.formSubmissionAttempt = true; // Set the form submission attempt flag to true
+    this.formSubmissionAttempt = true;
 
     if (this.report.severity === -1) {
-      // Manually mark the severity field as invalid
       const severityControl = reportForm.controls['severityField'];
       if (severityControl) {
         severityControl.setErrors({ invalidSeverity: true });
       }
+      this.alertErrorMessages.push('Severitatea nu a fost selectată.');
     }
 
-    if (reportForm.invalid || this.report.severity === -1) {
+    if (!this.isLocationValid()) {
+      this.alertErrorMessages.push(
+        'Trebuie să alegeți un punct de pe teritoriul României.'
+      );
+    }
+
+    if (
+      reportForm.invalid ||
+      this.report.severity === -1 ||
+      !this.isLocationValid()
+    ) {
       this.markFormControlsAsTouched(reportForm);
       console.log('Form is invalid!');
       this.isLoading = false;
+      this.alertErrorMessages.push(
+        'Formularul este invalid. Vă rugăm să verificați toate câmpurile.'
+      );
       return;
     }
 
@@ -242,7 +261,7 @@ export class ReportComponent implements OnInit {
 
       this.reportService.createReportWithImages(formData).subscribe({
         next: () => {
-          this.sendEmailNotification(newReport); // Send email after successful report creation
+          this.sendEmailNotification(newReport);
         },
         error: (error) => {
           this.isLoading = false;
@@ -255,14 +274,14 @@ export class ReportComponent implements OnInit {
               );
             }
           }
+          this.alertErrorMessages.push(
+            'Crearea raportului a eșuat. Vă rugăm să încercați din nou.'
+          );
         },
         complete: () => {
           this.isLoading = false;
-
           const successMessage = 'Problema a fost raportata cu succes';
           this.alertSuccessMessages.push(successMessage);
-
-          // Redirect to report-a-problem page with success message
           const navigationExtras: NavigationExtras = {
             queryParams: { message: successMessage },
           };
@@ -271,6 +290,9 @@ export class ReportComponent implements OnInit {
       });
     } else {
       this.isLoading = false;
+      this.alertErrorMessages.push(
+        'ID-ul utilizatorului nu a fost găsit. Vă rugăm să vă autentificați din nou.'
+      );
     }
   }
 
@@ -288,7 +310,6 @@ export class ReportComponent implements OnInit {
         this.sendEmail(report, cityEmail, userName, cityName, countyName);
 
         if (report.severity == 4) {
-          // 4 is the highest severity level (Critic)
           this.locationService.getCountyEmailById(+report.county).subscribe(
             (response: any) => {
               const countyEmail = response.email;
@@ -419,7 +440,6 @@ export class ReportComponent implements OnInit {
     }
   }
 
-  // Funcția care converteste un obiect Report în FormData
   createFormData(report: Report): FormData {
     const formData = new FormData();
     formData.append('Title', report.title);
@@ -435,7 +455,6 @@ export class ReportComponent implements OnInit {
 
     formData.append('UserId', report.userId.toString());
 
-    // Adăugarea fișierelor imagine
     if (report.imageFiles) {
       for (const imageFile of this.report.imageFiles) {
         formData.append('Images', imageFile);
@@ -452,22 +471,19 @@ export class ReportComponent implements OnInit {
     const newFiles = element.files;
 
     if (newFiles) {
-      // Adaugă fiecare fișier nou la lista de fișiere și creează un URL blob pentru previzualizare
       for (let file of Array.from(newFiles)) {
         const blobUrl = URL.createObjectURL(file);
-        this.imagePreviews.push(blobUrl); // Adaugă URL-ul blob pentru previzualizare
+        this.imagePreviews.push(blobUrl);
         this.report.imageFiles.push(file);
       }
-      // În caz că Angular nu detectează schimbările, marchează pentru verificare
       this.cdr.markForCheck();
     }
     this.isLoading = false;
   }
 
   removeImage(index: number): void {
-    // Elimină fișierul și URL-ul blob corespunzător
     this.report.imageFiles.splice(index, 1);
-    URL.revokeObjectURL(this.imagePreviews[index]); // Curăță memoria revocând URL-ul blob
+    URL.revokeObjectURL(this.imagePreviews[index]);
     this.imagePreviews.splice(index, 1);
 
     this.cdr.markForCheck();

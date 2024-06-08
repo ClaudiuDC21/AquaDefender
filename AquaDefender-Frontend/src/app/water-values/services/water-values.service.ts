@@ -1,16 +1,15 @@
-// water-values.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WaterValuesService {
   private baseUrl = environment.apiUrl;
   private apiUrl = `${this.baseUrl}/WaterValues`;
-  
+
   constructor(private http: HttpClient) {}
 
   getWaterValuesById(id: number): Observable<any> {
@@ -38,7 +37,9 @@ export class WaterValuesService {
       'Content-Type': 'application/json',
     });
 
-    return this.http.put<any>(`${this.apiUrl}/${id}`, waterValuesDto, { headers });
+    return this.http.put<any>(`${this.apiUrl}/${id}`, waterValuesDto, {
+      headers,
+    });
   }
 
   deleteWaterValues(id: number): Observable<any> {

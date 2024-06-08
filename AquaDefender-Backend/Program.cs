@@ -1,8 +1,4 @@
-using AquaDefender_Backend;
-using AquaDefender_Backend.Data;
 using AquaDefender_Backend.Extensions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
@@ -15,7 +11,6 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
-// Add Serilog for logging
 builder.Host.UseSerilog();
 
 builder.Services.AddControllers();
@@ -65,10 +60,10 @@ else
     app.UseHsts();
 }
 
-app.UseHttpsRedirection(); // Add HTTPS redirection
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseCors("AllowLocalhost4200"); // Apply the CORS policy globally
+app.UseCors("AllowLocalhost4200");
 
 var env = app.Services.GetRequiredService<IWebHostEnvironment>();
 env.WebRootPath = "imagesRoot";

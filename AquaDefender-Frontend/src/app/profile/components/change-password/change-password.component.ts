@@ -1,14 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../../authentication/services/authentication.service';
-import { Observable, filter, forkJoin, map, switchMap } from 'rxjs';
-import { ReportService } from '../../../report/services/report.service';
-import { User } from '../../models/user.model';
+import { filter } from 'rxjs';
 import { UserService } from '../../services/user.service';
-import { LocationService } from '../../../utils/services/location.service';
 import { NavigationEnd, NavigationExtras, Router } from '@angular/router';
-import { ReportStatus } from '../../../report/enums/status';
-import { SeverityLevel } from '../../../report/enums/severity';
-import { Report } from '../../../report/models/report.model';
 import { ViewportScroller } from '@angular/common';
 import { IconService } from '../../../utils/services/icon.service';
 
@@ -17,8 +11,7 @@ import { IconService } from '../../../utils/services/icon.service';
   templateUrl: './change-password.component.html',
   styleUrl: './change-password.component.scss',
 })
-export class ChangePasswordComponent implements OnInit {
-  isDropdownOpen: boolean = false;
+export class ChangePasswordComponent {
   isLoading: boolean = false;
 
   alertErrorMessages: string[] = [];
@@ -43,7 +36,6 @@ export class ChangePasswordComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void {}
 
   getisAuthenticated() {
     return this.authenticationService.getAuthStatus();
@@ -54,28 +46,18 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   removeAlert(index: number): void {
-    this.alertErrorMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
+    this.alertErrorMessages.splice(index, 1);
   }
 
   removeSuccessAlert(index: number): void {
-    this.alertSuccessMessages.splice(index, 1); // Îndepărtează mesajul de eroare la indexul specificat
+    this.alertSuccessMessages.splice(index, 1);
   }
 
   newPasswordsMatch(): boolean {
     return this.user.newPassword === this.user.confirmNewPassword;
   }
 
-  onLogout() {
-    this.authenticationService.logout();
-  }
-
-  toggleDropdown(): void {
-    this.isDropdownOpen = !this.isDropdownOpen;
-  }
-
   changePassword(): void {
-    console.log('Submitting:', this.user);
-
     if (
       !this.user.oldPassword ||
       !this.user.newPassword ||
@@ -95,12 +77,8 @@ export class ChangePasswordComponent implements OnInit {
       return;
     }
 
-    // Assuming 'userId' is stored and retrieved securely, e.g., from a user service or auth service
-    const userId = this.getUserId(); // Or however you obtain the user's ID
-
-    console.log('Old Password:', this.user.oldPassword);
-    console.log('New Password:', this.user.newPassword);
-    console.log('Confirm New Password:', this.user.confirmNewPassword);
+    const userId = this.getUserId();
+    this.isLoading = true;
     if (userId) {
       this.userService
         .updatePassword(userId, this.user.oldPassword, this.user.newPassword)
@@ -109,8 +87,7 @@ export class ChangePasswordComponent implements OnInit {
             const successMessage = 'Parola a fost actualizată cu succes.';
             console.log(successMessage);
             this.alertSuccessMessages.push(successMessage);
-
-            // Redirect to personal profile page with success message
+            this.isLoading = false;
             const navigationExtras: NavigationExtras = {
               queryParams: { message: successMessage },
             };
@@ -123,6 +100,7 @@ export class ChangePasswordComponent implements OnInit {
             const errorMessage = 'Actualizarea parolei a eșuat: ' + error.error;
             console.error(errorMessage, error);
             this.alertErrorMessages.push(errorMessage);
+            this.isLoading = false;
           },
         });
     }

@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AquaDefender_Backend.Domain;
 using AquaDefender_Backend.Repository.Interfaces;
 using AquaDefender_Backend.Service.Interfaces;
-using Microsoft.Extensions.Logging;
 
 namespace AquaDefender_Backend.Service
 {
@@ -100,6 +96,30 @@ namespace AquaDefender_Backend.Service
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"An error occurred while deleting the user with ID {userId}.");
+                throw;
+            }
+        }
+
+        public async Task<bool> HasProfilePictureAsync(int userId)
+        {
+            if (userId <= 0)
+            {
+                throw new ArgumentException("Id-ul utilizatorului trebuie să fie un număr întreg pozitiv.", nameof(userId));
+            }
+
+            try
+            {
+                var user = await _userRepository.GetUserByIdAsync(userId);
+                if (user == null)
+                {
+                    throw new ArgumentException($"Utilizatorul cu id-ul {userId} nu există.");
+                }
+
+                return !string.IsNullOrEmpty(user.ProfilePicture);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while checking if the user with ID {userId} has a profile picture.");
                 throw;
             }
         }

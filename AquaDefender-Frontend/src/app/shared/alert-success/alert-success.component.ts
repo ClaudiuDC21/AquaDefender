@@ -11,7 +11,7 @@ export class AlertSuccessComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
 
   constructor(public iconService: IconService) {}
-  
+
   ngOnInit(): void {
     setTimeout(() => {
       this.onClose();
@@ -22,4 +22,3 @@ export class AlertSuccessComponent implements OnInit {
     this.close.emit();
   }
 }
-

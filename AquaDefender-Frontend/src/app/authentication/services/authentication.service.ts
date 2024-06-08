@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs'; // Adjust the path as necessary
+import { Observable, tap } from 'rxjs';
 import { UserRole } from '../enums/user-role';
 import { environment } from '../../../environments/environment';
 
@@ -10,12 +10,12 @@ import { environment } from '../../../environments/environment';
 export class AuthenticationService {
   private baseUrl = environment.apiUrl;
   private apiUrl = `${this.baseUrl}/Authentication`;
-  private tokenKey = 'auth_token'; // key to store the token in local storage
-  private emailKey = 'auth_email'; // key to store the email in local storage
+  private tokenKey = 'auth_token';
+  private emailKey = 'auth_email';
   private userIDKey = 'user_id';
   private cityIDKey = 'auth_city_id';
-  private userNameKey = 'auth_user_name'; // key to store the username in local storage
-  private roleKey = 'auth_role_id'; // key to store the user role in local storage
+  private userNameKey = 'auth_user_name';
+  private roleKey = 'auth_role_id';
 
   constructor(private http: HttpClient) {}
 
@@ -47,32 +47,31 @@ export class AuthenticationService {
 
   private handleLoginAuthentication(response: any): void {
     console.log('Authentication response:', response);
-  
+
     if (response && response.token) {
       localStorage.setItem(this.tokenKey, response.token);
     }
-  
+
     if (response && response.email) {
       localStorage.setItem(this.emailKey, response.email);
     }
-  
+
     if (response && response.userId) {
-      localStorage.setItem(this.userIDKey, response.userId.toString()); // Ensure userId is stored as a string
+      localStorage.setItem(this.userIDKey, response.userId.toString());
     }
-  
+
     if (response && response.cityId) {
-      localStorage.setItem(this.cityIDKey, response.cityId.toString()); // Ensure cityId is stored as a string
+      localStorage.setItem(this.cityIDKey, response.cityId.toString());
     }
-  
+
     if (response && response.userName) {
       localStorage.setItem(this.userNameKey, response.userName);
     }
-  
+
     if (response && response.roleId) {
-      localStorage.setItem(this.roleKey, response.roleId.toString()); // Ensure roleId is stored as a string
+      localStorage.setItem(this.roleKey, response.roleId.toString());
     }
   }
-  
 
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
@@ -104,7 +103,7 @@ export class AuthenticationService {
 
   getAuthStatus(): boolean {
     const token = localStorage.getItem(this.tokenKey);
-    return !!token; // This will return true if there's a token, false otherwise
+    return !!token;
   }
 
   getCityId(): string | null {

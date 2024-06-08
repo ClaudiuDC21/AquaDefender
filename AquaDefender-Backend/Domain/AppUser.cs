@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.Metrics;
-using System.Linq;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace AquaDefender_Backend.Domain
 {
@@ -20,7 +15,7 @@ namespace AquaDefender_Backend.Domain
         public byte[] PasswordHash { get; set; }
         [Required]
         public byte[] PasswordSalt { get; set; }
-        public int RoleId { get; set; } 
+        public int RoleId { get; set; }
         public UserRole Role { get; set; }
         public DateTime BirthDate { get; set; }
         [Required]

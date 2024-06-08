@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AquaDefender_Backend.Domain;
 
 namespace AquaDefender_Backend.Repository.Interfaces

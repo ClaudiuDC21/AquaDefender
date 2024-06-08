@@ -13,12 +13,12 @@
   color: white;
 
   .alert-container {
-    position: fixed; 
-    top: 120px; 
-    right: 20px; 
-    z-index: 20; 
-    max-width: 30%; 
-    width: 30%; 
+    position: fixed;
+    top: 120px;
+    right: 20px;
+    z-index: 20;
+    max-width: 30%;
+    width: 30%;
   }
 
   .inner-header {
@@ -69,11 +69,10 @@
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       }
-      
 
       form {
         width: 80%;
-        margin: 0 auto; // Centrează formularul pe pagină
+        margin: 0 auto;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -89,19 +88,18 @@
           .error-message {
             color: red;
             font-size: 12px;
-            align-self: flex-start; /* Align error message to the start of the flex container */
-            margin-top: 0; /* Pull error message closer to input */
+            align-self: flex-start;
+            margin-top: 0;
             align-items: left;
             text-align: left;
           }
-      
 
           input[type="text"],
           input[type="date"],
           input[type="tel"],
           select,
           input[type="file"] {
-            width: 100%; // Setează lățimea la 100% pentru a se întinde pe tot containerul
+            width: 100%;
             padding: 10px;
             font-size: 1em;
             border: 1px solid #ddd;
@@ -133,13 +131,13 @@
 
           .image-preview,
           .profile-image-preview {
-            width: 100%; // Setează lățimea previzualizării imaginii să fie egală cu lățimea formularului
+            width: 100%;
             text-align: center;
             position: relative;
 
             img {
-              max-width: 100%; // Imaginea se va întinde să ocupe întreaga lățime a elementului său părinte
-              height: auto; // Înălțimea se va ajusta automat pentru a menține proporțiile
+              max-width: 100%;
+              height: auto;
               border-radius: 5px;
               border: 1px solid #3498db;
             }
@@ -153,7 +151,7 @@
               color: white;
               cursor: pointer;
               transition: background-color 0.3s;
-              display: block; // Butonul va ocupa lățimea completă a containerului său
+              display: block;
               margin: 10px auto;
 
               &:hover {
@@ -172,7 +170,7 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          overflow: hidden; // This ensures that any child elements that overflow the button's boundaries are not rendered outside
+          overflow: hidden;
           position: relative;
           border-radius: 100vw;
           background-color: #3498db;
@@ -181,14 +179,14 @@
           border: solid 1px rgba($color: #2776aa, $alpha: 0.3);
           overflow: hidden;
           cursor: pointer;
-          transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); // easeOutQuart
-          mask-image: -webkit-radial-gradient(white, black); // force safari to respect border radius
-        
+          transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+          mask-image: -webkit-radial-gradient(white, black);
+
           .button-text {
             position: relative;
             z-index: 2;
           }
-        
+
           .fill-container {
             position: absolute;
             left: 0;
@@ -196,8 +194,7 @@
             width: 100%;
             padding-bottom: 100%;
             transform: translateY(-50%) rotate(180deg);
-        
-            // collor filling
+
             &::after {
               content: "";
               position: absolute;
@@ -207,26 +204,26 @@
               height: 100%;
               background-color: #2776aa;
               border-radius: 50%;
-              transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); // easeOutQuart
+              transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
               transform: translateY(-100%);
             }
           }
-        
+
           &:hover {
             border-color: rgb(105, 138, 247);
             transform: translateY(-4px);
-        
+
             .fill-container {
               transform: translateY(-50%) rotate(0);
-        
+
               &::after {
                 transform: translateY(0);
               }
             }
           }
-        
+
           .button-icon {
-            margin-right: 10px; // Ajustează valoarea în funcție de nevoile tale
+            margin-right: 10px;
             z-index: 2;
           }
         }
@@ -236,17 +233,15 @@
 
   @media (max-width: 788px) {
     .alert-container {
-        right: 140px; /* Ajustează distanța de la marginea dreaptă */
-        width: 40%; /* Lățime ajustată pentru ecrane medii */
-        
-      }
+      right: 140px;
+      width: 40%;
+    }
   }
-  
+
   @media (max-width: 480px) {
     .alert-container {
-        right: 150px; /* Ajustează distanța de la marginea dreaptă */
-        width: 80%; /* Lățime ajustată pentru ecrane mici */
-       
+      right: 150px;
+      width: 80%;
     }
   }
 

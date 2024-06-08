@@ -10,7 +10,7 @@
         (close)="removeAlert(i)"
       ></app-alert-error>
     </div>
-  
+
     <div *ngFor="let successMessage of alertSuccessMessages; let j = index">
       <app-alert-success
         [message]="successMessage"
@@ -23,7 +23,9 @@
     <div class="back-container">
       <h1 class="form-title">Editare Profil</h1>
       <p class="form-instructions">
-        Puteți actualiza oricare dintre câmpurile de mai jos. Nu este necesar să completați toate câmpurile pentru a salva modificările. Alegeți doar informațiile pe care doriți să le schimbați.
+        Puteți actualiza oricare dintre câmpurile de mai jos. Nu este necesar să
+        completați toate câmpurile pentru a salva modificările. Alegeți doar
+        informațiile pe care doriți să le schimbați.
       </p>
       <form id="profileForm" (ngSubmit)="updateProfile()" #profileForm="ngForm">
         <div class="form-group">
@@ -81,14 +83,18 @@
             #phone="ngModel"
             pattern="^(\+4|)?07[0-8]\d{7}$"
           />
-          <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="error-message">
-           <div *ngIf="phone.errors?.['pattern']">Numărul de telefon trebuie să aibă 10 cifre și să fie în formatul valid din România.</div>
+          <div
+            *ngIf="phone.invalid && (phone.dirty || phone.touched)"
+            class="error-message"
+          >
+            <div *ngIf="phone.errors?.['pattern']">
+              Numărul de telefon trebuie să aibă 10 cifre și să fie în formatul
+              valid din România.
+            </div>
           </div>
         </div>
-        
-        
 
-        <div class="form-group">
+        <div class="form-group" *ngIf="!isCityHallEmployee()">
           <label for="county">Județ:</label>
           <select
             id="county"
@@ -103,8 +109,8 @@
             </option>
           </select>
         </div>
-        
-        <div class="form-group">
+
+        <div class="form-group" *ngIf="!isCityHallEmployee()">
           <label for="city">Localitate:</label>
           <select
             id="city"

@@ -29,7 +29,6 @@
       </div>
 
       <div class="statistics-container" *ngIf="!isLoading">
-        <!-- Rândul 1 -->
         <div class="statistics-row">
           <div class="statistic full-width">
             <div class="number">{{ stats.totalReports }}</div>
@@ -37,9 +36,7 @@
           </div>
         </div>
 
-        <!-- Titlu pentru Rândul 2 -->
         <p class="center-text">Statusul Rapoartelor</p>
-        <!-- Rândul 2 -->
         <div class="statistics-row">
           <div class="statistic full-width">
             <div class="number">{{ stats.newReports }}</div>
@@ -55,9 +52,7 @@
           </div>
         </div>
 
-        <!-- Titlu pentru Rândul 3 -->
         <p class="center-text">Severitatea Rapoartelor</p>
-        <!-- Rândul 3 -->
         <div class="statistics-row">
           <div class="statistic full-width">
             <div class="number">{{ stats.veryLowSeverity }}</div>
@@ -177,7 +172,6 @@
                 }}
                 a adăugat un nou raport
               </p>
-              <!-- Adăugat clasa report-title la p -->
               <p class="date-reported">
                 {{ report.reportDate | date : "dd.MM.yyyy" }}
               </p>
@@ -219,14 +213,12 @@
               Acest raport are un grad de severitate {{ report.severityText }}.
             </div>
             <div class="image-container" *ngIf="report.imageUrls.length > 0">
-              <!-- Container pentru slide-uri -->
               <div
                 class="slide"
                 [ngStyle]="{
                   transform: 'translateX(-' + report.currentIndex * 100 + '%)'
                 }"
               >
-                <!-- Slide-uri -->
                 <div
                   class="image"
                   *ngFor="let image of report.imageUrls; let i = index"
@@ -234,7 +226,6 @@
                   [attr.data-index]="i"
                 ></div>
               </div>
-              <!-- Butoanele pentru navigarea între imagini -->
               <button class="prev" (click)="prevImage(report)">&#8249;</button>
               <button class="next" (click)="nextImage(report)">&#8250;</button>
             </div>

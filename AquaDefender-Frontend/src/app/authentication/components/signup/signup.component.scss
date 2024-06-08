@@ -1,10 +1,10 @@
 .alert-container {
   position: fixed;
-  top: 120px; 
-  right: 20px; 
+  top: 120px;
+  right: 20px;
   z-index: 1050;
-  max-width: 30%; 
-  width: 30%; 
+  max-width: 30%;
+  width: 30%;
 }
 
 .signup-container {
@@ -13,12 +13,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
-  background-color: rgba(
-    255,
-    255,
-    255,
-    1
-  );
+  background-color: rgba(255, 255, 255, 1);
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -40,7 +35,7 @@
     border: none;
     background: none;
     font-size: 24px;
-    color: #333; 
+    color: #333;
     cursor: pointer;
   }
 
@@ -52,7 +47,7 @@
 
   h1 {
     color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     font-size: 25px;
   }
 
@@ -60,7 +55,7 @@
     display: flex;
     flex-direction: column;
 
-    .form-group { 
+    .form-group {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -68,7 +63,7 @@
 
     label {
       margin-bottom: 0px;
-      font-size: 14px;
+      font-size: 16px;
       color: #333;
       align-self: center;
     }
@@ -82,10 +77,11 @@
       margin-bottom: 0px;
       display: flex;
       flex-direction: column;
-      align-items: center; 
+      align-items: center;
     }
-    input.ng-invalid.ng-touched, select.ng-invalid.ng-touched {
-      border-color: red; 
+    input.ng-invalid.ng-touched,
+    select.ng-invalid.ng-touched {
+      border-color: red;
     }
 
     .error-message {
@@ -93,44 +89,43 @@
       font-size: 12px;
       margin-left: 6%;
       margin-right: 4%;
-      align-self: flex-start; /* Align error message to the start of the flex container */
-      margin-top: 0; /* Pull error message closer to input */
+      align-self: flex-start;
+      margin-top: 0;
       margin-bottom: 0px;
     }
 
     .redirect-button {
       width: 90%;
-       margin: 5px auto;
-       padding: 12px 24px;
-       color: #fff;
-       width: 90%; /* Adjust button width as well to match input fields */
-       font-size: 2rem;
-       display: flex;
-       justify-content: center;
-       align-items: center;
-       border-radius: 8px;
-       background-color: #3498db;
-       font-family: "Brush Script MT", sans-serif;
-       color: #fafafa;
-       border: solid 1px rgba(39, 118, 170, 0.3);
-       overflow: hidden;
-       cursor: pointer;
-       transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-     }
-   
-     .create-account-link {
-       margin-top: 16px;
-       font-size: 14px;
-   
-       a {
-         color: #3498db;
-         text-decoration: none;
-   
-         &:hover {
-           text-decoration: underline;
-         }
-       }
-     }
+      margin: 5px auto;
+      padding: 12px 24px;
+      color: #fff;
+      font-size: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 8px;
+      background-color: #3498db;
+      font-family: "Brush Script MT", sans-serif;
+      color: #fafafa;
+      border: solid 1px rgba(39, 118, 170, 0.3);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .create-account-link {
+      margin-top: 16px;
+      font-size: 14px;
+
+      a {
+        color: #3498db;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
   }
 
   .login-link {
@@ -147,63 +142,64 @@
     }
   }
 }
+
 @media (max-height: 900px) {
   .signup-container {
-    width: 350px; /* Facem containerul mai îngust pentru a se potrivi cu dimensiuni mai mici */
+    width: 350px;
   }
 
   .signup-box {
-    padding: 0px 20px; /* Reducem padding-ul vertical și menținem cel orizontal */
+    padding: 0px 20px;
     height: 90%;
   }
 
   .signup-box .close-button {
-    top: -10px; /* Poziționăm butonul exact în colțul de sus */
-    right: 5px; /* Poziționăm butonul exact în colțul drept */
-    padding: 5px; /* Păstrăm padding pentru a preveni lipirea de margini */
-    font-size: 16px; /* Poti ajusta mărimea dacă este necesar */
+    top: -10px;
+    right: 5px;
+    padding: 5px;
+    font-size: 16px;
   }
 
   .signup-box h1 {
-    font-size: 25px; /* Reducem dimensiunea fontului pentru titlu */
-    margin-bottom: 5px; /* Reducem spațiul de sub titlu */
+    font-size: 25px;
+    margin-bottom: 5px;
   }
 
   .signup-box label,
   .signup-box input,
   .signup-box select,
   .signup-box button {
-    font-size: 12px; /* Reducem dimensiunea fonturilor pentru toate elementele formularului */
+    font-size: 12px;
   }
 
   .signup-box input,
   .signup-box select,
   .signup-box label {
-    padding: 3px; /* Reducem padding-ul pentru input-uri și select-uri */
-    margin-bottom: 0; /* Oferim puțin mai mult spațiu între elemente decât 0 pentru claritate vizuală */
+    padding: 3px;
+    margin-bottom: 0;
   }
 }
 
 @media (max-width: 400px) {
   .signup-container {
-    width: 90%; /* Facem containerul mai îngust pentru a se potrivi cu dimensiuni mai mici */
+    width: 90%;
   }
 
   .signup-box {
-    padding: 0px 20px; /* Reducem padding-ul vertical și menținem cel orizontal */
+    padding: 0px 20px;
     height: 90%;
   }
 
   .signup-box .close-button {
-    top: -10px; /* Poziționăm butonul exact în colțul de sus */
-    right: 5px; /* Poziționăm butonul exact în colțul drept */
-    padding: 5px; /* Păstrăm padding pentru a preveni lipirea de margini */
-    font-size: 16px; /* Poti ajusta mărimea dacă este necesar */
+    top: -10px;
+    right: 5px;
+    padding: 5px;
+    font-size: 16px;
   }
 
   .signup-box h1 {
-    font-size: 25px; /* Reducem dimensiunea fontului pentru titlu */
-    margin-bottom: 5px; /* Reducem spațiul de sub titlu */
+    font-size: 25px;
+    margin-bottom: 5px;
   }
 
   .signup-box label,
@@ -215,58 +211,56 @@
 
   .signup-box input,
   .signup-box select {
-    padding: 3px; /* Reducem padding-ul pentru input-uri și select-uri */
-    margin-bottom: 0; /* Oferim puțin mai mult spațiu între elemente decât 0 pentru claritate vizuală */
+    padding: 3px;
+    margin-bottom: 0;
   }
 }
 
 @media (max-height: 800px) {
   .signup-container {
-    width: 350px; /* Facem containerul mai îngust pentru a se potrivi cu dimensiuni mai mici */
+    width: 350px;
   }
 
   .signup-box {
-    padding: 0px 10px; /* Reducem padding-ul vertical și menținem cel orizontal */
+    padding: 0px 10px;
     height: 90%;
   }
 
   .signup-box .close-button {
-    top: -10px; /* Poziționăm butonul exact în colțul de sus */
-    right: 5px; /* Poziționăm butonul exact în colțul drept */
-    padding: 5px; /* Păstrăm padding pentru a preveni lipirea de margini */
-    font-size: 16px; /* Poti ajusta mărimea dacă este necesar */
+    top: -10px;
+    right: 5px;
+    padding: 5px;
+    font-size: 16px;
   }
 
   .signup-box h1 {
-    font-size: 25px; /* Reducem dimensiunea fontului pentru titlu */
-    margin-bottom: 20px; /* Reducem spațiul de sub titlu */
+    font-size: 25px;
+    margin-bottom: 20px;
   }
 
   .signup-box form label {
-    display: none; /* Hide labels when under 800px wide */
+    display: none;
   }
 
   .signup-box input,
   .signup-box select,
   .signup-box button {
-    font-size: 12px; /* Reducem dimensiunea fonturilor pentru toate elementele formularului */
-    padding: -10px; /* Reducem padding-ul pentru input-uri și select-uri */
+    font-size: 12px;
+    padding: -10px;
     margin-bottom: -10px;
   }
 }
 
 @media (max-width: 788px) {
   .alert-container {
-      right: 140px; 
-      width: 40%; 
-      
-    }
+    right: 140px;
+    width: 40%;
+  }
 }
 
 @media (max-width: 480px) {
   .alert-container {
-      right: 150px; 
-      width: 80%; 
-     
+    right: 150px;
+    width: 80%;
   }
 }

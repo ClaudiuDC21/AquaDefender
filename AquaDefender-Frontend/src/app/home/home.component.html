@@ -248,7 +248,6 @@
     </div>
   </div>
 
-  <!-- report-list.component.html -->
   <div *ngIf="!isLoading">
     <div *ngFor="let report of reports" class="report-container">
       <div class="heading">
@@ -256,7 +255,6 @@
           {{ report.isAnonymous ? "Un utilizator anonim" : report.username }} a
           adăugat un nou raport
         </p>
-        <!-- Adăugat clasa report-title la p -->
         <p class="date-reported">
           {{ report.reportDate | date : "dd.MM.yyyy" }}
         </p>
@@ -295,14 +293,12 @@
         Acest raport are un grad de severitate {{ report.severityText }}.
       </div>
       <div class="image-container" *ngIf="report.imageUrls.length > 0">
-        <!-- Container pentru slide-uri -->
         <div
           class="slide"
           [ngStyle]="{
             transform: 'translateX(-' + report.currentIndex * 100 + '%)'
           }"
         >
-          <!-- Slide-uri -->
           <div
             class="image"
             *ngFor="let image of report.imageUrls; let i = index"
@@ -310,7 +306,6 @@
             [attr.data-index]="i"
           ></div>
         </div>
-        <!-- Butoanele pentru navigarea între imagini -->
         <button class="prev" (click)="prevImage(report)">&#8249;</button>
         <button class="next" (click)="nextImage(report)">&#8250;</button>
       </div>
