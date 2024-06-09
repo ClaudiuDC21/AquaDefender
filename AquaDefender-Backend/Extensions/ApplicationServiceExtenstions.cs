@@ -7,13 +7,19 @@ using AquaDefender_Backend.Service.Interfaces;
 using AquaDefender_Backend.Services;
 using AquaDefender_Backend.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.ApplicationInsights.AspNetCore;
 
 namespace AquaDefender_Backend.Extensions
 {
-    public static class ApplicationServiceExtenstions
+    public static class ApplicationServiceExtensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
+            services.AddApplicationInsightsTelemetry(options =>
+            {
+                options.ConnectionString = config["ApplicationInsights:ConnectionString"];
+            });
+
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ILocationService, LocationService>();
@@ -29,7 +35,7 @@ namespace AquaDefender_Backend.Extensions
             services.AddScoped<IReportRepository, ReportRepository>();
 
             services.AddDbContext<AquaDefenderDataContext>(options =>
-                       options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+                       options.UseSqlServer(config.GetConnectionString("ProductionConnection")));
 
             return services;
         }
