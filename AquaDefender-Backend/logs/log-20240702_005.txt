@@ -1,0 +1,54 @@
+2024-07-02 19:46:02.932 +03:00 [INF] User profile is available. Using 'C:\Users\claud\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-07-02 19:46:04.597 +03:00 [WRN] The WebRootPath was not found: C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\imagesRoot. Static files may be unavailable.
+2024-07-02 19:46:04.919 +03:00 [INF] Now listening on: https://localhost:2112
+2024-07-02 19:46:04.926 +03:00 [INF] Now listening on: http://localhost:2002
+2024-07-02 19:46:04.932 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-07-02 19:46:04.936 +03:00 [INF] Hosting environment: Development
+2024-07-02 19:46:04.940 +03:00 [INF] Content root path: C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend
+2024-07-02 19:46:10.609 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/swagger/index.html - null null
+2024-07-02 19:46:11.172 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/swagger/index.html - 200 null text/html;charset=utf-8 590.5093ms
+2024-07-02 19:46:11.249 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/_vs/browserLink - null null
+2024-07-02 19:46:11.249 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-02 19:46:11.522 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/_framework/aspnetcore-browser-refresh.js - 200 13776 application/javascript; charset=utf-8 273.9539ms
+2024-07-02 19:46:11.676 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/_vs/browserLink - 200 null text/javascript; charset=UTF-8 428.0124ms
+2024-07-02 19:46:11.887 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/swagger/v1/swagger.json - null null
+2024-07-02 19:46:12.225 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 338.295ms
+2024-07-02 19:46:31.723 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Report/all - null null
+2024-07-02 19:46:31.839 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.ReportController.GetAllReports (AquaDefender-Backend)'
+2024-07-02 19:46:31.878 +03:00 [INF] Route matched with {action = "GetAllReports", controller = "Report"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllReports() on controller AquaDefender_Backend.Controllers.ReportController (AquaDefender-Backend).
+2024-07-02 19:46:32.284 +03:00 [INF] Executing action method AquaDefender_Backend.Controllers.ReportController.GetAllReports (AquaDefender-Backend) - Validation state: "Valid"
+2024-07-02 19:46:34.887 +03:00 [INF] Executed DbCommand (211ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[Id], [r].[CityId], [r].[CountyId], [r].[Description], [r].[IsAnonymous], [r].[Latitude], [r].[LocationDetails], [r].[Longitude], [r].[ReportDate], [r].[Severity], [r].[Status], [r].[Title], [r].[UserId]
+FROM [Reports] AS [r]
+2024-07-02 19:46:35.016 +03:00 [INF] Executed action method AquaDefender_Backend.Controllers.ReportController.GetAllReports (AquaDefender-Backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2722.3282ms.
+2024-07-02 19:46:35.030 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[AquaDefender_Backend.Domain.Report, AquaDefender-Backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-07-02 19:46:35.091 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.ReportController.GetAllReports (AquaDefender-Backend) in 3201.1837ms
+2024-07-02 19:46:35.100 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.ReportController.GetAllReports (AquaDefender-Backend)'
+2024-07-02 19:46:35.115 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Report/all - 200 null application/json; charset=utf-8 3393.7442ms
+2024-07-02 19:47:36.800 +03:00 [INF] User profile is available. Using 'C:\Users\claud\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-07-02 19:47:37.831 +03:00 [WRN] The WebRootPath was not found: C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend\imagesRoot. Static files may be unavailable.
+2024-07-02 19:47:38.001 +03:00 [INF] Now listening on: https://localhost:2112
+2024-07-02 19:47:38.005 +03:00 [INF] Now listening on: http://localhost:2002
+2024-07-02 19:47:38.010 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-07-02 19:47:38.015 +03:00 [INF] Hosting environment: Development
+2024-07-02 19:47:38.019 +03:00 [INF] Content root path: C:\claudiu\Facultate\Licenta\AquaDefender\AquaDefender-Backend
+2024-07-02 19:47:39.984 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/swagger/index.html - null null
+2024-07-02 19:47:40.371 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/swagger/index.html - 200 null text/html;charset=utf-8 411.1301ms
+2024-07-02 19:47:40.599 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/_framework/aspnetcore-browser-refresh.js - null null
+2024-07-02 19:47:40.615 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/_vs/browserLink - null null
+2024-07-02 19:47:40.621 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/_framework/aspnetcore-browser-refresh.js - 200 13776 application/javascript; charset=utf-8 21.954ms
+2024-07-02 19:47:40.714 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/_vs/browserLink - 200 null text/javascript; charset=UTF-8 99.5495ms
+2024-07-02 19:47:40.855 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/swagger/v1/swagger.json - null null
+2024-07-02 19:47:41.207 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 352.0377ms
+2024-07-02 19:47:45.498 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Report/all - null null
+2024-07-02 19:47:45.601 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.ReportController.GetAllReports (AquaDefender-Backend)'
+2024-07-02 19:47:45.646 +03:00 [INF] Route matched with {action = "GetAllReports", controller = "Report"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllReports() on controller AquaDefender_Backend.Controllers.ReportController (AquaDefender-Backend).
+2024-07-02 19:47:45.904 +03:00 [INF] Executing action method AquaDefender_Backend.Controllers.ReportController.GetAllReports (AquaDefender-Backend) - Validation state: "Valid"
+2024-07-02 19:47:48.164 +03:00 [INF] Executed DbCommand (200ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [r].[Id], [r].[CityId], [r].[CountyId], [r].[Description], [r].[IsAnonymous], [r].[Latitude], [r].[LocationDetails], [r].[Longitude], [r].[ReportDate], [r].[Severity], [r].[Status], [r].[Title], [r].[UserId]
+FROM [Reports] AS [r]
+2024-07-02 19:47:48.485 +03:00 [INF] Executed action method AquaDefender_Backend.Controllers.ReportController.GetAllReports (AquaDefender-Backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2570.4816ms.
+2024-07-02 19:47:48.501 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[AquaDefender_Backend.Domain.Report, AquaDefender-Backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-07-02 19:47:48.561 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.ReportController.GetAllReports (AquaDefender-Backend) in 2904.6106ms
+2024-07-02 19:47:48.567 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.ReportController.GetAllReports (AquaDefender-Backend)'
+2024-07-02 19:47:48.579 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Report/all - 200 null application/json; charset=utf-8 3082.9557ms
