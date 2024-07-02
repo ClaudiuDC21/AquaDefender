@@ -1,0 +1,39 @@
+2024-07-02 08:31:57.592 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/counties - null null
+2024-07-02 08:31:57.754 +03:00 [INF] CORS policy execution successful.
+2024-07-02 08:31:57.764 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend)'
+2024-07-02 08:31:57.778 +03:00 [INF] Route matched with {action = "GetAllCounties", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[AquaDefender_Backend.Domain.County]]] GetAllCounties() on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-07-02 08:31:57.815 +03:00 [INF] Executing action method AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend) - Validation state: "Valid"
+2024-07-02 08:32:01.650 +03:00 [INF] Executed DbCommand (76ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[Id], [c].[Name], [c].[WaterDeptEmail]
+FROM [County] AS [c]
+2024-07-02 08:32:01.680 +03:00 [INF] Executed action method AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3858.8561ms.
+2024-07-02 08:32:01.688 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[AquaDefender_Backend.Domain.County, AquaDefender-Backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-07-02 08:32:01.703 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend) in 3916.8129ms
+2024-07-02 08:32:01.708 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend)'
+2024-07-02 08:32:01.712 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/counties - 200 null application/json; charset=utf-8 4132.8127ms
+2024-07-02 10:07:13.942 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/counties - null null
+2024-07-02 10:07:13.965 +03:00 [INF] CORS policy execution successful.
+2024-07-02 10:07:13.969 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend)'
+2024-07-02 10:07:13.977 +03:00 [INF] Route matched with {action = "GetAllCounties", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[AquaDefender_Backend.Domain.County]]] GetAllCounties() on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-07-02 10:07:13.995 +03:00 [INF] Executing action method AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend) - Validation state: "Valid"
+2024-07-02 10:07:14.569 +03:00 [INF] Executed DbCommand (72ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[Id], [c].[Name], [c].[WaterDeptEmail]
+FROM [County] AS [c]
+2024-07-02 10:07:14.584 +03:00 [INF] Executed action method AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 582.4827ms.
+2024-07-02 10:07:14.593 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[AquaDefender_Backend.Domain.County, AquaDefender-Backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-07-02 10:07:14.598 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend) in 615.2025ms
+2024-07-02 10:07:14.602 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend)'
+2024-07-02 10:07:14.607 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/counties - 200 null application/json; charset=utf-8 670.1402ms
+2024-07-02 10:34:42.887 +03:00 [INF] Request starting HTTP/2 GET https://localhost:2112/Locations/counties - null null
+2024-07-02 10:34:43.104 +03:00 [INF] CORS policy execution successful.
+2024-07-02 10:34:43.165 +03:00 [INF] Executing endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend)'
+2024-07-02 10:34:43.227 +03:00 [INF] Route matched with {action = "GetAllCounties", controller = "Locations"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[AquaDefender_Backend.Domain.County]]] GetAllCounties() on controller AquaDefender_Backend.Controllers.LocationsController (AquaDefender-Backend).
+2024-07-02 10:34:43.575 +03:00 [INF] Executing action method AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend) - Validation state: "Valid"
+2024-07-02 10:34:44.804 +03:00 [INF] Executed DbCommand (105ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[Id], [c].[Name], [c].[WaterDeptEmail]
+FROM [County] AS [c]
+2024-07-02 10:34:44.878 +03:00 [INF] Executed action method AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1227.4757ms.
+2024-07-02 10:34:44.921 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[AquaDefender_Backend.Domain.County, AquaDefender-Backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-07-02 10:34:44.969 +03:00 [INF] Executed action AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend) in 1469.6689ms
+2024-07-02 10:34:45.001 +03:00 [INF] Executed endpoint 'AquaDefender_Backend.Controllers.LocationsController.GetAllCounties (AquaDefender-Backend)'
+2024-07-02 10:34:45.032 +03:00 [INF] Request finished HTTP/2 GET https://localhost:2112/Locations/counties - 200 null application/json; charset=utf-8 2197.2177ms

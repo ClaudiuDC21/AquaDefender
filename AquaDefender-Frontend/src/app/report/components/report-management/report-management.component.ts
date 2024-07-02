@@ -117,20 +117,20 @@ export class ReportManagementComponent implements OnInit {
   }
 
   removeAlert(index: number): void {
-    this.alertErrorMessages.splice(index, 1); 
+    this.alertErrorMessages.splice(index, 1);
   }
 
   removeSuccessAlert(index: number): void {
-    this.alertSuccessMessages.splice(index, 1); 
+    this.alertSuccessMessages.splice(index, 1);
   }
 
   loadStatistics(cityId: number): void {
-    this.isLoading = true; 
+    this.isLoading = true;
     this.reportService.loadStatistics(cityId).subscribe({
       next: (statistics: ReportStatistics) => {
-        this.stats = statistics; 
+        this.stats = statistics;
         this.animateStatistics();
-        this.isLoading = false; 
+        this.isLoading = false;
       },
       error: (error) => {
         console.error('Error loading statistics:', error);
@@ -140,7 +140,7 @@ export class ReportManagementComponent implements OnInit {
   }
 
   private animateStatistics() {
-    const keys = Object.keys(this.stats) as (keyof typeof this.stats)[]; 
+    const keys = Object.keys(this.stats) as (keyof typeof this.stats)[];
     keys.forEach((key) => {
       this.animateNumber(key, this.stats[key], 2000);
     });
@@ -148,11 +148,12 @@ export class ReportManagementComponent implements OnInit {
 
   loadUserData() {
     this.isLoading = true;
-    const userId = this.authenticationService.getUserId(); 
+    const userId = this.authenticationService.getUserId();
 
     if (userId === null) {
       console.error('Invalid user ID');
-      this.alertErrorMessages.push('ID-ul utilizatorului este invalid.');
+      if (this.isAuthenticated())
+        this.alertErrorMessages.push('ID-ul utilizatorului este invalid.');
       this.isLoading = false;
       return;
     }
@@ -172,7 +173,7 @@ export class ReportManagementComponent implements OnInit {
             'Eroare la obținerea datelor utilizatorului: ' + error.message
           );
           this.isLoading = false;
-          return of(null); 
+          return of(null);
         })
       )
       .subscribe({
@@ -262,7 +263,7 @@ export class ReportManagementComponent implements OnInit {
           console.error(errorMessage);
           this.alertErrorMessages.push(errorMessage);
           this.isLoading = false;
-          return of([]); 
+          return of([]);
         })
       )
       .subscribe((reports) => {
@@ -270,7 +271,7 @@ export class ReportManagementComponent implements OnInit {
           reports = reports.filter((report) => !report.isAnonymous);
         }
 
-        this.reports = reports; 
+        this.reports = reports;
 
         if (reports.length === 0) {
           const errorMessage =
@@ -295,25 +296,25 @@ export class ReportManagementComponent implements OnInit {
         const details = await forkJoin({
           county: this.locationService.getCountyById(report.countyId),
           city: this.locationService.getCityById(report.cityId),
-          user: this.userService.getUserById(report.userId), 
-          hasImages: this.reportService.checkIfReportHasImages(report.id), 
+          user: this.userService.getUserById(report.userId),
+          hasImages: this.reportService.checkIfReportHasImages(report.id),
         }).toPromise();
 
         if (details) {
           report.county = details.county?.name;
           report.city = details.city?.name;
-          report.username = details.user?.userName; 
-          report.hasImages = details.hasImages; 
+          report.username = details.user?.userName;
+          report.hasImages = details.hasImages;
 
           if (report.hasImages) {
             report.imageUrls = await this.getReportImages(report.id);
           } else {
-            report.imageUrls = []; 
+            report.imageUrls = [];
           }
         }
 
         report.currentIndex = 0;
-        report.statusText = this.getStatusText(report.status); 
+        report.statusText = this.getStatusText(report.status);
         report.severityText = this.getSeverityText(report.severity);
         this.isLoading = false;
       } catch (error) {
@@ -432,7 +433,7 @@ export class ReportManagementComponent implements OnInit {
             const errorMessage =
               'Eroare la actualizarea statusului raportului: ' + error.message;
             this.alertErrorMessages.push(errorMessage);
-            this.currentReportId = null; 
+            this.currentReportId = null;
           },
         });
     }
@@ -447,7 +448,7 @@ export class ReportManagementComponent implements OnInit {
       case 'Rezolvat':
         return 'status-resolved';
       default:
-        return 'status-unknown'; 
+        return 'status-unknown';
     }
   }
 
@@ -456,7 +457,7 @@ export class ReportManagementComponent implements OnInit {
     target: number,
     duration: number
   ): Observable<number> {
-    const totalFrames = (duration / 1000) * 60; 
+    const totalFrames = (duration / 1000) * 60;
     const increment = (target - current) / totalFrames;
     let frame = 0;
 
@@ -466,7 +467,7 @@ export class ReportManagementComponent implements OnInit {
         const value = current + increment * frame;
 
         if (frame >= totalFrames) {
-          observer.next(target); 
+          observer.next(target);
           observer.complete();
           clearInterval(intervalId);
         } else {
